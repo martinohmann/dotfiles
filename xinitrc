@@ -16,7 +16,4 @@ xset b off
 
 urxvtd --quiet --opendisplay --fork
 thunar --daemon &
-# exec gnome-session
-# exec startkde
 exec startxfce4
-# ...or the Window Manager of your choice
