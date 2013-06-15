@@ -1,1 +1,88 @@
-/home/mohmann/.conkyrc-battery
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+total_run_times 0
+no_buffers yes
+double_buffer yes
+
+## UPDATE INTERVALS
+update_interval 2
+update_interval_on_battery 5
+
+## WINDOW SETTINGS
+#own_window_class System Monitor
+#own_window yes
+#own_window_type normal
+#own_window_transparent no
+#own_window_colour 333333
+#own_window_title SysInfo
+
+## DRAW SETTINGS
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+## DEFAULTS
+default_color white
+default_shade_color AAAAAA
+default_outline_color 000000
+default_bar_size 0 4
+
+## WINDOW SETTINGS
+own_window_class Conky
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+## ALIGNMENT AND SIZE
+alignment tr
+gap_x 5
+gap_y 10
+minimum_size 10 5
+maximum_width 500
+
+## MISC SETTINGS
+if_up_strictness link
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+
+## COLORS
+## color0 EAEAEA
+## color1 A7A7A7
+## color0 EEEEEE 
+## color1 AAAAAA 
+## color2 999999 
+## color3 AA0000
+## color4 00AA00
+color0 EEEEEE 
+color1 999999 
+color2 999999 
+color3 AA0000
+color4 00AA00
+
+## TEMPLATES
+template0 ${offset 20}
+template1 ${offset 5}
+template2 ${voffset -3}
+template3 ${voffset -4}
+
+TEXT
+${if_existing /sys/class/power_supply/BAT0/status}${if_match ${battery_percent BAT0}<99}
+	${if_existing /sys/class/power_supply/BAT0/status Discharging}
+		${font Ubuntu:bold:size=8}${color1}battery discharging ${template1}${color0}${battery_percent BAT0}%${if_empty ${battery_time BAT0}}${else}${template0}${color1}time left ${template1}${color0}${battery_time BAT0}${endif}
+	${else}
+		${font Ubuntu:bold:size=8}${color1}battery charging ${template1}${color0}${battery_percent BAT0}%
+	${endif}
+${else}
+
+	${font Ubuntu:bold:size=14}${template2}${color4}! ${template3}${font Ubuntu:bold:size=8}${color0}battery fully charged
+${endif}
+${else}
+	
+	${font Ubuntu:bold:size=14}${template2}${color3}! ${template3}${font Ubuntu:bold:size=8}${color0}no battery present
+${endif}
+

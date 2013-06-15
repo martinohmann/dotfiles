@@ -1,1 +1,116 @@
-/home/mohmann/.conkyrc
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+total_run_times 0
+no_buffers yes
+double_buffer yes
+
+## UPDATE INTERVALS
+update_interval 20
+update_interval_on_battery 30
+
+## WINDOW SETTINGS
+own_window_class System Monitor
+own_window yes
+own_window_type normal
+own_window_transparent no
+own_window_colour 1A1A1A 
+own_window_title SysInfo
+
+## DRAW SETTINGS
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+## DEFAULTS
+default_color white
+default_shade_color 000000
+default_outline_color 000000
+default_bar_size 0 4
+
+## ALIGNMENT AND SIZE
+alignment br
+gap_x 20
+gap_y 45
+minimum_size 180 5
+maximum_width 180
+
+## MISC SETTINGS
+if_up_strictness link
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+
+## COLORS
+color0 EAEAEA
+color1 A7A7A7
+
+## TEMPLATES
+template0 ${goto 100}
+template1 ${voffset 4}
+template2 ${texeci 30 curl -s http://checkip.dyndns.org/ | grep -o '[[:digit:].]\\+'}
+template3 ${execi 10 sensors | grep 'Core \1' | awk {'print($3)'} | sed 's/\\+//g'}
+
+TEXT
+${font Ubuntu:bold:pixelsize=10}${color0}SYSTEM
+${template1}${color1}node    					${template0}${color0}$nodename
+${color1}arch 									${template0}${color0}$machine
+${color1}kernel 								${template0}${color0}$kernel
+${template1}${color1}uptime 					${template0}${color0}$uptime
+$hr
+FILESYSTEMS/MEMORY
+${template1}${color1}/ 							${template0}${color0}${fs_used /} / ${fs_size /}
+${fs_bar /}
+${color1}/home 									${template0}${color0}${fs_used /home} / ${fs_size /home}
+${fs_bar /home}
+${color1}ram 									${template0}${color0}$mem / $memmax
+$membar
+$hr
+${if_up wlp3s0}NETWORK
+${template1}${color1}inet ip					${template0}${color0}${template2}
+${color1}wlan ip								${template0}${color0}${addr wlp3s0}
+${template1}${color1}bitrate					${template0}${color0}${wireless_bitrate wlp3s0}
+${color1}link quality							${template0}${color0}${wireless_link_qual wlp3s0}%
+${template1}${color1}up speed					${template0}${color0}${upspeed wlp3s0}
+${color1}down speed								${template0}${color0}${downspeed wlp3s0}
+${template1}${color1}total up	 				${template0}${color0}${totalup wlp3s0}
+${color1}total down 							${template0}${color0}${totaldown wlp3s0}
+$hr
+${else}${if_up enp0s25}NETWORK
+${template1}${color1}inet ip					${template0}${color0}${template2}
+${color1}eth ip									${template0}${color0}${addr enp0s25}
+${template1}${color1}up speed					${template0}${color0}${upspeed enp0s25}
+${color1}down speed								${template0}${color0}${downspeed enp0s25}
+${template1}${color1}total up	 				${template0}${color0}${totalup enp0s25}
+${color1}total down 							${template0}${color0}${totaldown enp0s25}
+$hr
+${endif}${endif}${if_match ${battery_percent BAT0}!=0}BATTERY
+${template1}${color1}bat0						${template0}${color0}${battery BAT0}
+${template1}${color1}time left					${template0}${color0}${battery_time BAT0}
+${battery_bar BAT0}
+$hr
+${endif}LOAD
+${template1}${color1}cpu0 thread0				${template0}${color0}${cpu cpu1}% / ${freq cpu1}MHz
+${cpubar cpu1}
+${color1}cpu0 thread1 							${template0}${color0}${cpu cpu2}% / ${freq cpu2}MHz 
+${cpubar cpu2}
+${color1}cpu1 thread0 							${template0}${color0}${cpu cpu3}% / ${freq cpu3}MHz
+${cpubar cpu3}
+${color1}cpu1 thread1 							${template0}${color0}${cpu cpu4}% / ${freq cpu4}MHz
+${cpubar cpu4}
+$hr
+SENSORS
+${template1}${color1}cpu0						${template0}${color0}${template3 0}
+${color1}cpu1 									${template0}${color0}${template3 1}
+${template1}${color1}fan 						${template0}${color0}$ibm_fan RPM
+$hr
+PROCESSES
+${template1}${color1}processes / run. 			${template0}${color0}$processes / $running_processes
+${color1}threads / run.							${template0}${color0}$threads / $running_threads
+${template1}${color1}${top name 1} 				${template0}${offset -3}${color0}${top cpu 1}%
+${color1}${top name 2} 							${template0}${offset -3}${color0}${top cpu 2}%
+${color1}${top name 3} 							${template0}${offset -3}${color0}${top cpu 3}%
+${color1}${top name 4} 							${template0}${offset -3}${color0}${top cpu 4}%
+${color1}${top name 5} 							${template0}${offset -3}${color0}${top cpu 5}%
