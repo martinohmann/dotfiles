@@ -1,1 +1,4 @@
-just dotfiles, nothing to see here.
+dotfiles
+========
+
+just dotfiles.
