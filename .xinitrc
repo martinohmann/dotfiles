@@ -11,9 +11,21 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+if [[ $# -gt 0 ]]; then
+  WM=$1
+fi
+
 # disable beep
 xset b off
 
 urxvtd --quiet --opendisplay --fork
 thunar --daemon &
-exec startxfce4
+
+case $WM in
+  xfce)
+    exec startxfce4
+    ;;
+  *)
+    ~/.local/bin/dwm-startup
+    ;;
+esac

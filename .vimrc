@@ -153,7 +153,7 @@ set noswapfile
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
-set expandtab
+" set expandtab
 
 " Be smart when using tabs ;)
 set smarttab
@@ -398,6 +398,24 @@ endfunction
 " => Custom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Use ranger as vim file manager
+function! Ranger()
+	" Get a temp file name without creating it
+	let tmpfile = substitute(system('mktemp -u'), '\n', '', '')
+	" Launch ranger, passing it the temp file name
+	silent exec '!RANGER_RETURN_FILE='.tmpfile.' ranger'
+	" If the temp file has been written by ranger
+	if filereadable(tmpfile)
+		" Get the selected file name from the temp file
+		let filetoedit = system('cat '.tmpfile)
+		exec 'edit '.filetoedit
+		call delete(tmpfile)
+	endif
+	redraw!
+endfunction
+
+" nmap <leader>r :call Ranger()<cr>"
+
 if has("gui_running")
     colorscheme 256-grayvim-gvim
     set lines=40 columns=120
@@ -430,3 +448,6 @@ nmap <leader>X :w<CR>:silent !chmod +x "%"<CR>:redraw!<CR>
 set gfn=Monospace\ 8 
 
 map <c-n> :NERDTreeToggle<CR>
+
+" Use system clipboard Shift+Insert to insert stuff into vim
+set clipboard+=unnamedplus

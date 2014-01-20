@@ -54,7 +54,7 @@ template2 ${texeci 30 curl -s http://checkip.dyndns.org/ | grep -o '[[:digit:].]
 template3 ${execi 10 sensors | grep 'Core \1' | awk {'print($3)'} | sed 's/\\+//g'}
 
 TEXT
-${font Ubuntu:bold:pixelsize=10}${color0}SYSTEM
+${font terminus:pixelsize=10}${color0}SYSTEM
 ${template1}${color1}node    					${template0}${color0}$nodename
 ${color1}arch 									${template0}${color0}$machine
 ${color1}kernel 								${template0}${color0}$kernel

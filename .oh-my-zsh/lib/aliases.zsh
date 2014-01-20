@@ -43,6 +43,42 @@ lsc() {
 	ls -Fla --block-size="'1" --color=always --group-directories-first -q "$@" | /home/mohmann/.local/bin/coloredls.pl
 }
 
+wg_weather () {
+	local api_key='d6c244098ffadf0b'
+	local response
+	local weather
+
+	response=$(wget -qO - "http://api.wunderground.com/api/$api_key/conditions/q/Germany/Berlin.json")
+	weather=$(echo "$response" | jq '.current_observation.temp_c')
+
+	if [[ "$weather" -eq "null" ]]; then
+		weather="N/A"
+	else
+		weather+="°C, "
+		weather+=$(echo "$response" | jq -r '.current_observation.weather')
+	fi
+
+	echo $weather
+}
+
+# translate german to english (with sentence translation w/o quoting. @mohmann)
+deen () {
+	q=
+	for w in $@; do 
+		q="$q $w"
+	done
+	trs {de=en} $q
+}
+
+# translate english to german (with sentence translation w/o quoting. @mohmann)
+ende () {
+	q=
+	for w in $@; do 
+		q="$q $w"
+	done
+	trs {en=de} $q
+}
+
 # real aliases
 # Push and pop directories on directory stack
 alias pu='pushd'
@@ -54,7 +90,6 @@ alias cls='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias home='cd ~'
 alias la='ls -a'
 alias ll='ls -l'
 alias lsd='ls -d */'
@@ -68,6 +103,8 @@ alias please='sudo'
 alias orphans='pacman -Qqdt'
 alias selfinstalled='pacman -Qqet'
 
+# Open files
+alias o='xdg-open'
 #alias g='grep -in'
 
 # Show history
@@ -76,7 +113,7 @@ alias mostused='most_used_commands'
 
 # List direcory contents
 alias lsa='ls -lah'
-alias l='ls -lA1'
+alias l='ls -la'
 alias ll='ls -l'
 alias la='ls -lA'
 alias sl=ls # often screw this up

@@ -1,43 +1,46 @@
-URxvt.geometry: 78x27
+! URxvt.geometry: 78x27
 URxvt.saveLines: 1000
 URxvt.scrollBar: false
 URxvt.foreground: white
 URxvt.background: black
 URxvt.secondaryScroll: true
-URxvt.font: xft:Liberation Mono:pixelsize=12
-URxvt.perl-ext-common: default,matcher
+! URxvt.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.font: -*-ohsnap-medium-r-*-*-12-*-*-*-*-*-*-*
+! URxvt.font: -*-terminus-medium-*-*-*-*-120-*-*-*-*-iso8859-1
+URxvt.perl-ext:      default,url-select
+URxvt.perl-ext-common: default,matcher,tabbedex,clipboard
 URxvt.urlLauncher: chromium
-URxvt.matcher.button: 1
+URxvt.url-launcher:      /usr/bin/chromium
+URxvt.matcher.button:   2
 URxvt.tabbed.saveLines: 1000
 URxvt.tabbed.scrollBar: false
-URxvt.tabbed.tabbar-fg: 3
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 0
-URxvt.tabbed.tab-bg: 1
 URxvt.tabbed.secondaryScroll: true
-URxvt.tabbed.font: xft:Liberation Mono:pixelsize=12
+! URxvt.tabbed.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.tabbed.font: -*-ohsnap-medium-r-*-*-12-*-*-*-*-*-*-*
+! URxvt.tabbed.font: -*-terminus-medium-*-*-*-*-120-*-*-*-*-iso8859-1
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: -1
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: -1
+URxvt.tabbed.autohide: true
+URxvt.tabbed.new-button: false
+URxvt.tabbed.title: false
 URxvt*inheritPixmap: true 
-URxvt*shading: 70
+URxvt*shading: 20
 URxvt.depth: 32
 
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
 
-URxvt.perl-ext-common:  default,matcher
-URxvt.url-launcher:      /usr/bin/chromium
-URxvt.matcher.button:   1
-
-URxvt.perl-ext:      default,url-select
 URxvt.keysym.M-u:    perl:url-select:select_next
 URxvt.url-select.launcher:   /usr/bin/chromium
 URxvt.url-select.underline: true
 
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755: False
-URxvt.perl-ext-common: default,clipboard
 
 ! Colors
-urxvt*background:                    [85]#111111
+urxvt*background: 						[99]#292929
 urxvt*foreground:                    #c2c2b0
 
 ! Black + DarkGrey

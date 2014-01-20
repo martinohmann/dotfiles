@@ -1,0 +1,9 @@
+gtk-theme-name = "Zukitwo-Brave"
+gtk-icon-theme-name = "Faenza-Dark"
+gtk-font-name = "Droid Sans 10"
+
+style "schrift"
+{
+font_name = "Droid Sans 10"  
+}
+widget_class "*" style "schrift"

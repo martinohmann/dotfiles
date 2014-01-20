@@ -1,11 +1,11 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.21 for mohmann on Fri Mar 29 18:22:11 2013.
+# Written by xscreensaver-demo 5.26 for mohmann on Thu Jan  9 11:28:08 2014.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:10:00
 cycle:		0:10:00
-lock:		False
-lockTimeout:	0:00:00
+lock:		True
+lockTimeout:	0:01:00
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
@@ -25,7 +25,7 @@ captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
 dpmsEnabled:	False
-dpmsQuickOff:	False
+dpmsQuickOff:	True
 dpmsStandby:	2:00:00
 dpmsSuspend:	2:00:00
 dpmsOff:	4:00:00
@@ -34,7 +34,7 @@ grabVideoFrames:    False
 chooseRandomImages: False
 imageDirectory:	
 
-mode:		off
+mode:		blank
 selected:	-1
 
 textMode:	file
@@ -245,6 +245,11 @@ programs:								      \
   GL: 				hilbert -root				    \n\
   GL: 				tronbit -root				    \n\
 				electricsheep --root 1			    \n\
+				hexadrop -root				    \n\
+  GL: 				kaleidocycle -root			    \n\
+  GL: 				quasicrystal -root			    \n\
+  GL: 				unknownpleasures -root			    \n\
+  GL: 				geodesic -root				    \n\
 
 
 pointerPollTime:    0:00:05
