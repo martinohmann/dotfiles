@@ -11,12 +11,6 @@ _most_used_commands() {
 	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n$1
 }
 
-# usage: remindme <time> <text>
-# e.g.: remindme 10m "omg, the pizza"
-remindme() {
-    sleep $1 && zenity --info --text "$2" &
-}
-
 note () {
 	#if file doesn't exist, create it
 	[ -f $HOME/.notes ] || touch $HOME/.notes
@@ -43,24 +37,6 @@ lsc() {
 	ls -Fla --block-size="'1" --color=always --group-directories-first -q "$@" | /home/mohmann/.local/bin/coloredls.pl
 }
 
-wg_weather () {
-	local api_key='d6c244098ffadf0b'
-	local response
-	local weather
-
-	response=$(wget -qO - "http://api.wunderground.com/api/$api_key/conditions/q/Germany/Berlin.json")
-	weather=$(echo "$response" | jq '.current_observation.temp_c')
-
-	if [[ "$weather" -eq "null" ]]; then
-		weather="N/A"
-	else
-		weather+="°C, "
-		weather+=$(echo "$response" | jq -r '.current_observation.weather')
-	fi
-
-	echo $weather
-}
-
 # translate german to english (with sentence translation w/o quoting. @mohmann)
 deen () {
 	q=
@@ -77,6 +53,18 @@ ende () {
 		q="$q $w"
 	done
 	trs {en=de} $q
+}
+
+# cat syntax highlighting
+cat () {
+    source-highlight -i "$1" -o STDOUT -f esc --failsafe
+}
+
+pstree_color () {
+	pstree -U "$@" | sed '
+		s/[-a-zA-Z]\+/\x1B[32m&\x1B[0om/g
+		s/[{}]/\x1B[31m&\x1B[0m/g
+		s/[─┬─├─└│]/\x1B[34m&\x1B[0m/g'
 }
 
 # real aliases
@@ -123,17 +111,6 @@ alias lso="ls -lG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2
 
 alias afind='ack-grep -il'
 
-# cat syntax highlighting
-cat () {
-    source-highlight -i "$1" -o STDOUT -f esc --failsafe
-}
-
-pstree_color () {
-	pstree -U "$@" | sed '
-		s/[-a-zA-Z]\+/\x1B[32m&\x1B[0om/g
-		s/[{}]/\x1B[31m&\x1B[0m/g
-		s/[─┬─├─└│]/\x1B[34m&\x1B[0m/g'
-}
 # sublime text
 alias st='subl'
 
