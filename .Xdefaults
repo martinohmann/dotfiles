@@ -5,7 +5,7 @@ URxvt.foreground: white
 URxvt.background: black
 URxvt.secondaryScroll: true
 ! URxvt.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-URxvt.font: -*-ohsnap-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.font: -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
 ! URxvt.font: -*-terminus-medium-*-*-*-*-120-*-*-*-*-iso8859-1
 URxvt.perl-ext:      default,url-select
 URxvt.perl-ext-common: default,matcher,tabbedex,clipboard
@@ -16,7 +16,7 @@ URxvt.tabbed.saveLines: 1000
 URxvt.tabbed.scrollBar: false
 URxvt.tabbed.secondaryScroll: true
 ! URxvt.tabbed.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-URxvt.tabbed.font: -*-ohsnap-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.tabbed.font: -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
 ! URxvt.tabbed.font: -*-terminus-medium-*-*-*-*-120-*-*-*-*-iso8859-1
 URxvt.tabbed.tabbar-fg: 2
 URxvt.tabbed.tabbar-bg: -1
@@ -32,6 +32,10 @@ URxvt.depth: 32
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
 
+URxvt.keysym.C-0: fsize\n
+URxvt.keysym.C-plus: fsize +\n
+URxvt.keysym.C-minus: fsize -\n
+
 URxvt.keysym.M-u:    perl:url-select:select_next
 URxvt.url-select.launcher:   /usr/bin/chromium
 URxvt.url-select.underline: true
@@ -44,7 +48,7 @@ urxvt*background: 						[99]#292929
 urxvt*foreground:                    #c2c2b0
 
 ! Black + DarkGrey
-*color0:                        #262626
+*color0:                        #363636
 *color8:                        #73675b
 ! DarkRed + Red
 *color1:                        #a64211

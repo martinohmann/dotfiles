@@ -1,13 +1,13 @@
 ! xscreensaver ---------------------------------------------------------------
 
 !font settings
-xscreensaver.Dialog.headingFont:        -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.bodyFont:           -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.labelFont:          -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.unameFont:          -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.buttonFont:         -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.dateFont:           -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.passwd.passwdFont:         -*-ohsnap.icons-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.headingFont:        -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
 
 !xscreensaver.Dialog.headingFont:        -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
 !xscreensaver.Dialog.bodyFont:           -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*

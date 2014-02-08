@@ -1,6 +1,5 @@
-
 if [ -n "$DISPLAY" ]; then 
-  #&& [ "$TERM" != "rxvt-unicode-256color" ]; then
+# if [ -n "$DISPLAY" ] && [ "$TERM" != "rxvt-unicode-256color" ]; then
 	# use prettier term in emulators
 	if [[ -e /usr/share/terminfo/x/xterm-256color ]]; then
 		export TERM='xterm-256color'
@@ -54,3 +53,5 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=/home/mohmann/.local/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/mohmann/Software/gookup/bin:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools:/opt/cordova-android/bin
+
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx

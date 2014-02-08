@@ -26,6 +26,6 @@ case $WM in
     exec startxfce4
     ;;
   *)
-    ~/.local/bin/dwm-startup
+    exec $HOME/.local/bin/dwm-startup
     ;;
 esac

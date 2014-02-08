@@ -1,3 +1,3 @@
 # autologin on tty1
-# [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+# [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && sleep 3 && exec startx
 [ ! -s ~/.mpd/pid ] && mpd
