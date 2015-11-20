@@ -1,0 +1,355 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 8
+font -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# modkeys
+set $mod Mod1
+set $mod4 Mod4
+
+# workspaces
+set $ws1 1:>_
+set $ws2 2:web
+set $ws3 3:work
+set $ws4 4:misc
+set $ws5 5:media
+set $ws6 6:mail&chat
+set $ws7 7:seven
+set $ws8 8:eight
+set $ws9 9:nine
+set $ws0 0:ten
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod4
+
+# kill focused window
+bindsym $mod4+Shift+c kill
+
+# change focus
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# tab through windows of current workspace
+bindsym $mod+Tab       focus right
+bindsym $mod+Shift+Tab focus left
+
+# move focused window
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod4+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym $mod+s layout stacking
+bindsym $mod4+m layout tabbed
+bindsym $mod4+t layout default
+bindsym $mod+y  layout toggle split
+
+# toggle tiling / floating
+bindsym $mod4+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod4+Shift+minus move scratchpad
+
+# switch to workspace
+bindsym $mod4+1 workspace $ws1
+bindsym $mod4+2 workspace $ws2
+bindsym $mod4+3 workspace $ws3
+bindsym $mod4+4 workspace $ws4
+bindsym $mod4+5 workspace $ws5
+bindsym $mod4+6 workspace $ws6
+bindsym $mod4+7 workspace $ws7
+bindsym $mod4+8 workspace $ws8
+bindsym $mod4+9 workspace $ws9
+bindsym $mod4+0 workspace $ws0
+
+bindsym $mod4+Shift+Left  move workspace to output left
+bindsym $mod4+Shift+Right move workspace to output right
+
+# move focused container to workspace
+bindsym $mod4+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod4+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod4+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod4+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod4+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod4+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod4+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod4+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod4+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod4+Shift+0 move container to workspace $ws0; workspace $ws0
+
+# cycle workspaces
+bindsym $mod4+Tab workspace next
+bindsym $mod4+Shift+Tab workspace prev
+
+# e.g. Assume you are on workspace "1: www" and switch to "2: IM" using mod+2
+# becaguse somebody sent you a message. You don’t need to remember where you
+# came from now, you can just press $mod+2 again to switch back to "1: www".
+# workspace_auto_back_and_forth yes
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# client colors
+# class                 border  backgr. text    indicator
+client.focused          #285577 #184567 #ffffff #2e9ef4
+client.focused_inactive #171717 #171717 #a3a4a8 #484e50
+client.unfocused        #0a0a0a #0a0a0a #a3a4a8 #292d2e
+client.urgent           #a00000 #900000 #ffffff #900000
+client.placeholder      #1c1c1c #0c0c0c #ffffff #000000
+client.background               #000000
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+  bindsym Shift+Left  resize shrink width  5 px
+  bindsym Shift+Down  resize grow   height 5 px
+  bindsym Shift+Up    resize shrink height 5 px
+  bindsym Shift+Right resize grow   width  5 px
+
+  bindsym Left  resize shrink width  20 px
+  bindsym Down  resize grow   height 20 px
+  bindsym Up    resize shrink height 20 px
+  bindsym Right resize grow   width  20 px
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+# move window
+mode "move" {
+  bindsym Shift+Left  move left  5 px
+  bindsym Shift+Down  move down  5 px
+  bindsym Shift+Up    move up    5 px
+  bindsym Shift+Right move right 5 px
+
+  bindsym Left  move left  20 px
+  bindsym Down  move down  20 px
+  bindsym Up    move up    20 px
+  bindsym Right move right 20 px
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+set $mode_screenshot "screenshot: focused (f), selection (s), screen (enter)"
+
+# screenshot
+mode $mode_screenshot {
+  bindsym --release Print mode "default", exec scrot
+  bindsym --release s mode "default", exec scrot -s
+  bindsym --release f mode "default", exec scrot -u
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+m mode "move"
+bindsym Print mode $mode_screenshot
+
+bar {
+  id bar0
+  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+  status_command ~/.config/i3/status bar0
+  separator_symbol "|"
+  tray_output none
+  position top
+  binding_mode_indicator yes
+  colors {
+    background #000000
+    statusline #cccccc
+    separator #333333
+    # class            border  backgr. text
+    focused_workspace  #285577 #184567 #ffffff
+    active_workspace   #171717 #171717 #a3a4a8
+    inactive_workspace #000000 #000000 #a3a4a8
+    urgent_workspace   #a00000 #900000 #ffffff
+    binding_mode       #a00000 #900000 #ffffff
+  }
+  bindsym Button3 bar mode toggle bar1, bar mode toggle bar2
+}
+
+bar {
+  id bar1
+  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+  status_command ~/.config/i3/status bar1
+  output DP1
+  separator_symbol "|"
+  tray_output primary
+  tray_padding 1
+  position bottom
+  workspace_buttons no
+  binding_mode_indicator no
+  hidden_state hide
+  mode hide
+  modifier Mod3
+  colors {
+    background #000000
+    statusline #cccccc
+    separator #333333
+    # class            border  backgr. text
+    focused_workspace  #285577 #184567 #ffffff
+    active_workspace   #171717 #171717 #a3a4a8
+    inactive_workspace #000000 #000000 #a3a4a8
+    urgent_workspace   #a00000 #900000 #ffffff
+    binding_mode       #a00000 #900000 #ffffff
+  }
+}
+
+bar {
+  id bar2
+  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+  status_command ~/.config/i3/status bar2
+  output LVDS1
+  output VGA1
+  separator_symbol "|"
+  tray_output primary
+  tray_padding 1
+  position bottom
+  workspace_buttons no
+  binding_mode_indicator no
+  hidden_state hide
+  mode hide
+  modifier Mod3
+  colors {
+    background #000000
+    statusline #cccccc
+    separator #333333
+    # class            border  backgr. text
+    focused_workspace  #285577 #184567 #ffffff
+    active_workspace   #171717 #171717 #a3a4a8
+    inactive_workspace #000000 #000000 #a3a4a8
+    urgent_workspace   #a00000 #900000 #ffffff
+    binding_mode       #a00000 #900000 #ffffff
+  }
+}
+
+# toggle bottom bar
+bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
+
+# window rules
+for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
+for_window [class="^(chromium|Spotify)$"] border none
+for_window [class="^Thunderbird$"] move workspace $ws6, workspace $ws6
+for_window [instance="System Monitor"] floating enable, border none
+for_window [class="Skype"] move workspace $ws6, floating enable
+
+assign [class="^Spotify$"] $ws5
+
+# misc
+focus_follows_mouse no
+focus_on_window_activation focus
+force_display_urgency_hint 2000 ms
+
+# applications
+bindsym $mod4+w workspace $ws2, exec ~/.config/i3/runorraise chromium
+bindsym $mod4+Shift+w exec chromium
+bindsym $mod4+e exec thunar
+bindsym $mod4+Shift+t exec thunderbird
+
+# screen lock
+bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
+
+# terminal
+bindsym $mod+Return exec urxvtc
+bindsym $mod4+Shift+Return exec urxvtc
+
+# dmemu commands
+bindsym $mod4+x exec --no-startup-id dmenu_run -b \
+  -fn "-*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*" \
+  -nb "#000000" -nf "#a3a4a8" \
+  -sb "#285577" -sf "#ffffff" 
+bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder
+bindsym $mod4+udiaeresis exec --no-startup-id dmenu_session
+
+# conky sysinfo
+bindsym $mod4+odiaeresis exec --no-startup-id toggle-sysinfo
+
+# volume keys
+bindcode 121 exec volume toggle
+bindcode 122 exec volume down
+bindcode 123 exec volume up
+
+# scratchpad
+bindsym F1 scratchpad show
+
+# single, extend, clone display
+bindcode 156 exec --no-startup-id ~/.config/i3/screen -s
+bindcode 235 exec --no-startup-id ~/.config/i3/screen -e
+bindsym $mod4+p exec --no-startup-id ~/.config/i3/screen -c
+
+# toggle border
+bindsym $mod4+b border toggle
+
+### -------------------------
+## startup
+
+# lauch NetworkManager applet
+exec --no-startup-id nm-applet &
+
+# launch thunderbird
+exec --no-startup-id thunderbird > /dev/null 2>&1 &
+
+# launch dropbox
+exec --no-startup-id dropboxd > /dev/null 2>&1 &
+
+# lauch notification daemon
+exec --no-startup-id dunst > /dev/null 2>&1 &
+
+# create scratchpad
+exec --no-startup-id ~/.config/i3/scratchpad
+
+# set background
+exec --no-startup-id ~/.fehbg
+
+# set background
+exec --no-startup-id lightsOn 590 &
+

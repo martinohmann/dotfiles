@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# prevent curl from hanging by limiting request time to 5sec
+ip=$(curl -s --max-time 5 https://api.ipify.org/)
+
+if [ $? -eq 0 ]; then
+  echo "$ip"
+else
+  echo "n/a"
+  exit 1
+fi

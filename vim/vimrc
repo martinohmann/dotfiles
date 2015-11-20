@@ -73,14 +73,14 @@ set so=7
 " Turn on the WiLd menu
 set wildmenu
 
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+" Ignore compiled files and archives
+set wildignore+=*.o,*~,*.pyc,*.pyo,*.so,*.zip,*.gz,*.tar
 
 "Always show current position
 set ruler
 
 " Height of the command bar
-set cmdheight=2
+set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -109,6 +109,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -156,9 +157,9 @@ set noswapfile
 " set expandtab
 
 " Be smart when using tabs ;)
-set smarttab
+" set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -207,11 +208,15 @@ map <leader>bd :Bclose<cr>
 map <leader>ba :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
-map <leader>tne :tabnew<cr>
+map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-map <leader>tn :tabn<cr>
+
+" next, prev, delete buffer
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>  
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -400,28 +405,42 @@ endfunction
 
 " Use ranger as vim file manager
 function! Ranger()
-	" Get a temp file name without creating it
-	let tmpfile = substitute(system('mktemp -u'), '\n', '', '')
-	" Launch ranger, passing it the temp file name
-	silent exec '!RANGER_RETURN_FILE='.tmpfile.' ranger'
-	" If the temp file has been written by ranger
-	if filereadable(tmpfile)
-		" Get the selected file name from the temp file
-		let filetoedit = system('cat '.tmpfile)
-		exec 'edit '.filetoedit
-		call delete(tmpfile)
-	endif
-	redraw!
+  " Get a temp file name without creating it
+  let tmpfile = substitute(system('mktemp -u'), '\n', '', '')
+  " Launch ranger, passing it the temp file name
+  silent exec '!RANGER_RETURN_FILE='.tmpfile.' ranger'
+  " If the temp file has been written by ranger
+  if filereadable(tmpfile)
+    " Get the selected file name from the temp file
+    let filetoedit = system('cat '.tmpfile)
+    exec 'edit '.filetoedit
+    call delete(tmpfile)
+endif
+  redraw!
 endfunction
 
-" nmap <leader>r :call Ranger()<cr>"
+" nmap <leader>r :call Ranger()<cr>
 
-if has("gui_running")
-    colorscheme 256-grayvim-gvim
-    set lines=40 columns=120
-else
-    colorscheme jellybeans
-endif
+" if has("gui_running")
+    " colorscheme 256-grayvim-gvim
+    " set lines=40 columns=120
+" endif
+
+set guifont=Inconsolata\ 10
+
+" make gvim look like vim
+set guioptions+=c " console dialogs
+set guioptions-=e " console tabs
+set guioptions-=m " no menu bar
+set guioptions-=T " no toolbar
+set guioptions-=l " no left scrollbar
+set guioptions-=r " no right scrollbar
+set guioptions-=L " no left vsp scrollbar
+set guioptions-=R " no right vsp scrollbar
+set guioptions-=b " no bottom scrollbar
+
+colorscheme jellybeans
+set background=dark
 
 " Activate mouse
 set mouse=a
@@ -436,6 +455,17 @@ set showbreak=↳
 set number
 set numberwidth=1
 
+" automatic wordwrap at 79 chars
+set tw=79
+set formatoptions+=l
+set formatoptions-=t
+
+" Use spaces instead of tabs
+set expandtab
+
+" fold using markers
+set foldmethod=marker
+
 " Toggle line numbering
 nmap <leader>n :set number!<CR>
 
@@ -445,9 +475,51 @@ nmap <leader>s :source %<CR>
 " chmod +x file in buffer
 nmap <leader>X :w<CR>:silent !chmod +x "%"<CR>:redraw!<CR>
 
-set gfn=Monospace\ 8 
-
-map <c-n> :NERDTreeToggle<CR>
+" map <c-n> :NERDTreeToggle<CR>
+map <c-n> :NERDTreeTabsToggle<CR>
 
 " Use system clipboard Shift+Insert to insert stuff into vim
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
+
+" save and load folds automatically
+autocmd BufWinLeave ?* mkview
+autocmd BufWinEnter ?* silent loadview
+
+" make vim transparent
+hi Normal       ctermbg=none
+hi NonText      ctermbg=none
+hi TabLineFill  ctermbg=none
+
+" darker tabs
+hi TabLine      ctermfg=244   ctermbg=234   cterm=none
+hi TabLineSel   ctermfg=255   ctermbg=238   cterm=bold
+
+" remap vim-unimpaired [ and ] to < and >
+" nmap < [
+" nmap > ]
+" omap < [
+" omap > ]
+" xmap < [
+" xmap > ]
+"
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg|o|gz|zip|tar)$',
+\}
+
+let g:ctrlp_working_path_mode = 0
+
+" show hidden files
+let g:ctrlp_show_hidden = 1
+
+map <C-O> :CtrlPBuffer<cr>
+
+" show hidden files in nerdtree
+let NERDTreeShowHidden=1
+
+" filetype rules
+au BufRead,BufNewFile *.upc set filetype=c
+au BufRead,BufNewFile *.uph set filetype=c
+
+" vim: set ts=2 sw=2 et:

@@ -1,0 +1,53 @@
+! xscreensaver ---------------------------------------------------------------
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+
+!xscreensaver.Dialog.headingFont:        -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.Dialog.bodyFont:           -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.Dialog.labelFont:          -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.Dialog.unameFont:          -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.Dialog.buttonFont:         -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.Dialog.dateFont:           -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+!xscreensaver.passwd.passwdFont:         -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #c2c2b0
+xscreensaver.Dialog.background:         #090909
+xscreensaver.Dialog.topShadowColor:     #090909
+xscreensaver.Dialog.bottomShadowColor:  #090909
+xscreensaver.Dialog.Button.foreground:  #090909
+xscreensaver.Dialog.Button.background:  #c2c2b0
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #090909
+xscreensaver.Dialog.text.background:    #c2c2b0
+xscreensaver.Dialog.internalBorderWidth:10
+xscreensaver.Dialog.borderColor:  #191919
+xscreensaver.Dialog.borderWidth:        1
+xscreensaver.Dialog.shadowThickness:    1
+xscreensaver.Dialog.logo.width: 210
+xscreensaver.Dialog.logo.height: 210
+
+!timeout bar (background is actually determined by Dialog.text.background)
+!xscreensaver.passwd.thermometer.foreground:  #87877b
+xscreensaver.passwd.thermometer.foreground:  #3247C9
+xscreensaver.passwd.thermometer.background:  #000000
+xscreensaver.passwd.thermometer.width:       10
+xscreensaver.passwd.heading.label: Arch Linux
+xscreensaver.passwd.body.label: Screen locked.
+xscreensaver.passwd.unlock.label: OK
+xscreensaver.passwd.login.label: New Login
+xscreensaver.passwd.user.label: Username:
+xscreensaver.passwd.asterisks: True
+xscreensaver.passwd.uname: False
+
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %Y-%m-%d %H:%M
+xscreensaver.newLoginCommand: 
+Xcursor.theme: Mac_OSX_Lion

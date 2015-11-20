@@ -1,0 +1,94 @@
+! common config
+URxvt.termName: rxvt-unicode-256color
+!URxvt.geometry: 78x27
+URxvt.saveLines: 5000
+URxvt.scrollBar: false
+URxvt.secondaryScroll: true
+!URxvt.internalBorder: 2
+!URxvt.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.font: -*-ohsnapu-medium-r-*-*-14-*-*-*-*-*-*-*
+!URxvt.inheritPixmap: true 
+!URxvt.tintColor: Blue
+!URxvt.transparent: true
+!URxvt.shading: 10
+URxvt.depth: 32
+
+! perl extensions
+URxvt.perl-ext: default,url-select
+URxvt.perl-ext-common: default,matcher,tabbedex,clipboard
+
+! disable default Ctrl+Shift-Binding
+URxvt.iso14755: False
+URxvt.iso14755_32: False
+
+! url launcher
+URxvt.urlLauncher: chromium
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 2
+
+! tabbed config
+URxvt.tabbed.saveLines: 5000
+URxvt.tabbed.scrollBar: false
+URxvt.tabbed.secondaryScroll: true
+!URxvt.tabbed.font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
+URxvt.tabbed.font: -*-ohsnapu-medium-r-*-*-14-*-*-*-*-*-*-*
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: -1
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: -1
+URxvt.tabbed.autohide: true
+URxvt.tabbed.new-button: false
+URxvt.tabbed.title: false
+!URxvt.keysym.Control-t: perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
+!URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+
+! home + end key
+URxvt.keysym.Home: \033[1~
+URxvt.keysym.End: \033[4~
+
+! font size
+URxvt.keysym.C-0: fsize\n
+URxvt.keysym.C-plus: fsize +\n
+URxvt.keysym.C-minus: fsize -\n
+
+! url launcher (Alt+u)
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/chromium
+URxvt.url-select.underline: true
+
+! secondary clipboard
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+
+! Colors
+! URxvt.background: 							[95]#181a1b
+URxvt.background: 							[90]#000000
+URxvt.foreground:               #c2c2b0
+urxvt.background: 							[90]#000000
+urxvt.foreground:               #c2c2b0
+
+! Black + DarkGrey
+*color0:                        #464646
+*color8:                        #73675b
+! DarkRed + Red
+*color1:                        #a64211
+*color9:                        #cc5214
+! DarkGreen + Green
+*color2:                        #638046
+*color10:                       #80a65b
+! DarkYellow + Yellow
+*color3:                        #bf8c25
+*color11:                       #e6a82d
+! DarkBlue + Blue
+*color4:                        #4d6d99
+*color12:                       #6088bf
+! DarkMangenta + Mangenta
+*color5:                        #996b89
+*color13:                       #bf86ac
+! DarkCyan + Cyan
+*color6:                        #8bAeA9
+*color14:                       #B6E1Ef
+! LightGrey + White
+*color7:                        #998a7a
+*color15:                       #c2c2b0

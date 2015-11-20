@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# i3: focus window of class ($2) if program ($1) is running. 
+# If it's not running, start program.
+
+[ $# -lt 1 ] && exit 1
+
+cmd="$1"
+class="$cmd"
+
+[ $# -gt 1 ] && class="$2"
+
+if pgrep -c "$cmd"; then
+  i3-msg "[class=\"$class\"] focus"
+else
+  i3-msg "exec $cmd"
+fi

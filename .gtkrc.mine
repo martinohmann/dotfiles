@@ -1,9 +1,0 @@
-gtk-theme-name="Zukitwo-Brave"
-gtk-icon-theme-name="Faenza-Dark"
-gtk-font-name="Droid Sans 9"
-gtk-cursor-theme-name="Mac_OSX_Lion"
-style "schrift"
-{
-font_name = "Droid Sans 9"  
-}
-widget_class "*" style "schrift"

@@ -1,0 +1,226 @@
+#!/usr/bin/python3
+import sys
+
+from i3pystatus import Status
+from i3pystatus.updates import pacman
+
+class Colors(object):
+  DEFAULT  = '#cccccc'
+  WARNING  = '#ffd760'
+  CRITICAL = '#ff5454'
+  DISABLED = '#777777' 
+
+try:
+  bar_id = sys.argv[1]
+except IndexError:
+  bar_id = None
+
+status = Status(standalone=True)
+
+# status for top bar
+if bar_id == "bar0":
+  status.register("clock",
+    format = "É %a %b %d %Y %H:%M",
+    interval = 5)
+
+  status.register("network",
+    format_up = 'Â {interface}',
+    format_down = '',
+    interface = 'enp0s25',
+    color_up = Colors.DEFAULT,
+    color_down = Colors.CRITICAL,
+    dynamic_color = False,
+    interval = 5)
+
+  status.register("network",
+    format_up = '¶ {essid}',
+    format_down = '',
+    interface = 'wlp3s0',
+    color_up = Colors.DEFAULT,
+    color_down = Colors.CRITICAL,
+    dynamic_color = False,
+    interval = 5)
+
+  status.register("updates",
+    format ="º {count}",
+    format_no_updates = '',
+    color = Colors.DEFAULT,
+    color_no_updates = Colors.DEFAULT,
+    backends = [ pacman.Pacman() ],
+    on_rightclick = '~/.config/i3/status-cmd-updates',
+    interval = 1800)
+
+  status.register("temp",
+    format = "Ñ {temp:.0f}°C",
+    color = Colors.DEFAULT,
+    alert_color = Colors.CRITICAL,
+    alert_temp = 85,
+    interval = 5)
+
+  status.register("alsa",
+    format = "Å {volume}%",
+    format_muted = "Ã {volume}%",
+    color = Colors.DEFAULT,
+    color_muted = Colors.CRITICAL,
+    mixer = "Master",
+    mixer_id = 0,
+    interval = 1)
+
+  status.register("battery",
+    format = "ð {percentage:.0f}%{status}{remaining:%H:%M}",
+    not_present_text = "ð not present",
+    color = Colors.DEFAULT,
+    full_color = Colors.DEFAULT,
+    charging_color = Colors.DEFAULT,
+    critical_color = Colors.CRITICAL,
+    not_present_color = Colors.DISABLED,
+    critical_level_percentage = 10,
+    alert_percentage = 5,
+    alert = True,
+    no_text_full = True,
+    status = {
+        'CHR': ' Û ',
+        'DIS': ' Ú ',
+        'FULL': '',
+        'DPL': ''
+    },
+    interval = 20)
+
+# status for bottom bar, bar1 = big screen, bar2 = small screen
+elif bar_id in ["bar1", "bar2"]:
+  status.register("dpms",
+    format = 'Ð dpms {status}',
+    color = '#00dd77',
+    color_disabled = Colors.DISABLED,
+    interval = 5)
+
+  status.register("weather",
+    format = "± {current_temp}",
+    location_code = 'GMXX0007:1:GM',
+    colorize = False,
+    on_rightclick= 'chromium http://www.wetter.com/wetter_aktuell/aktuelles_wetter/deutschland/berlin/DE0001020.html',
+    interval = 1800)
+
+  status.register("disk",
+    format = "² /home {used}/{total}G",
+    path = "/home",
+    color = '#99ffff',
+    on_leftclick = 'thunar /home',
+    interval = 60)
+
+  status.register("disk",
+    format = "² / {used}/{total}G",
+    path = "/",
+    color = '#ffaa99',
+    on_leftclick = 'thunar /',
+    interval = 60)
+
+  status.register("mem",
+    format = "Î {used_mem}/{total_mem}G",
+    color = '#99ffaa',
+    warn_color = Colors.WARNING,
+    alert_color = Colors.CRITICAL,
+    divisor = 1024**3,
+    interval = 10)
+
+  # additional stats on bigger screen
+  if bar_id == "bar1":
+    status.register("load",
+      format = "· {avg1} {avg5} ({tasks})",
+      color = '#99aaff',
+      critical_color = Colors.CRITICAL,
+      interval = 10)
+
+    status.register("cpu_usage",
+      format = '({usage:02}%)',
+      color = '#cfb57a',
+      interval = 10)
+
+    status.register("cpu_freq",
+      format = 'Ñ {avgg}GHz',
+      color = '#cfb57a',
+      hints = { 
+        'separator': False,
+        'separator_block_width': 5
+      },
+      interval = 10)
+
+    status.register("uptime",
+      format = '¸ up {days}d {hours}h {mins}m',
+      color = '#ff99aa',
+      interval = 50)
+
+  status.register("network",
+    format_up = 'Â {interface} {v4}',
+    format_down = 'Â {interface} down',
+    interface = 'enp0s25',
+    color_up = '#99ffff',
+    color_down = Colors.CRITICAL,
+    dynamic_color = False,
+    interval = 10)
+
+  status.register("network",
+    format_up = '¶ {interface} {v4}',
+    format_down = '¶ {interface} down',
+    interface = 'wlp3s0',
+    color_up = '#ffff99',
+    color_down = Colors.CRITICAL,
+    dynamic_color = False,
+    interval = 10)
+
+  if bar_id == "bar1":
+    status.register("shell",
+      command = '~/.config/i3/status-cmd-ip',
+      format = '{output}',
+      color = '#00dd00',
+      error_color = Colors.CRITICAL,
+      interval = 120)
+
+    status.register("online",
+      format_online = 'µ online',
+      format_offline = 'µ offline',
+      color = '#00dd00',
+      color_offline = Colors.CRITICAL,
+      hints = { 
+        'separator': False,
+        'separator_block_width': 7
+      },
+      interval = 120)
+  else:
+    status.register("online",
+      format_online = 'µ online',
+      format_offline = 'µ offline',
+      color = '#00dd00',
+      color_offline = Colors.CRITICAL,
+      interval = 60)
+
+  if bar_id == "bar1":
+    net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) Û {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) Ú'
+  else:
+    net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s Û {bytes_recv:4d}kb/s Ú'
+
+  status.register("network",
+    format_up = net_fmt_up,
+    format_down = '¶ {interface} n/a Û n/a Ú',
+    interface = 'enp0s25',
+    color_down = Colors.CRITICAL,
+    start_color = '#99ffaa',
+    end_color = Colors.CRITICAL,
+    dynamic_color = True,
+    interval = 2)
+
+  # status.register("mpd",
+  #   format = "ê {artist} - {title} {status} {song_elapsed}/{song_length}",
+  #   hide_inactive = True,
+  #   status = {
+  #       'play': 'æ',
+  #       'stop': 'å',
+  #       'pause': 'ç'
+  #   },
+  #   interval = 1)
+
+# unknown bar, use clock placeholder
+else:
+  status.register("clock")
+
+status.run()

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# reopen scratchpad when closed
+while true; do
+  urxvt -name scratchpad
+done

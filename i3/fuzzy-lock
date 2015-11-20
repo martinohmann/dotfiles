@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# image path
+image=/tmp/lock-screen.png
+
+# take screenshot
+scrot $image
+
+# pixel image
+convert $image -scale 5% -scale 2000% $image
+
+# lock screen using image
+exec i3lock --ignore-empty-password --dpms --inactivity-timeout 60 \
+  --show-failed-attempts --color=000000 --image=$image
