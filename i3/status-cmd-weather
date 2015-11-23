@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import json
-import urllib.request
+import requests
 import sys
 
 # openweathermap api key
@@ -14,12 +14,11 @@ def _get_location():
   url = 'http://ip-api.com/json'
 
   try:
-    with urllib.request.urlopen(url, timeout=TIMEOUT) as res:
-      if res.getcode() == 200:
-        data = res.read().decode("utf-8")
-        data = json.loads(data)
-        if data['status'] == 'success':
-          return data
+    r = requests.get(url, timeout=TIMEOUT)
+    if r.status_code == 200:
+      data = r.json()
+      if data['status'] == 'success':
+        return data
   except:
     pass
 
@@ -33,11 +32,9 @@ def _get_weather(location):
     url = url % (location['lat'], location['lon'], APPID)
 
     try:
-      with urllib.request.urlopen(url, timeout=TIMEOUT) as res:
-        if res.getcode() == 200:
-          data = res.read().decode("utf-8")
-          data = json.loads(data)
-          return data
+      r = requests.get(url, timeout=TIMEOUT)
+      if r.status_code == 200:
+        return r.json()
     except:
       pass
 
