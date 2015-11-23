@@ -14,7 +14,8 @@ fi
 # disable beep
 xset b off
 
-# set dpms to 20min
+# set screensaver and dpms to 20min
+xset s 1200 1200
 xset dpms 1200 1200 1200
 
 # update font config

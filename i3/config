@@ -316,10 +316,10 @@ bindsym $mod4+udiaeresis exec --no-startup-id dmenu_session
 bindsym $mod4+odiaeresis exec --no-startup-id toggle-sysinfo
 
 # volume & mic keys
-bindcode 121 exec volume toggle
-bindcode 122 exec volume down
-bindcode 123 exec volume up
-bindcode 198 exec amixer set Capture toggle
+bindcode 121 exec --no-startup-id volume toggle
+bindcode 122 exec --no-startup-id volume down
+bindcode 123 exec --no-startup-id volume up
+bindcode 198 exec --no-startup-id amixer set Capture toggle
 
 # scratchpad
 bindsym F1 scratchpad show
