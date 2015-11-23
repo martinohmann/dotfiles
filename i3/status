@@ -23,6 +23,10 @@ if bar_id == "bar0":
     format = "É %a %b %d %Y %H:%M",
     interval = 5)
 
+  status.register("text",
+    text = "©",
+    on_rightclick = 'dmenu_session')
+
   status.register("network",
     format_up = 'Â {interface}',
     format_down = '',
@@ -30,6 +34,10 @@ if bar_id == "bar0":
     color_up = Colors.DEFAULT,
     color_down = Colors.CRITICAL,
     dynamic_color = False,
+    on_leftclick = None,
+    on_rightclick = 'nm-connection-editor --show --type=802-3-ethernet',
+    on_upscroll = None,
+    on_downscroll = None,
     interval = 5)
 
   status.register("network",
@@ -39,6 +47,10 @@ if bar_id == "bar0":
     color_up = Colors.DEFAULT,
     color_down = Colors.CRITICAL,
     dynamic_color = False,
+    on_leftclick = None,
+    on_rightclick = 'nm-connection-editor --show --type=802-11-wireless',
+    on_upscroll = None,
+    on_downscroll = None,
     interval = 5)
 
   status.register("updates",
@@ -107,14 +119,14 @@ elif bar_id in ["bar1", "bar2"]:
     format = "² /home {used}/{total}G",
     path = "/home",
     color = '#99ffff',
-    on_leftclick = 'thunar /home',
+    on_rightclick = 'thunar /home',
     interval = 60)
 
   status.register("disk",
     format = "² / {used}/{total}G",
     path = "/",
     color = '#ffaa99',
-    on_leftclick = 'thunar /',
+    on_rightclick = 'thunar /',
     interval = 60)
 
   status.register("mem",
@@ -159,6 +171,10 @@ elif bar_id in ["bar1", "bar2"]:
     color_up = '#99ffff',
     color_down = Colors.DISABLED,
     dynamic_color = False,
+    on_leftclick = None,
+    on_rightclick = 'nm-connection-editor --show --type=802-3-ethernet',
+    on_upscroll = None,
+    on_downscroll = None,
     interval = 10)
 
   status.register("network",
@@ -168,6 +184,10 @@ elif bar_id in ["bar1", "bar2"]:
     color_up = '#ffff99',
     color_down = Colors.DISABLED,
     dynamic_color = False,
+    on_leftclick = None,
+    on_rightclick = 'nm-connection-editor --show --type=802-11-wireless',
+    on_upscroll = None,
+    on_downscroll = None,
     interval = 10)
 
   if bar_id == "bar1":
@@ -211,6 +231,8 @@ elif bar_id in ["bar1", "bar2"]:
     start_color = '#99ffaa',
     end_color = Colors.CRITICAL,
     dynamic_color = True,
+    on_leftclick = 'cycle_interface',
+    on_rightclick = 'nm-connection-editor',
     interval = 2)
 
   # status.register("mpd",
