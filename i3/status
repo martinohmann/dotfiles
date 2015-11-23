@@ -68,13 +68,14 @@ if bar_id == "bar0":
 
   status.register("battery",
     format = "ð {percentage:.0f}%{status}{remaining:%H:%M}",
-    not_present_text = "ð not present",
+    not_present_text = "î not present",
     color = Colors.DEFAULT,
     full_color = Colors.DEFAULT,
     charging_color = Colors.DEFAULT,
     critical_color = Colors.CRITICAL,
     not_present_color = Colors.DISABLED,
-    critical_level_percentage = 10,
+    critical_level_percentage = 4,
+    critical_level_command = 'systemctl suspend',
     alert_percentage = 5,
     alert = True,
     no_text_full = True,
@@ -89,15 +90,16 @@ if bar_id == "bar0":
 # status for bottom bar, bar1 = big screen, bar2 = small screen
 elif bar_id in ["bar1", "bar2"]:
   status.register("dpms",
-    format = 'Ð dpms {status}',
+    format = 'Ð dpms',
     color = '#00dd77',
     color_disabled = Colors.DISABLED,
     interval = 5)
 
-  status.register("weather",
-    format = "± {current_temp}",
-    location_code = 'GMXX0007:1:GM',
-    colorize = False,
+  status.register("shell",
+    command = '~/.config/i3/status-cmd-weather',
+    format = '± {output}',
+    color = '#ccccff',
+    error_color = Colors.DISABLED,
     on_rightclick= 'chromium http://www.wetter.com/wetter_aktuell/aktuelles_wetter/deutschland/berlin/DE0001020.html',
     interval = 1800)
 
@@ -155,7 +157,7 @@ elif bar_id in ["bar1", "bar2"]:
     format_down = 'Â {interface} down',
     interface = 'enp0s25',
     color_up = '#99ffff',
-    color_down = Colors.CRITICAL,
+    color_down = Colors.DISABLED,
     dynamic_color = False,
     interval = 10)
 
@@ -164,7 +166,7 @@ elif bar_id in ["bar1", "bar2"]:
     format_down = '¶ {interface} down',
     interface = 'wlp3s0',
     color_up = '#ffff99',
-    color_down = Colors.CRITICAL,
+    color_down = Colors.DISABLED,
     dynamic_color = False,
     interval = 10)
 
@@ -196,14 +198,16 @@ elif bar_id in ["bar1", "bar2"]:
 
   if bar_id == "bar1":
     net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) Û {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) Ú'
+    net_interface = 'enp0s25'
   else:
     net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s Û {bytes_recv:4d}kb/s Ú'
+    net_interface = 'wlp3s0'
 
   status.register("network",
     format_up = net_fmt_up,
-    format_down = '¶ {interface} n/a Û n/a Ú',
-    interface = 'enp0s25',
-    color_down = Colors.CRITICAL,
+    format_down = '¶ {interface}   - kb/s Û   - kb/s Ú',
+    interface = net_interface,
+    color_down = Colors.DISABLED,
     start_color = '#99ffaa',
     end_color = Colors.CRITICAL,
     dynamic_color = True,

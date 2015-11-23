@@ -183,7 +183,7 @@ set $mode_screenshot "screenshot: focused (f), selection (s), screen (enter)"
 
 # screenshot
 mode $mode_screenshot {
-  bindsym --release Print mode "default", exec scrot
+  bindsym --release Return mode "default", exec scrot
   bindsym --release s mode "default", exec scrot -s
   bindsym --release f mode "default", exec scrot -u
 
@@ -223,13 +223,11 @@ bar {
   status_command ~/.config/i3/status bar1
   output DP1
   separator_symbol "|"
-  tray_output primary
+  tray_output DP1
   tray_padding 1
   position bottom
   workspace_buttons no
   binding_mode_indicator no
-  hidden_state hide
-  mode hide
   modifier Mod3
   colors {
     background #000000
@@ -251,13 +249,11 @@ bar {
   output LVDS1
   output VGA1
   separator_symbol "|"
-  tray_output primary
+  tray_output LVDS1
   tray_padding 1
   position bottom
   workspace_buttons no
   binding_mode_indicator no
-  hidden_state hide
-  mode hide
   modifier Mod3
   colors {
     background #000000
@@ -332,6 +328,12 @@ bindsym $mod4+b border toggle
 ### -------------------------
 ## startup
 
+# enable usb automount
+exec --no-startup-id udiskie -2 &
+
+# launch urxvt daemon
+exec --no-startup-id urxvtd --quiet --opendisplay --fork
+
 # lauch NetworkManager applet
 exec --no-startup-id nm-applet &
 
@@ -345,7 +347,7 @@ exec --no-startup-id dropboxd > /dev/null 2>&1 &
 exec --no-startup-id dunst > /dev/null 2>&1 &
 
 # create scratchpad
-exec --no-startup-id ~/.config/i3/scratchpad
+exec --no-startup-id ~/.config/i3/scratchpad &
 
 # set background
 exec --no-startup-id ~/.fehbg

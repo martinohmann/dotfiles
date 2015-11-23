@@ -32,19 +32,13 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 # override style for QT applications
 export QT_STYLE_OVERRIDE=gtk
 
-# enable usb automount
-udiskie -2 &
-
-# launch urxvt daemon
-urxvtd --quiet --opendisplay --fork
-
 # fix trackpoint issues
 sudo ~/.local/bin/fixtp &
 
 # set dircolors
 eval $(dircolors -b ~/.dircolors)
 
-# lauch compositor
+# launch compositor
 compton -CGb -f -D 5 --backend glx
 
 for i in {1..3}; do
