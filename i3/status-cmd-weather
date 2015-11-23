@@ -1,0 +1,74 @@
+#!/usr/bin/python3
+
+import json
+import urllib.request
+import sys
+
+# openweathermap api key
+APPID = "8ab59c0c302e4fafaca328679cc81188"
+
+# http request timeout
+TIMEOUT = 5
+
+def _get_location():
+  url = 'http://ip-api.com/json'
+
+  try:
+    with urllib.request.urlopen(url, timeout=5) as res:
+      if res.getcode() == 200:
+        data = res.read().decode("utf-8")
+        data = json.loads(data)
+        if data['status'] == 'success':
+          return data
+  except:
+    pass
+
+  return None
+
+def _get_weather(location):
+  url = "http://api.openweathermap.org/data/2.5/weather" \
+        "?units=metric&lat=%f&lon=%f&appid=%s"
+
+  if location != None:
+    url = url % (location['lat'], location['lon'], APPID)
+
+    try:
+      with urllib.request.urlopen(url, timeout=5) as res:
+        if res.getcode() == 200:
+          data = res.read().decode("utf-8")
+          data = json.loads(data)
+          return data
+    except:
+      pass
+
+  return None
+
+def print_weather():
+  location = _get_location()
+  weather = _get_weather(location)
+
+  if weather != None:
+    temp = int(weather['main']['temp'])
+    status = int(weather['weather'][0]['id'])
+
+    if 200 <= status < 300:
+      cond = 'thunderstorm'
+    elif 300 <= status < 400:
+      cond = 'drizzle'
+    elif 500 <= status < 600:
+      cond = 'rain'
+    elif 600 <= status < 700:
+      cond = 'snow'
+    elif status == 800:
+      cond = 'clear sky'
+    elif 800 < status < 900:
+      cond = 'clouds'
+    else:
+      cond = weather['weather'][0]['description']
+
+    print("%s°C, %s" % (temp, cond))
+  else:
+    sys.exit("unknown")
+
+if __name__ == '__main__':
+  print_weather()
