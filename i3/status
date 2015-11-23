@@ -112,7 +112,7 @@ elif bar_id in ["bar1", "bar2"]:
     format = '± {output}',
     color = '#ccccff',
     error_color = Colors.DISABLED,
-    on_rightclick= 'chromium http://www.wetter.com/wetter_aktuell/aktuelles_wetter/deutschland/berlin/DE0001020.html',
+    on_rightclick = '~/.config/i3/status-cmd-weather browser',
     interval = 1800)
 
   status.register("disk",
