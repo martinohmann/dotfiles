@@ -1,0 +1,6 @@
+#!/bin/bash
+cal=$(cal --months 6 --color=always | \
+  sed 's|\x1B\[7m|<span foreground="#000000" background="#ffffff"><b>|g;
+    s|\x1B\[27m|</b></span>|g')
+exec notify-send --expire-time 10000 --icon none \
+  --app-name "Calendar" " " "$cal"

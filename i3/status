@@ -21,6 +21,7 @@ status = Status(standalone=True)
 if bar_id == "bar0":
   status.register("clock",
     format = "É %a %b %d %Y %H:%M",
+    on_rightclick = '~/.config/i3/status-cmd-calendar',
     interval = 5)
 
   status.register("text",
@@ -196,6 +197,7 @@ elif bar_id in ["bar1", "bar2"]:
       format = '{output}',
       color = '#00dd00',
       error_color = Colors.CRITICAL,
+      on_rightclick = '/usr/bin/true',
       interval = 120)
 
     status.register("online",
@@ -207,6 +209,7 @@ elif bar_id in ["bar1", "bar2"]:
         'separator': False,
         'separator_block_width': 7
       },
+      on_rightclick = '/usr/bin/true',
       interval = 120)
   else:
     status.register("online",
@@ -214,6 +217,7 @@ elif bar_id in ["bar1", "bar2"]:
       format_offline = 'µ offline',
       color = '#00dd00',
       color_offline = Colors.CRITICAL,
+      on_rightclick = '/usr/bin/true',
       interval = 60)
 
   if bar_id == "bar1":
