@@ -335,30 +335,5 @@ bindsym $mod4+b border toggle
 ### -------------------------
 ## startup
 
-# enable usb automount
-exec --no-startup-id udiskie -2 &
-
-# launch urxvt daemon
-exec --no-startup-id urxvtd --quiet --opendisplay --fork
-
-# lauch NetworkManager applet
-exec --no-startup-id nm-applet &
-
-# launch thunderbird
-exec --no-startup-id thunderbird > /dev/null 2>&1 &
-
-# launch dropbox
-exec --no-startup-id dropboxd > /dev/null 2>&1 &
-
-# lauch notification daemon
-exec --no-startup-id dunst > /dev/null 2>&1 &
-
 # create scratchpad
 exec --no-startup-id ~/.config/i3/scratchpad &
-
-# set background
-exec --no-startup-id ~/.fehbg
-
-# set background
-exec --no-startup-id lightsOn 590 &
-
