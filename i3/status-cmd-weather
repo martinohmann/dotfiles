@@ -20,7 +20,7 @@ def _get_location():
       data = r.json()
       if data['status'] == 'success':
         return data
-  except:
+  except Exception:
     pass
 
   return None
@@ -29,14 +29,14 @@ def _get_weather(location):
   url = "http://api.openweathermap.org/data/2.5/weather" \
         "?units=metric&lat=%f&lon=%f&appid=%s"
 
-  if location != None:
+  if location:
     url = url % (location['lat'], location['lon'], APPID)
 
     try:
       r = requests.get(url, timeout=TIMEOUT)
       if r.status_code == 200:
         return r.json()
-    except:
+    except Exception:
       pass
 
   return None
@@ -45,7 +45,7 @@ def print_weather():
   location = _get_location()
   weather = _get_weather(location)
 
-  if weather != None and weather['cod'] == 200:
+  if weather and weather['cod'] == 200:
     temp = int(weather['main']['temp'])
     status = int(weather['weather'][0]['id'])
 
@@ -73,7 +73,7 @@ def open_browser():
   location = _get_location()
   weather = _get_weather(location)
 
-  if weather != None and weather['cod'] == 200:
+  if weather and weather['cod'] == 200:
     url += str(weather['id'])
 
   webbrowser.open(url)
