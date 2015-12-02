@@ -144,8 +144,8 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # client colors
 # class                 border  backgr. text    indicator
 client.focused          #285577 #184567 #ffffff #2e9ef4
-client.focused_inactive #171717 #171717 #a3a4a8 #484e50
-client.unfocused        #0a0a0a #0a0a0a #a3a4a8 #292d2e
+client.focused_inactive #272727 #272727 #a3a4a8 #484e50
+client.unfocused        #1a1a1a #1a1a1a #a3a4a8 #292d2e
 client.urgent           #b92020 #990000 #ffffff #c90000
 client.placeholder      #1c1c1c #0c0c0c #ffffff #000000
 client.background               #000000
@@ -190,7 +190,6 @@ mode $mode_screenshot {
   bindsym --release s      mode "default", exec scrot -s
   bindsym --release f      mode "default", exec scrot -u
 
-  bindsym Return mode "default"
   bindsym Escape mode "default"
 }
 
@@ -296,6 +295,10 @@ bindsym $mod4+w workspace $ws2, exec ~/.config/i3/runorraise chromium
 bindsym $mod4+Shift+w exec chromium
 bindsym $mod4+e exec thunar
 bindsym $mod4+Shift+t exec thunderbird
+
+# sleep timer
+bindsym $mod4+s exec --no-startup-id sudo ~/.local/bin/sleep-timer
+bindsym $mod4+Shift+s exec --no-startup-id sudo ~/.local/bin/sleep-timer status
 
 # screen lock
 bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
