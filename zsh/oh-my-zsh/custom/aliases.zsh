@@ -86,3 +86,6 @@ alias diff='colordiff'
 alias le='cless'
 
 alias mathpy='PYTHONSTARTUP=~/.math-interactive.py python'
+
+# docker
+alias docker='sudo docker'

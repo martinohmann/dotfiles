@@ -1,2 +1,2 @@
 #!/bin/bash
-exec urxvtc -e sh -c 'echo "Install updates"; sudo pacman -Syu; $SHELL'
+exec urxvtc -e sh -c 'sudo pacman -Syu; $SHELL'
