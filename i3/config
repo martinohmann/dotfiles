@@ -228,7 +228,7 @@ bar {
   output DP1
   separator_symbol "|"
   tray_output DP1
-  tray_padding 1
+  tray_padding 3
   position bottom
   workspace_buttons no
   binding_mode_indicator no
@@ -254,7 +254,7 @@ bar {
   output VGA1
   separator_symbol "|"
   tray_output LVDS1
-  tray_padding 1
+  tray_padding 3
   position bottom
   workspace_buttons no
   binding_mode_indicator no
