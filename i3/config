@@ -310,9 +310,11 @@ bindsym $mod4+Shift+Return exec urxvtc
 
 # dmemu commands
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
-  -fn "-*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*" \
+  -fn "Ohsnap-12" \
   -nb "#000000" -nf "#a3a4a8" \
   -sb "#285577" -sf "#ffffff" 
+# -fn "-*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*" \ # dmenu 4.5.3
+
 bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder
 bindsym $mod4+udiaeresis exec --no-startup-id dmenu_session
 
