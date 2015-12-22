@@ -161,22 +161,48 @@ tempd() {
   cd "$dir"
 }
 
+_bc_convert() {
+  # $1: ibase
+  # $2: obase, in ibase notation
+  # $3: val
+  if [ $1 -gt 10 ]; then
+    val=$(echo $3 | tr '[:lower:]' '[:upper:]')
+  else
+    val=$3
+  fi
+  res=$(echo "ibase=$1; obase=$2; $val" | bc) 
+  if [ $2 -gt 10 ]; then
+    res=$(echo $res | tr '[:upper:]' '[:lower:]')
+  fi
+  echo $res
+}
+
 # hex to dec
 h2d(){
-  echo "ibase=16; $@"|bc
+  _bc_convert 16 A $1
 }
 
 # dec to hex
 d2h(){
-  echo "obase=16; $@"|bc
+  _bc_convert 10 16 $1
 }
 
 # bin to dec
 b2d(){
-  echo "ibase=2; $@"|bc
+  _bc_convert 2 1010 $1
 }
 
 # dec to bin
 d2b(){
-  echo "obase=2; $@"|bc
+  _bc_convert 10 2 $1
+}
+
+# bin to hex
+b2h(){
+  _bc_convert 2 10000 $1
+}
+
+# dec to bin
+h2b(){
+  _bc_convert 16 2 $1
 }
