@@ -54,9 +54,6 @@ nm-applet &
 # launch thunderbird
 thunderbird > /dev/null 2>&1 &
 
-# launch dropbox
-dropboxd > /dev/null 2>&1 &
-
 # launch owncloud
 owncloud > /dev/null 2>&1 &
 
