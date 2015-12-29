@@ -277,8 +277,9 @@ bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
 
 # window rules
 for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
-for_window [class="^(chromium)$"] border none
+for_window [class="^chromium$"] border none
 for_window [class="^(Spotify|sublime_text)$"] border pixel 2
+for_window [class="^Vlc$"] border pixel 1
 for_window [class="^Thunderbird$"] move workspace $ws6
 for_window [instance="System Monitor"] floating enable, border pixel 2
 for_window [class="Skype"] move workspace $ws7, floating enable
