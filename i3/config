@@ -73,7 +73,7 @@ bindsym $mod+v split v
 bindsym $mod4+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-#bindsym $mod+s layout stacking
+bindsym $mod4+v layout stacking
 bindsym $mod4+m layout tabbed
 bindsym $mod4+t layout default
 bindsym $mod+y  layout toggle split
@@ -177,6 +177,8 @@ mode "move" {
   bindsym Down  move down  20 px
   bindsym Up    move up    20 px
   bindsym Right move right 20 px
+
+  bindsym space move position center
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
