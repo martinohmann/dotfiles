@@ -4,9 +4,8 @@
 while true; do
   # only restart scratchpad when i3 is running 
   # to prevent process from respawning on logout
-  if pgrep '^i3$' > /dev/null 2>&1; then
-    urxvt -name scratchpad
-  else
+  if ! pgrep '^i3$' > /dev/null 2>&1; then
     break
   fi
+  urxvt -name scratchpad
 done
