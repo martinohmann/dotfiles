@@ -11,7 +11,7 @@ APPID = "8ab59c0c302e4fafaca328679cc81188"
 # http request timeout
 TIMEOUT = 5
 
-def _get_location():
+def get_location():
   url = 'http://ip-api.com/json'
 
   try:
@@ -25,7 +25,7 @@ def _get_location():
 
   return None
 
-def _get_weather(location):
+def get_weather(location):
   url = "http://api.openweathermap.org/data/2.5/weather" \
         "?units=metric&lat=%f&lon=%f&appid=%s"
 
@@ -41,10 +41,7 @@ def _get_weather(location):
 
   return None
 
-def print_weather():
-  location = _get_location()
-  weather = _get_weather(location)
-
+def print_weather(weather):
   if weather and weather['cod'] == 200:
     temp = int(weather['main']['temp'])
     status = int(weather['weather'][0]['id'])
@@ -64,14 +61,12 @@ def print_weather():
     else:
       cond = weather['weather'][0]['description']
 
-    print("%s°C, %s" % (temp, cond))
+    print("%d°C, %s" % (temp, cond))
   else:
     sys.exit("unknown")
 
-def open_browser():
+def open_browser(weather):
   url = 'http://openweathermap.org/city/'
-  location = _get_location()
-  weather = _get_weather(location)
 
   if weather and weather['cod'] == 200:
     url += str(weather['id'])
@@ -79,7 +74,10 @@ def open_browser():
   webbrowser.open(url)
 
 if __name__ == '__main__':
+  location = get_location()
+  weather = get_weather(location)
+
   if len(sys.argv) > 1 and sys.argv[1] == 'browser':
-    open_browser()
+    open_browser(weather)
   else:
-    print_weather()
+    print_weather(weather)
