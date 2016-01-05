@@ -40,12 +40,6 @@ export PATH=$PATH:/home/mohmann/.local/bin
 # add android tools to PATH
 export PATH=$PATH:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools
 
-# add scalasca related to PATH
-export PATH=$PATH:/opt/scorep/bin:/opt/cube/bin:/opt/scalasca/bin
-
-# add upc runtime to PATH
-export PATH=$PATH:/opt/berkeley-upc/2.20.0/runtime/bin
-
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -78,7 +72,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(mohmann command-not-found extract grails history history-substring-search jump colored-man systemd dircycle screen autojump sudo)
+plugins=(mohmann command-not-found extract history history-substring-search jump colored-man systemd dircycle screen autojump sudo)
 
 source $ZSH/oh-my-zsh.sh
 ## <<< END oh-my-zsh-specific

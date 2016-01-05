@@ -4,8 +4,8 @@
 ip=$(curl -s --max-time 5 https://api.ipify.org/)
 
 if [ $? -eq 0 ]; then
-  echo "$ip"
+  echo "online $ip"
 else
-  echo "n/a"
+  echo "offline"
   exit 1
 fi
