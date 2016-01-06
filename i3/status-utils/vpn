@@ -1,12 +1,17 @@
 #!/bin/bash
 
-[ $# -lt 1 ] && { echo "n/a"; exit 1; } 
+cd /etc/openvpn
 
-output=$(systemctl show openvpn@$1 | grep -oP 'ActiveState=\K(\w+)')
+for f in *.conf; do
+  profile=${f%.*}
+  output=$(systemctl show openvpn@$profile | grep -oP 'ActiveState=\K(\w+)')
 
-if [ "$output" = "active" ]; then
-  echo "vpn on"
-else
-  echo "vpn off"
-  exit 1
-fi
+  if [ "$output" = "active" ]; then
+    echo "vpn on"
+    exit 0
+  fi
+done
+
+# no vpn active, exit with error code
+echo "vpn off"
+exit 1

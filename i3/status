@@ -192,7 +192,7 @@ elif bar_id in ["bar1", "bar2"]:
     interval = 10)
 
   status.register("shell",
-    command = '~/.config/i3/status-utils/vpn scuzzlebutt',
+    command = '~/.config/i3/status-utils/vpn',
     format = 'Ö {output}',
     color = '#3377ff',
     error_color = Colors.DISABLED,
