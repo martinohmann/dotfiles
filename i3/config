@@ -308,7 +308,7 @@ bindsym $mod4+Shift+s exec --no-startup-id sudo ~/.local/bin/sleep-timer status
 bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
 
 # terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod4+Return exec urxvtc
 bindsym $mod4+Shift+Return exec urxvtc
 
 # dmemu commands

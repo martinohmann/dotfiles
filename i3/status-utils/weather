@@ -43,7 +43,10 @@ def get_weather(location):
 
 def print_weather(weather):
   if weather and weather['cod'] == 200:
-    temp = int(weather['main']['temp'])
+    try:
+      temp = int(weather['main']['temp'])
+    except KeyError:
+      temp = 'n/a'
     status = int(weather['weather'][0]['id'])
 
     if 200 <= status < 300:
@@ -61,7 +64,7 @@ def print_weather(weather):
     else:
       cond = weather['weather'][0]['description']
 
-    print("%d°C, %s" % (temp, cond))
+    print("%s°C, %s" % (temp, cond))
   else:
     sys.exit("unknown")
 
