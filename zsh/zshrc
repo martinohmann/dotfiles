@@ -39,6 +39,11 @@ export PATH=$PATH:/home/mohmann/.local/bin
 
 # add android tools to PATH
 export PATH=$PATH:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools
+#
+# add grails to PATH
+export PATH=$PATH:/opt/grails-current/bin
+export GRAILS_HOME=/opt/grails-current
+export JAVA_HOME=/usr/lib/jvm/default
 
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
