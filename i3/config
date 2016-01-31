@@ -276,6 +276,8 @@ bar {
 
 # toggle bottom bar
 bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
+# toggle all bars
+bindsym $mod4+Shift+adiaeresis bar mode toggle bar0, bar mode toggle bar1, bar mode toggle bar2
 
 # window rules
 for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
