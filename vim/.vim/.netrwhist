@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/mohmann/Workspaces/Web/lmd/repo'
+let g:netrw_dirhist_2='/home/mohmann/.oh-my-zsh/plugins'
+let g:netrw_dirhist_3='/home/mohmann/Dropbox/Studium/sem14_ss2013/Leistungsanalyse/Gnuplot-example'
+let g:netrw_dirhist_4='/home/mohmann/Workspaces/servload-0.7.1'
+let g:netrw_dirhist_5='/home/mohmann/.oh-my-zsh'
+let g:netrw_dirhist_6='/home/mohmann'
+let g:netrw_dirhist_7='/home/mohmann/.oh-my-zsh'

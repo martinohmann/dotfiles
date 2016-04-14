@@ -228,8 +228,10 @@ bar {
   font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
   status_command ~/.config/i3/status bar1
   output DP1
+  output HDMI1
   separator_symbol "|"
-  tray_output DP1
+  # tray_output DP1
+  tray_output HDMI1
   tray_padding 3
   position bottom
   workspace_buttons no

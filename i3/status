@@ -15,7 +15,7 @@ try:
 except IndexError:
   bar_id = None
 
-status = Status(standalone=True)
+status = Status(standalone=True,logfile='/tmp/i3pystatus.log')
 
 # status for top bar
 if bar_id == "bar0":

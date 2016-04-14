@@ -1,12 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -19,10 +19,11 @@
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
+"    -> Pathogen
 "    -> General
 "    -> VIM user interface
 "    -> Colors and Fonts
@@ -38,7 +39,13 @@
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" pathogen
+" => Pathogen
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+
+call add(g:pathogen_disabled, 'vim-powerline')
+
 call pathogen#infect()
 syntax on
 
@@ -92,7 +99,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
@@ -216,7 +223,7 @@ map <leader>tm :tabmove
 " next, prev, delete buffer
 map gn :bn<cr>
 map gp :bp<cr>
-map gd :bd<cr>  
+map gd :bd<cr>
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -225,7 +232,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -248,7 +255,16 @@ set viminfo^=%
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ \ %{fugitive#statusline()}
+set statusline=\ %{HasPaste()}
+set statusline+=%F " file name
+set statusline+=%m%r%h%w " modified, read-only, help and preview flags
+set statusline+=\ \ cwd:\ %{getcwd()} " cwd
+set statusline+=%=%{fugitive#statusline()} " git wrapper status line
+set statusline+=\ %y " file type
+set statusline+=\ [%{strlen(&fenc)?&fenc:'none'} " file encoding
+set statusline+=\|%{&ff}] " file format
+set statusline+=\ [col\ %c] " col
+set statusline+=\ [line\ %l/%L\ %p%%] " current/total lines, % through file
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -439,8 +455,9 @@ set guioptions-=L " no left vsp scrollbar
 set guioptions-=R " no right vsp scrollbar
 set guioptions-=b " no bottom scrollbar
 
-colorscheme jellybeans
 set background=dark
+" colorscheme jellybeans
+colorscheme hybrid
 
 " Activate mouse
 set mouse=a
@@ -476,7 +493,7 @@ nmap <leader>s :source %<CR>
 nmap <leader>X :w<CR>:silent !chmod +x "%"<CR>:redraw!<CR>
 
 " map <c-n> :NERDTreeToggle<CR>
-map <c-n> :NERDTreeTabsToggle<CR>
+map <c-n> :NERDTreeToggle<CR>
 
 " Use system clipboard Shift+Insert to insert stuff into vim
 set clipboard=unnamedplus
@@ -522,4 +539,31 @@ let NERDTreeShowHidden=1
 au BufRead,BufNewFile *.upc set filetype=c
 au BufRead,BufNewFile *.uph set filetype=c
 
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_theme = 'powerlineish'
+
+" unicode symbols
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.linenr = 'ln'
+let g:airline_symbols.branch = '->'
+let g:airline_symbols.paste = 'p'
+let g:airline_symbols.whitespace = 'ws'
+let g:airline_symbols.readonly = 'ro'
+let g:airline_symbols.space = "\ua0"
+
+" syntastic config
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" tmuxline config
+let g:tmuxline_powerline_separators = 0
 " vim: set ts=2 sw=2 et:

@@ -1,5 +1,6 @@
 ! common config
 URxvt.termName: rxvt-unicode-256color
+URxvt.loginShell: true
 !URxvt.geometry: 78x27
 URxvt.saveLines: 5000
 URxvt.scrollBar: false
@@ -63,7 +64,7 @@ URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 ! Colors
 ! URxvt.background: 							[95]#181a1b
-URxvt.background: 							[90]#000000
+URxvt.background: 							[95]#050505
 URxvt.foreground:               #c2c2b0
 urxvt.background: 							[90]#000000
 urxvt.foreground:               #c2c2b0

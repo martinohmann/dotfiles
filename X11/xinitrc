@@ -71,4 +71,4 @@ done
 # set background
 ~/.fehbg
 
-exec i3
+exec i3 --shmlog-size=2614400
