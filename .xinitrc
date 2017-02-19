@@ -6,6 +6,7 @@
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/*; do
+    # shellcheck disable=SC1090
     [ -x "$f" ] && . "$f"
   done
   unset f
@@ -27,17 +28,21 @@ xrdb -merge ~/.Xresources
 xrdb -merge ~/.Xdefaults
 
 # init keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+eval "$(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)"
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+export GNOME_KEYRING_CONTROL=/run/user/1000/keyring
 
 # override style for QT applications
 export QT_STYLE_OVERRIDE=gtk
 
-# fix trackpoint issues
-sudo ~/.local/bin/fixtp &
+# disable touchpad
+synclient touchpadoff=1
+
+# disable touchpad while typing. will override the touchpadoff=1 rule
+# syndaemon -i 1 -k -d
 
 # set dircolors
-eval $(dircolors -b ~/.dircolors)
+eval "$(dircolors -b ~/.dircolors)"
 
 # launch compositor
 compton -CGb -f -D 5 --backend glx
@@ -61,14 +66,12 @@ owncloud > /dev/null 2>&1 &
 dunst > /dev/null 2>&1 &
 
 # prevent dpms if needed
-lightsOn 590 &
+lightson 590 &
 
-for i in {1..3}; do
-  xrandr -q | grep "DP${i} connected" && xrandr --output LVDS1 --off --output DP${i} --auto --primary
-  xrandr -q | grep "HDMI${i} connected" && xrandr --output LVDS1 --off --output HDMI${i} --auto --primary
-done
+# extend displays if connected
+srcsw -e
 
 # set background
 ~/.fehbg
 
-exec i3 --shmlog-size=2614400
+exec i3

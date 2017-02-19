@@ -9,14 +9,6 @@ xscreensaver.Dialog.buttonFont:         -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
 xscreensaver.Dialog.dateFont:           -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
 xscreensaver.passwd.passwdFont:         -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
 
-!xscreensaver.Dialog.headingFont:        -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.Dialog.bodyFont:           -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.Dialog.labelFont:          -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.Dialog.unameFont:          -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.Dialog.buttonFont:         -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.Dialog.dateFont:           -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-!xscreensaver.passwd.passwdFont:         -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-*
-
 !general dialog box (affects main hostname, username, password text)
 xscreensaver.Dialog.foreground:         #c2c2b0
 xscreensaver.Dialog.background:         #090909
