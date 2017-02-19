@@ -1,6 +1,6 @@
 [global]
-    #font = Inconsolata 10
-    font = Ohsnap 12
+    font = Misc Ohsnap 12
+    # font = Ohsnap 12
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
