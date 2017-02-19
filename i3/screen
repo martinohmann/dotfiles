@@ -1,6 +1,0 @@
-#!/bin/bash
-
-screenswitcher $@ && {
-  # refresh wallpaper
-  ~/.fehbg
-}

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import sys
 
 from i3pystatus import Status
@@ -8,14 +8,14 @@ class Colors(object):
   DEFAULT  = '#cccccc'
   WARNING  = '#ffd760'
   CRITICAL = '#ff5454'
-  DISABLED = '#777777' 
+  DISABLED = '#777777'
 
 try:
   bar_id = sys.argv[1]
 except IndexError:
   bar_id = None
 
-status = Status(standalone=True,logfile='/tmp/i3pystatus.log')
+status = Status(standalone=True, logfile='/tmp/i3pystatus.log')
 
 # status for top bar
 if bar_id == "bar0":
@@ -31,12 +31,12 @@ if bar_id == "bar0":
   status.register("network",
     format_up = 'Â {interface}',
     format_down = '',
-    interface = 'enp0s25',
+    interface = 'enp0s31f6',
     color_up = Colors.DEFAULT,
     color_down = Colors.CRITICAL,
     dynamic_color = False,
     on_leftclick = None,
-    on_rightclick = 'nm-connection-editor --show --type=802-3-ethernet',
+    on_rightclick = None,
     on_upscroll = None,
     on_downscroll = None,
     interval = 5)
@@ -44,12 +44,12 @@ if bar_id == "bar0":
   status.register("network",
     format_up = '¶ {essid}',
     format_down = '',
-    interface = 'wlp3s0',
+    interface = 'wlp4s0',
     color_up = Colors.DEFAULT,
     color_down = Colors.CRITICAL,
     dynamic_color = False,
     on_leftclick = None,
-    on_rightclick = 'nm-connection-editor --show --type=802-11-wireless',
+    on_rightclick = None,
     on_upscroll = None,
     on_downscroll = None,
     interval = 5)
@@ -70,14 +70,23 @@ if bar_id == "bar0":
     alert_temp = 85,
     interval = 5)
 
-  status.register("alsa",
+#   status.register("alsa",
+#     format = "Å {volume}%",
+#     format_muted = "Ã {volume}%",
+#     color = Colors.DEFAULT,
+#     color_muted = Colors.CRITICAL,
+#     mixer = "Master",
+#     mixer_id = 0,
+#     interval = 1)
+
+  status.register("pulseaudio",
     format = "Å {volume}%",
     format_muted = "Ã {volume}%",
-    color = Colors.DEFAULT,
+    color_unmuted = Colors.DEFAULT,
     color_muted = Colors.CRITICAL,
-    mixer = "Master",
-    mixer_id = 0,
-    interval = 1)
+    # mixer = "Master",
+    # mixer_id = 0,
+    )
 
   status.register("battery",
     format = "ð {percentage:.0f}%{status}{remaining:%H:%M}",
@@ -117,13 +126,6 @@ elif bar_id in ["bar1", "bar2"]:
     interval = 1800)
 
   status.register("disk",
-    format = "² /home {used}/{total}G",
-    path = "/home",
-    color = '#99ffff',
-    on_rightclick = 'thunar /home',
-    interval = 60)
-
-  status.register("disk",
     format = "² / {used}/{total}G",
     path = "/",
     color = '#ffaa99',
@@ -154,7 +156,7 @@ elif bar_id in ["bar1", "bar2"]:
     status.register("cpu_freq",
       format = 'Ñ {avgg}GHz',
       color = '#cfb57a',
-      hints = { 
+      hints = {
         'separator': False,
         'separator_block_width': 5
       },
@@ -168,12 +170,12 @@ elif bar_id in ["bar1", "bar2"]:
   status.register("network",
     format_up = 'Â {interface} {v4}',
     format_down = 'Â {interface} down',
-    interface = 'enp0s25',
+    interface = 'enp0s31f6',
     color_up = '#99ffff',
     color_down = Colors.DISABLED,
     dynamic_color = False,
     on_leftclick = None,
-    on_rightclick = 'nm-connection-editor --show --type=802-3-ethernet',
+    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui-connect',
     on_upscroll = None,
     on_downscroll = None,
     interval = 10)
@@ -181,12 +183,12 @@ elif bar_id in ["bar1", "bar2"]:
   status.register("network",
     format_up = '¶ {interface} {v4}',
     format_down = '¶ {interface} down',
-    interface = 'wlp3s0',
+    interface = 'wlp4s0',
     color_up = '#ffff99',
     color_down = Colors.DISABLED,
     dynamic_color = False,
     on_leftclick = None,
-    on_rightclick = 'nm-connection-editor --show --type=802-11-wireless',
+    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui-connect',
     on_upscroll = None,
     on_downscroll = None,
     interval = 10)
@@ -206,7 +208,7 @@ elif bar_id in ["bar1", "bar2"]:
       color = '#00dd00',
       error_color = Colors.CRITICAL,
       on_rightclick = '/usr/bin/true',
-      interval = 120)
+      interval = 300)
   else:
     status.register("online",
       format_online = 'µ online',
@@ -218,10 +220,10 @@ elif bar_id in ["bar1", "bar2"]:
 
   if bar_id == "bar1":
     net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) Û {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) Ú'
-    net_interface = 'enp0s25'
+    net_interface = 'enp0s31f6'
   else:
     net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s Û {bytes_recv:4d}kb/s Ú'
-    net_interface = 'wlp3s0'
+    net_interface = 'wlp4s0'
 
   status.register("network",
     format_up = net_fmt_up,
@@ -232,18 +234,8 @@ elif bar_id in ["bar1", "bar2"]:
     end_color = Colors.CRITICAL,
     dynamic_color = True,
     on_leftclick = 'cycle_interface',
-    on_rightclick = 'nm-connection-editor',
+    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui',
     interval = 2)
-
-  # status.register("mpd",
-  #   format = "ê {artist} - {title} {status} {song_elapsed}/{song_length}",
-  #   hide_inactive = True,
-  #   status = {
-  #       'play': 'æ',
-  #       'stop': 'å',
-  #       'pause': 'ç'
-  #   },
-  #   interval = 1)
 
 # unknown bar, use clock placeholder
 else:

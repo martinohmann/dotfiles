@@ -124,7 +124,7 @@ bindsym $mod4+Shift+9 move container to workspace $ws9; workspace $ws9
 bindsym $mod4+Shift+0 move container to workspace $ws0; workspace $ws0
 
 # cycle workspaces
-bindsym $mod4+Tab workspace next
+bindsym $mod4+Tab workspace back_and_forth
 bindsym $mod4+Shift+Tab workspace prev
 
 # e.g. Assume you are on workspace "1: www" and switch to "2: IM" using mod+2
@@ -188,9 +188,9 @@ set $mode_screenshot "screenshot: focused (f), selection (s), screen (enter)"
 
 # screenshot
 mode $mode_screenshot {
-  bindsym --release Return mode "default", exec scrot
-  bindsym --release s      mode "default", exec scrot -s
-  bindsym --release f      mode "default", exec scrot -u
+  bindsym --release Return mode "default", exec cd ~ && scrot
+  bindsym --release s      mode "default", exec cd ~ && scrot -s
+  bindsym --release f      mode "default", exec cd ~ && scrot -u
 
   bindsym Escape mode "default"
 }
@@ -228,10 +228,10 @@ bar {
   font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
   status_command ~/.config/i3/status bar1
   output DP1
-  output HDMI1
+  output eDP1
+  output HDMI2
   separator_symbol "|"
-  # tray_output DP1
-  tray_output HDMI1
+  tray_output eDP1
   tray_padding 3
   position bottom
   workspace_buttons no
@@ -254,10 +254,9 @@ bar {
   id bar2
   font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
   status_command ~/.config/i3/status bar2
-  output LVDS1
   output VGA1
   separator_symbol "|"
-  tray_output LVDS1
+  tray_output VGA1
   tray_padding 3
   position bottom
   workspace_buttons no
@@ -276,40 +275,49 @@ bar {
   }
 }
 
-# toggle bottom bar
-bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
-# toggle all bars
-bindsym $mod4+Shift+adiaeresis bar mode toggle bar0, bar mode toggle bar1, bar mode toggle bar2
+# border styles
+new_window pixel 2
+new_float normal
 
 # window rules
+for_window [class="URxvt"] border normal
 for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
-for_window [class="^chromium$"] border none
-for_window [class="^(Spotify|sublime_text|jetbrains-studio|jetbrains-idea-ce|Thunderbird)$"] border pixel 2
-for_window [class="^Vlc$"] border pixel 1
-for_window [class="^Thunderbird$"] move workspace $ws6
-for_window [instance="System Monitor"] floating enable, border pixel 2
-for_window [class="Skype"] move workspace $ws7, floating enable
-for_window [class="VirtualBox"] floating enable
+for_window [class="URxvt" instance="nmtui"] floating enable, border pixel 5
+for_window [class="Chromium"] border none
+for_window [class="(Skype|VirtualBox)"] floating enable
+for_window [class="(Wine|PokerStars.exe)"] floating enable, border normal
 
-assign [class="^Spotify$"] $ws5
+# workspace assignments
+assign [class="Spotify"] $ws5
+assign [class="Thunderbird"] $ws6
+assign [class="Skype"] $ws7
 
 # misc
 focus_follows_mouse no
 focus_on_window_activation focus
 force_display_urgency_hint 2000 ms
 
+### -------------------------
+## misc keybindings
+
+# toggle bottom bar
+bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
+# toggle all bars
+bindsym $mod4+Shift+adiaeresis bar mode toggle bar0, bar mode toggle bar1, bar mode toggle bar2
+
+# toggle border
+bindsym $mod4+b border toggle
+
 # applications
 bindsym $mod4+w workspace $ws2, exec ~/.config/i3/runorraise chromium
 bindsym $mod4+Shift+w exec chromium
-bindsym $mod4+e exec thunar
-bindsym $mod4+Shift+t exec thunderbird
-
-# sleep timer
-bindsym $mod4+s exec --no-startup-id sudo ~/.local/bin/sleep-timer
-bindsym $mod4+Shift+s exec --no-startup-id sudo ~/.local/bin/sleep-timer status
+bindsym $mod4+e exec thunar ~
+bindsym $mod4+Shift+t workspace $ws6, exec thunderbird
 
 # screen lock
-bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
+# bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
+# bindsym $mod+Control+l exec --no-startup-id /usr/bin/slock > /tmp/slock.out 2> /tmp/slock.err
+bindsym $mod+Control+l exec --no-startup-id /usr/bin/physlock -s
 
 # terminal
 bindsym $mod4+Return exec urxvtc
@@ -317,16 +325,15 @@ bindsym $mod4+Shift+Return exec urxvtc
 
 # dmemu commands
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
-  -fn "Ohsnap-12" \
   -nb "#000000" -nf "#a3a4a8" \
-  -sb "#285577" -sf "#ffffff" 
-# -fn "-*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*" \ # dmenu 4.5.3
+  -fn "Misc Ohsnap-12" \
+  -sb "#285577" -sf "#ffffff"
 
 bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder
 bindsym $mod4+udiaeresis exec --no-startup-id dmenu_session
 
-# conky sysinfo
-bindsym $mod4+odiaeresis exec --no-startup-id toggle-sysinfo
+# scratchpad
+bindsym F1 scratchpad show
 
 # volume & mic keys
 bindcode 121 exec --no-startup-id volume toggle
@@ -334,16 +341,18 @@ bindcode 122 exec --no-startup-id volume down
 bindcode 123 exec --no-startup-id volume up
 bindcode 198 exec --no-startup-id amixer set Capture toggle
 
-# scratchpad
-bindsym F1 scratchpad show
+# backlight
+bindcode 232 exec --no-startup-id light -U 10
+bindcode 233 exec --no-startup-id light -A 10
+
+# networkmanager
+bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 
 # single, extend, clone display
-bindcode 156 exec --no-startup-id ~/.config/i3/screen -s
-bindcode 235 exec --no-startup-id ~/.config/i3/screen -e
-bindsym $mod4+p exec --no-startup-id ~/.config/i3/screen -c
+bindsym $mod+F11 exec --no-startup-id ~/.config/i3/screen -C
 
-# toggle border
-bindsym $mod4+b border toggle
+# toggle touchpad
+bindsym $mod+F12 exec --no-startup-id touchpad toggle
 
 ### -------------------------
 ## startup
