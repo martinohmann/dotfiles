@@ -1,0 +1,96 @@
+#!/bin/bash
+
+declare -a dotfiles=(
+  .Xdefaults
+  .Xresources
+  .bash_aliases
+  .bash_functions
+  .bashrc
+  .config/dunst
+  .config/i3
+  .dircolors
+  .oh-my-zsh/custom
+  .tmux.conf
+  .vimrc
+  .xinitrc
+  .zshrc
+)
+
+usage() {
+  cat <<-EOS
+installs dotfiles to user's home directory
+
+usage: $(basename "$0") [options]
+  -h|--help             Show this help and exit.
+  -b|--backup           Backup existing files. Backups will be suffixed
+                        with '$backup_suffix'.
+  -d|--dryrun           Execute without actually installing files.
+  -f|--force            Overwrite existing files without confirmation.
+EOS
+}
+
+confirm_install() {
+  read -r -p "Existing dotfiles will be overwritten, continue? [y|N] " yn
+  case $yn in
+    [Yy]) return ;;
+    *) echo "installation aborted"; exit ;;
+  esac
+}
+
+# shellcheck disable=SC2086
+install_dotfiles() {
+  if [ $dryrun -eq 0 ] && [ $force -eq 0 ]; then
+    confirm_install
+  fi
+
+  for f in "${dotfiles[@]}"; do
+    if [ -e "$HOME/$f" ] && [ $backup -eq 1 ]; then
+      echo "backing up $HOME/$f to $HOME/$f.$backup_suffix"
+
+      if [ $dryrun -eq 0 ]; then
+        mv -f "$HOME/$f" "$HOME/$f.$backup_suffix"
+      fi
+    fi
+
+    echo "installing $repo_root/$f to $HOME/$f"
+
+    if [ $dryrun -eq 0 ]; then
+      ln -sf "$repo_root/$f" "$HOME/$f"
+    fi
+  done
+
+  if [ $dryrun -eq 1 ]; then
+    echo "dryrun: nothing was installed"
+  else
+    echo "installation finished"
+  fi
+}
+
+parse_args() {
+  while [ $# -ge 1 ]; do
+    case "$1" in
+      -h|--help)
+        usage
+        exit ;;
+      -f|--force)
+        force=1 ;;
+      -b|--backup)
+        backup=1 ;;
+      -d|--dryrun)
+        dryrun=1 ;;
+      *)
+        echo "invalid argument: $1. use -h to get a list of all valid options." 1>&2
+        exit 1 ;;
+    esac
+    shift
+  done
+}
+
+backup=0
+backup_suffix=dot-backup
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+dryrun=0
+force=0
+
+parse_args "$@"
+install_dotfiles
