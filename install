@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a dotfiles=(
+declare -a dotfiles_standard=(
   .Xdefaults
   .Xresources
   .bash_aliases
@@ -16,6 +16,17 @@ declare -a dotfiles=(
   .zshrc
 )
 
+declare -a dotfiles_minimal=(
+  .bash_aliases
+  .bash_functions
+  .bashrc
+  .dircolors
+  .oh-my-zsh/custom
+  .tmux.conf
+  .vimrc
+  .zshrc
+)
+
 usage() {
   cat <<-EOS
 installs dotfiles to user's home directory
@@ -24,6 +35,8 @@ usage: $(basename "$0") [options]
   -h|--help             Show this help and exit.
   -b|--backup           Backup existing files. Backups will be suffixed
                         with '$backup_suffix'.
+  -m|--minimal          Only install dotfiles for terminal applications
+                        (e.g. for use on headless servers).
   -d|--dryrun           Execute without actually installing files.
   -f|--force            Overwrite existing files without confirmation.
 EOS
@@ -78,6 +91,8 @@ parse_args() {
         backup=1 ;;
       -d|--dryrun)
         dryrun=1 ;;
+      -m|--minimal)
+        dotfiles=( "${dotfiles_minimal[@]}" ) ;;
       *)
         echo "invalid argument: $1. use -h to get a list of all valid options." 1>&2
         exit 1 ;;
@@ -88,6 +103,7 @@ parse_args() {
 
 backup=0
 backup_suffix=dot-backup
+dotfiles=( "${dotfiles_standard[@]}" )
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 dryrun=0
 force=0
