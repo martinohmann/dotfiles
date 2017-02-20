@@ -44,7 +44,7 @@ eval $(dircolors -b ~/.dircolors)
 export GDK_NATIVE_WINDOWS=true
 
 # add usrscripts to PATH
-export PATH=$PATH:/home/mohmann/.local/bin:/home/mohmann/.config/composer/vendor/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.config/composer/vendor/bin
 
 # add gopath
 export GOPATH="$HOME/.go"
@@ -112,7 +112,6 @@ plugins=(
   history
   history-substring-search
   knife
-  mohmann
   sudo
   symfony2
   systemd
