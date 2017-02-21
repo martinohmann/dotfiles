@@ -87,9 +87,6 @@ alias le='cless'
 
 alias mathpy='PYTHONSTARTUP=~/.math-interactive.py python'
 
-# docker
-alias docker='sudo docker'
-
 # knife
 alias kcu='knife cookbook upload'
 alias krff='knife role from file'
