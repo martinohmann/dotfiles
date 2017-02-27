@@ -95,6 +95,7 @@ Plug 'nvie/vim-flake8'
 Plug 'Shougo/echodoc.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'gregsexton/gitv'
+Plug 'robbles/logstash.vim'
 
 set noshowmode
 
