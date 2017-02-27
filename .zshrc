@@ -104,7 +104,6 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
   colored-man-pages
-  command-not-found
   composer
   docker
   docker-compose
@@ -161,3 +160,5 @@ eval "$(chef shell-init zsh)"
 export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -g ''"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
