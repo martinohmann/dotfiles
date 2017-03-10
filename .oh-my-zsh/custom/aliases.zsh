@@ -75,9 +75,6 @@ alias sinkport='pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo'
 # old alias
 #alias fuck='sudo $(cat $(readlink -f $HISTFILE) | tail -n2 | head -n1 | cut -d\; -f2-)'
 alias fuck='sudo $(tail -2 $HISTFILE | head -1 | cut -d\; -f2-)'
-# truecrypt
-alias tm='truecrypt -t -k "" --protect-hidden=no ~/Misc/.logins /media/truecrypt1'
-alias td='truecrypt -t -d'
 
 # colordiff
 alias diff='colordiff'
@@ -91,3 +88,6 @@ alias mathpy='PYTHONSTARTUP=~/.math-interactive.py python'
 alias kcu='knife cookbook upload'
 alias krff='knife role from file'
 alias kdb='knife data bag'
+
+# vim
+alias vi=vim
