@@ -96,6 +96,11 @@ Plug 'Shougo/echodoc.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'gregsexton/gitv'
 Plug 'robbles/logstash.vim'
+Plug 'fatih/vim-go'
+Plug 'nelsyeung/twig.vim'
+Plug 'ap/vim-buftabline'
+Plug 'majutsushi/tagbar'
+Plug 'tobyS/pdv' | Plug 'tobyS/vmustache', { 'for': 'php' }
 
 set noshowmode
 
@@ -340,9 +345,9 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
 " next, prev, delete buffer
-map gn :bn<cr>
-map gp :bp<cr>
-map gd :bd<cr>
+nnoremap <silent> <leader>bn :bnext<cr>
+nnoremap <silent> <leader>bp :bprev<cr>
+nnoremap <silent> <leader>bc :bdelete<cr>
 
 " switch to buffer with <leader><number>
 nnoremap <Leader>1 :buffer 1<CR>
@@ -754,6 +759,12 @@ let g:neocomplete#sources#omni#input_patterns.ruby =
 let g:neocomplete#sources#omni#input_patterns.python =
 	\ '[^. *\t]\.\w*\|\h\w*'
 
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
+
 noremap <leader>m :NeoCompleteToggle<cr>
 
 au BufEnter *.php :NeoCompleteBufferMakeCache
@@ -893,6 +904,7 @@ nmap <C-D>l :Lines<CR>
 nmap <C-D>L :BLines<CR>
 " nmap <C-D>t :Tags<CR>
 " nmap <C-D>T :BTags<CR>
+nnoremap <C-S> :Buffers<CR>
 
 nmap <leader>h :History/<CR>
 nmap <leader>H :History:<CR>
@@ -900,14 +912,14 @@ nmap <leader><enter> :History<CR>
 
 nnoremap <C-A> :Ag<CR>
 nnoremap <leader>a :AgE<CR>
-nnoremap <C-P> :Files<CR>
-nnoremap <C-S> :Buffers<CR>
+
+" prevent opening files in nerd tree
+nnoremap <silent> <expr> <c-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+" nnoremap <C-P> :Files<CR>
 
 " Ag mappings
 nnoremap * :exec ':Ag '.expand('<cword>')<CR>
 vnoremap * "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
-nnoremap + :exec ':Ag '.expand('<cword>')<CR>
-vnoremap + "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
 
 function! s:ag_to_qf(line)
   let parts = split(a:line, ':')
@@ -1085,5 +1097,24 @@ let g:flake8_show_in_gutter=1
 
 autocmd BufWritePost *.py call Flake8()
 "}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-go
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"{{{
+let g:go_fmt_command = "goimports"
+"}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => tagbar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"{{{
+map <C-T> :TagbarToggle<cr>
+"}}}
+
+nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
+let g:pdv_template_dir = $HOME ."/.vim/pdv_templates"
 
 " vim: set ts=2 sw=2 et:
