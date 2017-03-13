@@ -350,7 +350,7 @@ bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 
 # single, extend, clone display
 bindsym $mod+F11 exec --no-startup-id ~/.config/i3/screen -C
-bindsym $mod+Shift+F11 exec --no-startup-id ~/.config/i3/screen -d HDMI2:HDMI1 -e right
+bindsym $mod+Shift+F11 exec --no-startup-id ~/.config/i3/screen -d HDMI1:HDMI2 -e right
 # toggle touchpad
 bindsym $mod+F12 exec --no-startup-id touchpad toggle
 
