@@ -34,7 +34,6 @@
 "    -> Moving around, tabs and buffers
 "    -> Status line
 "    -> Editing mappings
-"    -> vimgrep searching and cope displaying
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
@@ -101,6 +100,10 @@ Plug 'nelsyeung/twig.vim'
 Plug 'ap/vim-buftabline'
 Plug 'majutsushi/tagbar'
 Plug 'tobyS/pdv' | Plug 'tobyS/vmustache', { 'for': 'php' }
+Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
+Plug 'easymotion/vim-easymotion'
+Plug 'wincent/ferret'
+Plug 'tpope/vim-abolish'
 
 set noshowmode
 
@@ -156,8 +159,8 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -184,7 +187,7 @@ set ruler
 set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
-set hid
+" set hid
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -301,12 +304,10 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 map j gj
 map k gk
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
-
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader>. :noh<cr>
+
+imap jk <Esc>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -332,12 +333,6 @@ map <leader>OB <C-W>J
 map <leader>OC <C-W>L
 map <leader>OD <C-W>H
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
@@ -345,9 +340,9 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
 " next, prev, delete buffer
-nnoremap <silent> <leader>bn :bnext<cr>
-nnoremap <silent> <leader>bp :bprev<cr>
-nnoremap <silent> <leader>bc :bdelete<cr>
+nnoremap <tab> :bnext<cr>
+nnoremap <leader><tab> :bprev<cr>
+nnoremap <silent> bd :bdelete<cr>
 
 " switch to buffer with <leader><number>
 nnoremap <Leader>1 :buffer 1<CR>
@@ -380,8 +375,6 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-" Remember info about open buffers on close
-set viminfo^=%
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -434,40 +427,6 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimgrep searching and cope displaying
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"{{{
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSelection('gv')<CR>
-
-" Open vimgrep and put the cursor in the right position
-map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-" Vimgreps in the current file
-map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
-
-" When you press <leader>r you can search and replace the selected text
-vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
-
-" Do :help cope if you are unsure what cope is. It's super useful!
-"
-" When you search with vimgrep, display your results in cope by doing:
-"   <leader>cc
-"
-" To go to the next search result do:
-"   <leader>n
-"
-" To go to the previous search results do:
-"   <leader>p
-"
-map <leader>cc :botright cope<cr>
-map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -738,7 +697,7 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
-inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+" inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
 " donot showpreview
 set completeopt-=preview
@@ -977,7 +936,7 @@ autocmd VimEnter * command! -nargs=* Ag call fzf#run({
 map <c-n> :NERDTreeToggle<CR>
 "
 " Find current file in NERDTree
-map <c-m> :NERDTreeFind<CR>
+map <leader>N :NERDTreeFind<CR>
 "
 " unmap default NERDTreeFind binding as it is annoying
 " unmap <CR>
@@ -1019,7 +978,15 @@ set formatoptions-=t
 set foldmethod=marker
 
 " Toggle line numbering
-nmap <leader>n :set number!<CR>
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+" nnoremap <leader>n :call NumberToggle()<cr>
 
 " Source file in buffer
 nmap <leader>s :source %<CR>
@@ -1034,8 +1001,8 @@ nmap <leader>c :silent !update-git-ctags<CR>:redraw!<CR>
 set clipboard=unnamedplus
 
 " " save and load folds automatically
-autocmd BufWinLeave ?* mkview
-autocmd BufWinEnter ?* silent loadview
+autocmd BufWinLeave $MYVIMRC mkview
+autocmd BufWinEnter $MYVIMRC silent loadview
 
 " " remap vim-unimpaired [ and ] to < and >
 " nmap < [
@@ -1114,7 +1081,40 @@ let g:go_fmt_command = "goimports"
 map <C-T> :TagbarToggle<cr>
 "}}}
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => PHP templates and namespace
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/pdv_templates"
+
+" insert use statement
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+" autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+
+" make class or function names fully qualified
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+" autocmd FileType php inoremap <Leader>e <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>e :call PhpExpandClass()<CR>
+
+" sort namespaces alphabetically
+" autocmd FileType php inoremap <Leader>s <Esc>:call PhpSortUse()<CR>
+autocmd FileType php noremap <Leader>s :call PhpSortUse()<CR>
+let g:php_namespace_sort_after_insert = 1
+
+
+" Gif config
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" move to word
+map  <Leader>f <Plug>(easymotion-bd-w)
+nmap <Leader>f <Plug>(easymotion-overwin-w)
 
 " vim: set ts=2 sw=2 et:
