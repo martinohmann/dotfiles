@@ -96,7 +96,8 @@ parse_args() {
       -m|--minimal)
         dotfiles=( "${dotfiles_minimal[@]}" ) ;;
       *)
-        echo "invalid argument: $1. use -h to get a list of all valid options." 1>&2
+        echo -e "invalid argument: $1.\n" 1>&2
+        usage 1>&2
         exit 1 ;;
     esac
     shift
