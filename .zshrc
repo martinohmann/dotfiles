@@ -67,6 +67,9 @@ export PATH=$PATH:/opt/android-sdk/tools:/opt/android-sdk/platform-tools
 export KNIFE_CONF_PATH=$HOME/work/chef-repo/.chef/knife.rb
 export KNIFE_COOKBOOK_PATH=$HOME/work/chef-repo/site-cookbooks
 
+# add global yarn node_modules to path
+export PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
+
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -108,6 +111,7 @@ plugins=(
   docker
   docker-compose
   extract
+  git
   history
   history-substring-search
   knife
@@ -162,3 +166,6 @@ export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -g ''"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
