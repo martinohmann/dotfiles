@@ -68,6 +68,8 @@ install_dotfiles() {
     echo "installing $repo_root/$f to $HOME/$f"
 
     if [ $dryrun -eq 0 ]; then
+      parent_dir="$(dirname "$HOME/$f")"
+      [ -e "$parent_dir" ] || mkdir -p "$parent_dir"
       ln -sf "$repo_root/$f" "$HOME/$f"
     fi
   done
