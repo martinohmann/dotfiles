@@ -132,13 +132,13 @@ elif bar_id in ["bar1", "bar2"]:
     on_rightclick = 'thunar /',
     interval = 60)
 
-  status.register("mem",
-    format = "Î {used_mem}/{total_mem}G",
-    color = '#99ffaa',
-    warn_color = Colors.WARNING,
-    alert_color = Colors.CRITICAL,
-    divisor = 1024**3,
-    interval = 10)
+  # status.register("mem",
+  #   format = "Î {used_mem}/{total_mem}G",
+  #   color = '#99ffaa',
+  #   warn_color = Colors.WARNING,
+  #   alert_color = Colors.CRITICAL,
+  #   divisor = 1024**3,
+  #   interval = 10)
 
   # additional stats on bigger screen
   if bar_id == "bar1":
