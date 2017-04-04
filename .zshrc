@@ -106,6 +106,7 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
+  alias-tips
   colored-man-pages
   composer
   docker
