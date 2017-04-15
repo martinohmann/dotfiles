@@ -39,7 +39,6 @@
 "    -> Helper functions
 "    -> Colorscheme and GUI
 "    -> Airline/Powerline
-"    -> Syntastic
 "    -> Neocomplete
 "    -> UltiSnips
 "    -> Omni completion
@@ -59,15 +58,11 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
-" Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/auto-pairs-gentle'
 Plug 'Shougo/neocomplete.vim'
 Plug 'shawncplus/phpcomplete.vim'
-Plug 'vim-syntastic/syntastic'
-" Plug 'tomtom/tlib_vim'
-" Plug 'joonty/vdebug'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -79,14 +74,14 @@ Plug 'xolox/vim-misc'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'nishigori/vim-php-dictionary'
-Plug 'joonty/vim-phpqa'
+" Plug 'joonty/vim-phpqa'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'garbas/vim-snipmate'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'stephpy/vim-yaml'
-" Plug 'Raimondi/delimitMate'
-" Plug 'amiorin/vim-project'
+Plug 'avakhov/vim-yaml', {'for': 'yaml'}
+Plug 'evidens/vim-twig', {'for': 'twig'}
+Plug 'amiorin/vim-project'
 Plug 'SirVer/ultisnips'
 Plug 'phux/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -100,10 +95,15 @@ Plug 'nelsyeung/twig.vim'
 Plug 'ap/vim-buftabline'
 Plug 'majutsushi/tagbar'
 Plug 'tobyS/pdv' | Plug 'tobyS/vmustache', { 'for': 'php' }
-Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
 Plug 'easymotion/vim-easymotion'
 Plug 'wincent/ferret'
 Plug 'tpope/vim-abolish'
+Plug 'sahibalejandro/vim-php', { 'for': 'php' }
+Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+Plug 'matze/vim-move'
+Plug 'adoy/vim-php-refactoring-toolbox', { 'for': 'php' }
+Plug 'troydm/easytree.vim'
+Plug 'w0rp/ale'
 
 set noshowmode
 
@@ -116,17 +116,19 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "{{{
-" " before call project#rc()
-" let g:project_enable_welcome = 1
-" " if you want the NERDTree integration.
-" let g:project_use_nerdtree = 1
+" before call project#rc()
+let g:project_enable_welcome = 0
+" if you want the NERDTree integration.
+let g:project_use_nerdtree = 0
+set rtp+=~/.vim/plugged/vim-project/
 
-" call project#rc("~/work/repos")
+call project#rc("~/work/repos")
 
 " File '~/work/TODO', 'Todo-List'
 
-" Project '~/work/chef-repo', 'chef-repo'
-" Project 'lesara'
+Project '~/work/chef-repo', 'chef-repo'
+Project 'lesara'
+Callback 'lesara', 'Zf1'
 " Project 'dwh'
 " Project 'logistic', 'logistics'
 " Project 'sourcing-tool'
@@ -140,6 +142,14 @@ call plug#end()
 
 " File '~/.vimrc', 'vimrc'
 " File '~/.zshrc', 'zshrc'
+
+function! Zf1(...) abort
+    let g:ale_php_phpcs_standard = 'Zend'
+    let g:ultisnips_php_scalar_types = 0
+
+    let g:phpcomplete_parse_docblock_comments = 0
+    autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+endfunction
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -342,7 +352,34 @@ map <leader>tm :tabmove
 " next, prev, delete buffer
 nnoremap <tab> :bnext<cr>
 nnoremap <leader><tab> :bprev<cr>
-nnoremap <silent> bd :bdelete<cr>
+nnoremap <silent> bd :bp<bar>sp<bar>bn<bar>bd<CR>
+
+function! DeleteInactiveBufs()
+  "From tabpagebuflist() help, get a list of all buffers in all tabs
+  let tablist = []
+  for i in range(tabpagenr('$'))
+    call extend(tablist, tabpagebuflist(i + 1))
+  endfor
+
+  "Below originally inspired by Hara Krishna Dara and Keith Roberts
+  "http://tech.groups.yahoo.com/group/vim/message/56425
+  let nWipeouts = 0
+  for i in range(1, bufnr('$'))
+    if bufexists(i) && !getbufvar(i,"&mod") && index(tablist, i) == -1
+      "bufno exists AND isn't modified AND isn't in the list of buffers open in windows and tabs
+      silent exec 'bwipeout' i
+      let nWipeouts = nWipeouts + 1
+    endif
+  endfor
+  echomsg nWipeouts . ' buffer(s) wiped out'
+endfunction
+
+command! Ball :call DeleteInactiveBufs()
+
+aug QFClose
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
 
 " switch to buffer with <leader><number>
 nnoremap <Leader>1 :buffer 1<CR>
@@ -405,19 +442,6 @@ set statusline+=\ [line\ %l/%L\ %p%%] " current/total lines, % through file
 "{{{
 " Remap VIM 0 to first non-blank character
 map 0 ^
-
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -623,22 +647,6 @@ let g:tmuxline_powerline_separators = 0
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"{{{
-" syntastic config
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_php_checkers = []
-let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
-let g:syntastic_eruby_ruby_quiet_messages =
-    \ {'regex': 'possibly useless use of a variable in void context'}
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Neocomplete Configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -799,7 +807,7 @@ augroup end
 au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
 
 " tabstop setup
-autocmd FileType php,python set ts=4|set sw=4|set expandtab
+autocmd FileType php,python,html,twig set ts=4|set sw=4|set expandtab
 
 " phpunit file type
 au BufNewFile,BufRead *Test.php setlocal ft=php.php-phpunit
@@ -1087,27 +1095,9 @@ map <C-T> :TagbarToggle<cr>
 nnoremap <leader>d :call pdv#DocumentWithSnip()<CR>
 let g:pdv_template_dir = $HOME ."/.vim/pdv_templates"
 
-" insert use statement
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-" autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
-
-" make class or function names fully qualified
-function! IPhpExpandClass()
-    call PhpExpandClass()
-    call feedkeys('a', 'n')
-endfunction
-" autocmd FileType php inoremap <Leader>e <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>e :call PhpExpandClass()<CR>
-
-" sort namespaces alphabetically
-" autocmd FileType php inoremap <Leader>s <Esc>:call PhpSortUse()<CR>
-autocmd FileType php noremap <Leader>s :call PhpSortUse()<CR>
-let g:php_namespace_sort_after_insert = 1
-
+autocmd FileType php noremap <Leader>u :PHPImportClass<CR>
+autocmd FileType php noremap <Leader>e :PHPExpandFQCN<CR>
+autocmd FileType php noremap <Leader>E :PHPExpandFQCNAbsolute<CR>
 
 " Gif config
 map  / <Plug>(easymotion-sn)
@@ -1117,4 +1107,31 @@ omap / <Plug>(easymotion-tn)
 map  <Leader>f <Plug>(easymotion-bd-w)
 nmap <Leader>f <Plug>(easymotion-overwin-w)
 
+let g:move_map_keys = 0
+
+vmap <C-d> <Plug>MoveBlockDown
+vmap <C-u> <Plug>MoveBlockUp
+
+" ale
+" Write this in your vimrc file
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+let g:ale_open_list = 1
+" Set this if you want to.
+" This can be useful if you are combining ALE with
+" some other plugin which sets quickfix errors, etc.
+let g:ale_keep_list_window_open = 0
+
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" ale php config
+let g:ale_php_phpcs_standard = 'PSR2'
+let g:ale_php_phpmd_ruleset = 'cleancode,codesize,design,unusedcode'
+"
 " vim: set ts=2 sw=2 et:
