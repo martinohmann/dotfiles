@@ -4,71 +4,78 @@ import sys
 from i3pystatus import Status
 from i3pystatus.updates import pacman
 
+
 class Colors(object):
-  DEFAULT  = '#cccccc'
-  WARNING  = '#ffd760'
-  CRITICAL = '#ff5454'
-  DISABLED = '#777777'
+    DEFAULT = '#cccccc'
+    WARNING = '#ffd760'
+    CRITICAL = '#ff5454'
+    DISABLED = '#777777'
+
 
 try:
-  bar_id = sys.argv[1]
+    bar_id = sys.argv[1]
 except IndexError:
-  bar_id = None
+    bar_id = None
 
 status = Status(standalone=True, logfile='/tmp/i3pystatus.log')
 
 # status for top bar
 if bar_id == "bar0":
-  status.register("clock",
-    format = "É %a %b %d %Y %H:%M",
-    on_rightclick = '~/.config/i3/status-utils/calendar',
-    interval = 5)
+    status.register("clock",
+                    format="É %a %b %d %Y %H:%M",
+                    on_rightclick='~/.config/i3/status-utils/calendar',
+                    interval=5)
 
-  status.register("text",
-    text = "©",
-    on_rightclick = 'dmenu_session')
+    status.register("text",
+                    text="©",
+                    on_rightclick='dmenu_session')
 
-  status.register("network",
-    format_up = 'Â {interface}',
-    format_down = '',
-    interface = 'enp0s31f6',
-    color_up = Colors.DEFAULT,
-    color_down = Colors.CRITICAL,
-    dynamic_color = False,
-    on_leftclick = None,
-    on_rightclick = None,
-    on_upscroll = None,
-    on_downscroll = None,
-    interval = 5)
+    status.register("xkblayout",
+                    format="{name}",
+                    layouts=["de", "gb"],
+                    interval=10)
 
-  status.register("network",
-    format_up = '¶ {essid}',
-    format_down = '',
-    interface = 'wlp4s0',
-    color_up = Colors.DEFAULT,
-    color_down = Colors.CRITICAL,
-    dynamic_color = False,
-    on_leftclick = None,
-    on_rightclick = None,
-    on_upscroll = None,
-    on_downscroll = None,
-    interval = 5)
+    status.register("network",
+                    format_up='Â {interface}',
+                    format_down='',
+                    interface='enp0s31f6',
+                    color_up=Colors.DEFAULT,
+                    color_down=Colors.CRITICAL,
+                    dynamic_color=False,
+                    on_leftclick=None,
+                    on_rightclick=None,
+                    on_upscroll=None,
+                    on_downscroll=None,
+                    interval=5)
 
-  status.register("updates",
-    format ="º {count}",
-    format_no_updates = '',
-    color = Colors.DEFAULT,
-    color_no_updates = Colors.DEFAULT,
-    backends = [ pacman.Pacman() ],
-    on_rightclick = '~/.config/i3/status-utils/updates',
-    interval = 1800)
+    status.register("network",
+                    format_up='¶ {essid}',
+                    format_down='',
+                    interface='wlp4s0',
+                    color_up=Colors.DEFAULT,
+                    color_down=Colors.CRITICAL,
+                    dynamic_color=False,
+                    on_leftclick=None,
+                    on_rightclick=None,
+                    on_upscroll=None,
+                    on_downscroll=None,
+                    interval=5)
 
-  status.register("temp",
-    format = "Ñ {temp:.0f}°C",
-    color = Colors.DEFAULT,
-    alert_color = Colors.CRITICAL,
-    alert_temp = 85,
-    interval = 5)
+    status.register("updates",
+                    format="º {count}",
+                    format_no_updates='',
+                    color=Colors.DEFAULT,
+                    color_no_updates=Colors.DEFAULT,
+                    backends=[pacman.Pacman()],
+                    on_rightclick='~/.config/i3/status-utils/updates',
+                    interval=1800)
+
+    status.register("temp",
+                    format="Ñ {temp:.0f}°C",
+                    color=Colors.DEFAULT,
+                    alert_color=Colors.CRITICAL,
+                    alert_temp=85,
+                    interval=5)
 
 #   status.register("alsa",
 #     format = "Å {volume}%",
@@ -79,166 +86,171 @@ if bar_id == "bar0":
 #     mixer_id = 0,
 #     interval = 1)
 
-  status.register("pulseaudio",
-    format = "Å {volume}%",
-    format_muted = "Ã {volume}%",
-    color_unmuted = Colors.DEFAULT,
-    color_muted = Colors.CRITICAL,
-    # mixer = "Master",
-    # mixer_id = 0,
-    )
+    status.register("pulseaudio",
+                    format="Å {volume}%",
+                    format_muted="Ã {volume}%",
+                    color_unmuted=Colors.DEFAULT,
+                    color_muted=Colors.CRITICAL,
+                    # mixer = "Master",
+                    # mixer_id = 0,
+                    )
 
-  status.register("battery",
-    format = "ð {percentage:.0f}%{status}{remaining:%H:%M}",
-    not_present_text = "î not present",
-    color = Colors.DEFAULT,
-    full_color = Colors.DEFAULT,
-    charging_color = Colors.DEFAULT,
-    critical_color = Colors.CRITICAL,
-    not_present_color = Colors.DISABLED,
-    critical_level_percentage = 4,
-    critical_level_command = 'systemctl suspend',
-    alert_percentage = 5,
-    alert = True,
-    no_text_full = True,
-    status = {
-        'CHR': ' Û ',
-        'DIS': ' Ú ',
-        'FULL': '',
-        'DPL': ''
-    },
-    interval = 20)
+    status.register("battery",
+                    format="ð {percentage:.0f}%{status}{remaining:%H:%M}",
+                    not_present_text="î not present",
+                    color=Colors.DEFAULT,
+                    full_color=Colors.DEFAULT,
+                    charging_color=Colors.DEFAULT,
+                    critical_color=Colors.CRITICAL,
+                    not_present_color=Colors.DISABLED,
+                    critical_level_percentage=4,
+                    critical_level_command='systemctl suspend',
+                    alert_percentage=5,
+                    alert=True,
+                    no_text_full=True,
+                    status={
+                        'CHR': ' Û ',
+                        'DIS': ' Ú ',
+                        'FULL': '',
+                        'DPL': ''
+                    },
+                    interval=20)
 
 # status for bottom bar, bar1 = big screen, bar2 = small screen
 elif bar_id in ["bar1", "bar2"]:
-  status.register("dpms",
-    format = 'Ð dpms',
-    color = '#00dd77',
-    color_disabled = Colors.DISABLED,
-    interval = 5)
+    status.register("dpms",
+                    format='Ð dpms',
+                    color='#00dd77',
+                    color_disabled=Colors.DISABLED,
+                    interval=5)
 
-  status.register("shell",
-    command = '~/.config/i3/status-utils/weather',
-    format = '± {output}',
-    color = '#ccccff',
-    error_color = Colors.DISABLED,
-    on_rightclick = '~/.config/i3/status-utils/weather browser',
-    interval = 1800)
-
-  status.register("disk",
-    format = "² / {used}/{total}G",
-    path = "/",
-    color = '#ffaa99',
-    on_rightclick = 'thunar /',
-    interval = 60)
-
-  # status.register("mem",
-  #   format = "Î {used_mem}/{total_mem}G",
-  #   color = '#99ffaa',
-  #   warn_color = Colors.WARNING,
-  #   alert_color = Colors.CRITICAL,
-  #   divisor = 1024**3,
-  #   interval = 10)
-
-  # additional stats on bigger screen
-  if bar_id == "bar1":
-    status.register("load",
-      format = "· {avg1} {avg5} ({tasks})",
-      color = '#99aaff',
-      critical_color = Colors.CRITICAL,
-      interval = 10)
-
-    status.register("cpu_usage",
-      format = '({usage:02}%)',
-      color = '#cfb57a',
-      interval = 10)
-
-    status.register("cpu_freq",
-      format = 'Ñ {avgg}GHz',
-      color = '#cfb57a',
-      hints = {
-        'separator': False,
-        'separator_block_width': 5
-      },
-      interval = 10)
-
-    status.register("uptime",
-      format = '¸ up {days}d {hours}h {mins}m',
-      color = '#ff99aa',
-      interval = 50)
-
-  status.register("network",
-    format_up = 'Â {interface} {v4}',
-    format_down = 'Â {interface} down',
-    interface = 'enp0s31f6',
-    color_up = '#99ffff',
-    color_down = Colors.DISABLED,
-    dynamic_color = False,
-    on_leftclick = None,
-    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui-connect',
-    on_upscroll = None,
-    on_downscroll = None,
-    interval = 10)
-
-  status.register("network",
-    format_up = '¶ {interface} {v4}',
-    format_down = '¶ {interface} down',
-    interface = 'wlp4s0',
-    color_up = '#ffff99',
-    color_down = Colors.DISABLED,
-    dynamic_color = False,
-    on_leftclick = None,
-    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui-connect',
-    on_upscroll = None,
-    on_downscroll = None,
-    interval = 10)
-
-  status.register("shell",
-    command = '~/.config/i3/status-utils/vpn',
-    format = 'Ö {output}',
-    color = '#3377ff',
-    error_color = Colors.DISABLED,
-    on_rightclick = '/usr/bin/true',
-    interval = 120)
-
-  if bar_id == "bar1":
     status.register("shell",
-      command = '~/.config/i3/status-utils/ip',
-      format = 'µ {output}',
-      color = '#00dd00',
-      error_color = Colors.CRITICAL,
-      on_rightclick = '/usr/bin/true',
-      interval = 300)
-  else:
-    status.register("online",
-      format_online = 'µ online',
-      format_offline = 'µ offline',
-      color = '#00dd00',
-      color_offline = Colors.CRITICAL,
-      on_rightclick = '/usr/bin/true',
-      interval = 120)
+                    command='~/.config/i3/status-utils/weather',
+                    format='± {output}',
+                    color='#ccccff',
+                    error_color=Colors.DISABLED,
+                    on_rightclick='~/.config/i3/status-utils/weather browser',
+                    interval=1800)
 
-  if bar_id == "bar1":
-    net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) Û {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) Ú'
-    net_interface = 'enp0s31f6'
-  else:
-    net_fmt_up = '¶ {interface} {bytes_sent:4d}kb/s Û {bytes_recv:4d}kb/s Ú'
-    net_interface = 'wlp4s0'
+    status.register("disk",
+                    format="² / {used}/{total}G",
+                    path="/",
+                    color='#ffaa99',
+                    on_rightclick='thunar /',
+                    interval=60)
 
-  status.register("network",
-    format_up = net_fmt_up,
-    format_down = '¶ {interface}   - kb/s Û   - kb/s Ú',
-    interface = net_interface,
-    color_down = Colors.DISABLED,
-    start_color = '#99ffaa',
-    end_color = Colors.CRITICAL,
-    dynamic_color = True,
-    on_leftclick = 'cycle_interface',
-    on_rightclick = 'urxvt -name nmtui -geometry 100x40 -e nmtui',
-    interval = 2)
+    # status.register("mem",
+    #   format = "Î {used_mem}/{total_mem}G",
+    #   color = '#99ffaa',
+    #   warn_color = Colors.WARNING,
+    #   alert_color = Colors.CRITICAL,
+    #   divisor = 1024**3,
+    #   interval = 10)
+
+    # additional stats on bigger screen
+    if bar_id == "bar1":
+        status.register("load",
+                        format="· {avg1} {avg5} ({tasks})",
+                        color='#99aaff',
+                        critical_color=Colors.CRITICAL,
+                        interval=10)
+
+        status.register("cpu_usage",
+                        format='({usage:02}%)',
+                        color='#cfb57a',
+                        interval=10)
+
+        status.register("cpu_freq",
+                        format='Ñ {avgg}GHz',
+                        color='#cfb57a',
+                        hints={
+                            'separator': False,
+                            'separator_block_width': 5
+                        },
+                        interval=10)
+
+        status.register("uptime",
+                        format='¸ up {days}d {hours}h {mins}m',
+                        color='#ff99aa',
+                        interval=50)
+
+    status.register("network",
+                    format_up='Â {interface} {v4}',
+                    format_down='Â {interface} down',
+                    interface='enp0s31f6',
+                    color_up='#99ffff',
+                    color_down=Colors.DISABLED,
+                    dynamic_color=False,
+                    on_leftclick=None,
+                    on_rightclick=('urxvt -name nmtui -geometry 100x40'
+                                   '-e nmtui-connect'),
+                    on_upscroll=None,
+                    on_downscroll=None,
+                    interval=10)
+
+    status.register("network",
+                    format_up='¶ {interface} {v4}',
+                    format_down='¶ {interface} down',
+                    interface='wlp4s0',
+                    color_up='#ffff99',
+                    color_down=Colors.DISABLED,
+                    dynamic_color=False,
+                    on_leftclick=None,
+                    on_rightclick=('urxvt -name nmtui -geometry 100x40 '
+                                   '-e nmtui-connect'),
+                    on_upscroll=None,
+                    on_downscroll=None,
+                    interval=10)
+
+    status.register("shell",
+                    command='~/.config/i3/status-utils/vpn',
+                    format='Ö {output}',
+                    color='#3377ff',
+                    error_color=Colors.DISABLED,
+                    on_rightclick='/usr/bin/true',
+                    interval=120)
+
+    if bar_id == "bar1":
+        status.register("shell",
+                        command='~/.config/i3/status-utils/ip',
+                        format='µ {output}',
+                        color='#00dd00',
+                        error_color=Colors.CRITICAL,
+                        on_rightclick='/usr/bin/true',
+                        interval=300)
+    else:
+        status.register("online",
+                        format_online='µ online',
+                        format_offline='µ offline',
+                        color='#00dd00',
+                        color_offline=Colors.CRITICAL,
+                        on_rightclick='/usr/bin/true',
+                        interval=120)
+
+    if bar_id == "bar1":
+        net_fmt_up = ('¶ {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) '
+                      'Û {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) Ú')
+        net_interface = 'enp0s31f6'
+    else:
+        net_fmt_up = ('¶ {interface} {bytes_sent:4d}kb/s '
+                      'Û {bytes_recv:4d}kb/s Ú')
+        net_interface = 'wlp4s0'
+
+    status.register("network",
+                    format_up=net_fmt_up,
+                    format_down='¶ {interface}   - kb/s Û   - kb/s Ú',
+                    interface=net_interface,
+                    color_down=Colors.DISABLED,
+                    start_color='#99ffaa',
+                    end_color=Colors.CRITICAL,
+                    dynamic_color=True,
+                    on_leftclick='cycle_interface',
+                    on_rightclick=('urxvt -name nmtui -geometry 100x40 '
+                                   '-e nmtui'),
+                    interval=2)
 
 # unknown bar, use clock placeholder
 else:
-  status.register("clock")
+    status.register("clock")
 
 status.run()
