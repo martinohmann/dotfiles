@@ -103,3 +103,5 @@ export BC_ENV_ARGS=~/.bcrc
 
 # load bash functions
 source $HOME/.bash_functions
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
