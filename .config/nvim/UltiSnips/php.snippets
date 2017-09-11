@@ -1,0 +1,87 @@
+priority 1
+snippet class "Class declaration template" b
+<?php
+
+namespace `!p
+relpath = os.path.relpath(path)
+m = re.search(r'[A-Z].+(?=/)', relpath)
+if m:
+    snip.rv = m.group().replace('/', '\\')
+`;
+
+class `!p snip.rv=snip.basename`
+{
+}
+endsnippet
+
+snippet interface "Interface declaration template" b
+<?php
+
+namespace `!p
+relpath = os.path.relpath(path)
+m = re.search(r'[A-Z].+(?=/)', relpath)
+if m:
+    snip.rv = m.group().replace('/', '\\')
+`;
+
+interface `!p snip.rv=snip.basename`
+{
+    public function ${1:someFunction}();$2
+}
+endsnippet
+
+snippet tc "TestClass"
+<?php
+
+namespace ${1:`!p
+abspath = os.path.abspath(path)
+m = re.search(r'[A-Z].+(?=/)', abspath)
+if m:
+    snip.rv = m.group().replace('/', '\\')
+`};
+
+use \PHPUnit\Framework\TestCase;
+
+/**
+ * Class ${1:`!p snip.rv=snip.fn.split('.')[0]`}
+ */
+class $1 extends TestCase
+{
+    $0
+}
+endsnippet
+
+snippet p "Phake::"
+Phake::$0;
+endsnippet
+
+snippet pm "Phake::mock"
+$${1:var} = Phake::mock(${2:class}${3:::class});$0
+endsnippet
+
+snippet pv "Phake::verify"
+Phake::verify($${1:mock})->${2:method};$0
+endsnippet
+
+snippet pw "Phake::when"
+Phake::when($${1:mock})->$3->thenReturn(${2:value});$0
+endsnippet
+
+snippet pa "Phake::anyParameters()"
+Phake::anyParameters()$0
+endsnippet
+
+snippet pc "Phake::capture()"
+Phake::capture($${1:object})$0
+endsnippet
+
+snippet tm "test method annotated" b
+/**
+ * @test
+ */
+public function $1()
+{
+    $0
+}
+endsnippet
+# :vim:ft=snippets:
