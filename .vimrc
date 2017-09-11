@@ -915,7 +915,7 @@ function! s:ag_handler(lines)
 endfunction
 
 autocmd VimEnter * command! -nargs=* AgE call fzf#run({
-\ 'source':  printf('ag --nogroup --column --color "%s"',
+\ 'source':  printf('rg --no-heading --column --color=always "%s"',
 \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
 \ 'sink*':    function('<sid>ag_handler'),
 \ 'options': '--exact --ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
@@ -925,7 +925,7 @@ autocmd VimEnter * command! -nargs=* AgE call fzf#run({
 \ })
 
 autocmd VimEnter * command! -nargs=* Ag call fzf#run({
-\ 'source':  printf('ag --nogroup --column --color "%s"',
+\ 'source':  printf('rg --no-heading --column --color=always "%s"',
 \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
 \ 'sink*':    function('<sid>ag_handler'),
 \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
@@ -1098,10 +1098,6 @@ let g:pdv_template_dir = $HOME ."/.vim/pdv_templates"
 autocmd FileType php noremap <Leader>u :PHPImportClass<CR>
 autocmd FileType php noremap <Leader>e :PHPExpandFQCN<CR>
 autocmd FileType php noremap <Leader>E :PHPExpandFQCNAbsolute<CR>
-
-" Gif config
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
 
 " move to word
 map  <Leader>f <Plug>(easymotion-bd-w)
