@@ -31,8 +31,8 @@ if bar_id == "bar0":
                     on_rightclick='dmenu_session')
 
     status.register("xkblayout",
-                    format="{name}",
-                    layouts=["de", "gb"],
+                    format="Í {name}",
+                    layouts=["de", "us"],
                     interval=10)
 
     status.register("network",

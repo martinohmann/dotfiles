@@ -64,16 +64,16 @@ bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod4+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod4+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod4+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod4+v layout stacking
+bindsym $mod4+s layout stacking
 bindsym $mod4+m layout tabbed
 bindsym $mod4+t layout default
 bindsym $mod+y  layout toggle split
@@ -302,6 +302,7 @@ force_display_urgency_hint 2000 ms
 
 # toggle bottom bar
 bindsym $mod4+adiaeresis bar mode toggle bar1, bar mode toggle bar2
+bindsym $mod4+Shift+f bar mode toggle bar1, bar mode toggle bar2
 # toggle all bars
 bindsym $mod4+Shift+adiaeresis bar mode toggle bar0, bar mode toggle bar1, bar mode toggle bar2
 
@@ -331,6 +332,7 @@ bindsym $mod4+x exec --no-startup-id dmenu_run -b \
 
 bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder
 bindsym $mod4+udiaeresis exec --no-startup-id dmenu_session
+bindsym $mod4+Shift+s exec --no-startup-id dmenu_session
 
 # scratchpad
 bindsym F1 scratchpad show
@@ -350,13 +352,13 @@ bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 
 # single, extend, clone display
 bindsym $mod+F11 exec --no-startup-id ~/.config/i3/screen -C
-bindsym $mod+Shift+F11 exec --no-startup-id ~/.config/i3/screen -d HDMI1:HDMI2 -e right
+bindsym $mod+Shift+F11 exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
 
 # toggle touchpad
 bindsym $mod+F12 exec --no-startup-id touchpad toggle
 
 # toggle keymap
-bindsym $mod+F10 exec --no-startup-id ~/.config/i3/toggle-keymap
+bindsym $mod4+Shift+d exec --no-startup-id ~/.config/i3/toggle-keymap
 
 ### -------------------------
 ## startup
