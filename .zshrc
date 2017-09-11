@@ -25,7 +25,7 @@ setopt no_beep
 
 ## ENV variables
 # default applications
-export EDITOR="vim"
+export EDITOR="nvim"
 export BROWSER="chromium"
 
 # hide default venv prompt
@@ -150,7 +150,7 @@ bindkey "\ee[C" forward-word
 bindkey "\ee[D" backward-word
 bindkey "^H" backward-delete-word
 
-# for rxvt
+# # for rxvt
 bindkey "\e[8~" end-of-line
 bindkey "\e[7~" beginning-of-line
 
@@ -162,11 +162,12 @@ eval "$(chef shell-init zsh)"
 # autostartx on tty1 only. why has this to be down here?! strange behaviour
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 
-export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -g ''"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.git/*" --no-messages'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

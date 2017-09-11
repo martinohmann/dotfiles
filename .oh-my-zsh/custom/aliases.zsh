@@ -90,4 +90,10 @@ alias krff='knife role from file'
 alias kdb='knife data bag'
 
 # vim
-alias vi=vim
+alias vi=nvim
+alias vim=nvim
+
+# ruby observr
+alias ob='observr autotest.rb'
+
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
