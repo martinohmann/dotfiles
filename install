@@ -8,6 +8,7 @@ declare -a dotfiles_standard=(
   .bashrc
   .config/dunst
   .config/i3
+  .config/nvim
   .dircolors
   .oh-my-zsh/custom
   .tmux.conf
