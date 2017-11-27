@@ -43,6 +43,7 @@ set splitright
 " set 10 lines to the cursor - when moving vertically using j/k
 set so=10
 
+set number
 " relative line numbers
 set relativenumber
 
@@ -98,6 +99,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'simeji/winresizer'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -212,7 +214,7 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-nnoremap <S-D> :call DeleteTrailingWS()<cr>
+nnoremap <C-M> :call DeleteTrailingWS()<cr>
 
 " next, prev buffer
 nnoremap <tab> :bnext<cr>
@@ -223,6 +225,10 @@ nnoremap <leader><tab> :Buffers<cr>
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
+autocmd FileType ruby,json,sh,yaml set ts=2|set sw=2|set expandtab
+
+" wrapper for shell commands
+command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 
 "" plugins
 
@@ -325,6 +331,8 @@ augroup vimphp
     autocmd FileType php call PhpSyntaxOverride()
     autocmd FileType php nnoremap <leader>d :call UpdatePhpDocIfExists()<cr>
     autocmd FileType php nnoremap <leader>f :call PHPBreakLongLine()<cr>
+    autocmd FileType php set ts=4|set sw=4|set expandtab
+    autocmd FileType php nnoremap <c-s> :update<cr>:Silent php-cs-fixer fix %:p > /dev/null 2>&1<cr>:e<cr>
 augroup end
 
 " php-doc-modded
@@ -476,3 +484,28 @@ let g:vim_php_refactoring_use_default_mapping = 0
 nnoremap <leader>i :Extradite!<cr>
 nnoremap <leader>I :Extradite<cr>
 
+" statusline
+set statusline=
+" " set statusline+=%#PmenuSel#
+" set statusline+=%#LineNr#
+" set statusline+=\ %f
+" set statusline+=%m
+" set statusline+=%=
+" set statusline+=\ %y
+
+" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+" " set statusline+=\[%{&fileformat}\]
+" set statusline+=%10(%l:%c%)\ 
+" " set statusline+=\ %l:%c
+" " set statusline+=\ %p%%
+" set statusline+=%{StatuslineGit()}
+" set statusline+=\ 
+
+" function! GitBranch()
+"   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" endfunction
+
+" function! StatuslineGit()
+"   let l:branchname = GitBranch()
+"   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+" endfunction

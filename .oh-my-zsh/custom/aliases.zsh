@@ -97,3 +97,5 @@ alias vim=nvim
 alias ob='observr autotest.rb'
 
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+
+alias trx='ssh -t db1.private.lesara.de innotop'

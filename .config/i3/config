@@ -280,12 +280,12 @@ new_window pixel 2
 new_float normal
 
 # window rules
-for_window [class="URxvt"] border normal
+for_window [class="URxvt"] border pixel 1
 for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
 for_window [class="URxvt" instance="nmtui"] floating enable, border pixel 5
 for_window [class="Chromium"] border none
 for_window [class="(Skype|VirtualBox)"] floating enable
-for_window [class="(Wine|PokerStars.exe)"] floating enable, border normal
+for_window [class="(Wine|PokerStars.exe|Xsane)"] floating enable, border normal
 
 # workspace assignments
 assign [class="Spotify"] $ws5
@@ -353,6 +353,7 @@ bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 # single, extend, clone display
 bindsym $mod+F11 exec --no-startup-id ~/.config/i3/screen -C
 bindsym $mod+Shift+F11 exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
+bindsym $mod4+Shift+F11 exec --no-startup-id ~/.local/bin/dmenu_screen
 
 # toggle touchpad
 bindsym $mod+F12 exec --no-startup-id touchpad toggle
