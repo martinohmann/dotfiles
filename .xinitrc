@@ -59,8 +59,8 @@ nm-applet &
 # launch thunderbird
 thunderbird > /dev/null 2>&1 &
 
-# launch owncloud
-owncloud > /dev/null 2>&1 &
+# launch nextcloud
+nextcloud > /dev/null 2>&1 &
 
 # launch notification daemon
 dunst > /dev/null 2>&1 &

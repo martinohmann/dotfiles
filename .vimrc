@@ -117,18 +117,18 @@ call plug#end()
 
 "{{{
 " before call project#rc()
-let g:project_enable_welcome = 0
-" if you want the NERDTree integration.
-let g:project_use_nerdtree = 0
-set rtp+=~/.vim/plugged/vim-project/
+" let g:project_enable_welcome = 0
+" " if you want the NERDTree integration.
+" let g:project_use_nerdtree = 0
+" set rtp+=~/.vim/plugged/vim-project/
 
-call project#rc("~/work/repos")
+" call project#rc("~/work/repos")
 
 " File '~/work/TODO', 'Todo-List'
 
-Project '~/work/chef-repo', 'chef-repo'
-Project 'lesara'
-Callback 'lesara', 'Zf1'
+" Project '~/work/chef-repo', 'chef-repo'
+" Project 'lesara'
+" Callback 'lesara', 'Zf1'
 " Project 'dwh'
 " Project 'logistic', 'logistics'
 " Project 'sourcing-tool'
@@ -143,13 +143,13 @@ Callback 'lesara', 'Zf1'
 " File '~/.vimrc', 'vimrc'
 " File '~/.zshrc', 'zshrc'
 
-function! Zf1(...) abort
-    let g:ale_php_phpcs_standard = 'Zend'
-    let g:ultisnips_php_scalar_types = 0
+" function! Zf1(...) abort
+"     let g:ale_php_phpcs_standard = 'Zend'
+"     let g:ultisnips_php_scalar_types = 0
 
-    let g:phpcomplete_parse_docblock_comments = 0
-    autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-endfunction
+"     let g:phpcomplete_parse_docblock_comments = 0
+"     autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+" endfunction
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -871,7 +871,7 @@ nmap <C-D>l :Lines<CR>
 nmap <C-D>L :BLines<CR>
 " nmap <C-D>t :Tags<CR>
 " nmap <C-D>T :BTags<CR>
-nnoremap <C-S> :Buffers<CR>
+" nnoremap <C-S> :Buffers<CR>
 
 nmap <leader>h :History/<CR>
 nmap <leader>H :History:<CR>

@@ -22,7 +22,6 @@ set gdefault " use global flag by default in s: commands
 set hlsearch " highlight searches
 set ignorecase
 set smartcase " don't ignore capitals in searches
-nnoremap <leader>. :nohls <enter>
 
 " Tabs
 set tabstop=4
@@ -66,6 +65,10 @@ set tags+=tags
 set tags+=.git/tags
 set tags+=.tags
 set tags+=../tags
+"
+" don't give |ins-completion-menu| messages.  For example,
+" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
 
 " enable filetype plugins
 filetype plugin on
@@ -85,6 +88,7 @@ call plug#begin('~/.config/nvim/plugged')
 " multi purpose
 Plug 'ap/vim-buftabline'
 Plug 'flazz/vim-colorschemes'
+" Plug 'fgrsnau/ncm-otherbuf'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -94,9 +98,23 @@ Plug 'milkypostman/vim-togglelist'
 Plug 'neomake/neomake'
 Plug 'pbogut/fzf-mru.vim'
 Plug 'phux/vim-snippets'
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANTE: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" NOTE: you need to install completion sources to get completions. Check
+" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-go'
+Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'sheerun/vim-polyglot'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'sheerun/vim-polyglot'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'simeji/winresizer'
@@ -105,11 +123,14 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/ScrollColors'
+Plug 'yssl/QFEnter'
 " Plug 'w0rp/ale'
 " golang
 Plug 'fatih/vim-go'
 Plug 'godoctor/godoctor.vim'
-Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go'}
+Plug 'jodosha/vim-godebug'
+" Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+" Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go'}
 " git
 Plug 'airblade/vim-gitgutter'
 Plug 'gregsexton/gitv'
@@ -117,15 +138,26 @@ Plug 'int3/vim-extradite'
 Plug 'tpope/vim-fugitive'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 " php
+" requires phpactor
+Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+" Plug 'roxma/ncm-phpactor'
+Plug 'phpactor/ncm2-phpactor'
 Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'adoy/vim-php-refactoring-toolbox', { 'for': 'php' }
 Plug 'nelsyeung/twig.vim'
-Plug 'padawan-php/deoplete-padawan', {'for': 'php'}
-Plug 'phux/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'phux/padawan-navigator', {'do': ':UpdateRemotePlugins'}
+" Plug 'padawan-php/deoplete-padawan', {'for': 'php'}
+" Plug 'phux/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'phux/padawan-navigator', {'do': ':UpdateRemotePlugins'}
 Plug 'phux/php-doc-modded', { 'for': 'php' }
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-Plug 'sahibalejandro/vim-php', { 'for': 'php' }
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+"
+" Plug 'roxma/nvim-completion-manager'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+
+" javascript
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 "" plugins to check
 
@@ -137,6 +169,10 @@ Plug 'sahibalejandro/vim-php', { 'for': 'php' }
 " Plug 'wincent/ferret'
 " Plug 'tpope/vim-abolish'
 " Plug 'janko-m/vim-test'
+"
+Plug 'saltstack/salt-vim'
+
+Plug 'martinohmann/vim-stepsize'
 
 call plug#end()
 
@@ -225,7 +261,7 @@ nnoremap <leader><tab> :Buffers<cr>
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
-autocmd FileType ruby,json,sh,yaml set ts=2|set sw=2|set expandtab
+autocmd FileType ruby,json,javascript,javascript.jsx,sh,yaml,feature set ts=2|set sw=2|set expandtab
 
 " wrapper for shell commands
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
@@ -263,8 +299,8 @@ let g:deoplete#auto_complete_start_length = 1
 " let g:deoplete#max_list = 10
 let g:deoplete#auto_complete_delay = 100
 
-let g:deoplete#sources#padawan#auto_update = 0
-let g:deoplete#sources#padawan#add_parentheses = 1
+" let g:deoplete#sources#padawan#auto_update = 0
+" let g:deoplete#sources#padawan#add_parentheses = 1
 " needed for echodoc to work if add_parentheses is 1
 let g:deoplete#skip_chars = ['$']
 
@@ -285,11 +321,18 @@ command! -bang PadawanRestart call deoplete#sources#padawan#RestartServer()
 
 let g:deoplete#sources#padawan#server_command='~/repos/padawan.php/bin/padawan-server'
 
-" padawan navigator
+" " padawan navigator
 let g:padawan_navigator#server_command='~/repos/padawan.php/bin/padawan-server'
-nnoremap <leader>pp :call PadawanGetParents()<cr>
-nnoremap <leader>pi :call PadawanGetImplementations()<cr>
-nnoremap <leader>pc :call padawan_navigator#CloseWindow()<cr>
+" nnoremap <leader>pp :call PadawanGetParents()<cr>
+" nnoremap <leader>pi :call PadawanGetImplementations()<cr>
+" nnoremap <leader>pc :call padawan_navigator#CloseWindow()<cr>
+
+" ncm
+let g:cm_sources_override = {
+    \ 'cm-tags': {'enable':0}
+    \ }
+
+call neomake#configure#automake('w')
 
 " auto-pairs
 let g:AutoPairsFlyMode = 0
@@ -321,18 +364,41 @@ endfunction
 
 augroup vimphp
     autocmd!
-    autocmd FileType php nnoremap <Leader>u :PHPImportClass<cr>
-    autocmd FileType php nnoremap <Leader>e :PHPExpandFQCNAbsolute<cr>
-    autocmd FileType php nnoremap <Leader>E :PHPExpandFQCN<cr>
-
     au BufNewFile,BufRead,BufWinEnter *Test.php exe ":UltiSnipsAddFiletypes php.phpunit"
     au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
-    autocmd FileType php vnoremap <leader>e :call PHPExtractVariable()<cr>
     autocmd FileType php call PhpSyntaxOverride()
     autocmd FileType php nnoremap <leader>d :call UpdatePhpDocIfExists()<cr>
     autocmd FileType php nnoremap <leader>f :call PHPBreakLongLine()<cr>
     autocmd FileType php set ts=4|set sw=4|set expandtab
-    autocmd FileType php nnoremap <c-s> :update<cr>:Silent php-cs-fixer fix %:p > /dev/null 2>&1<cr>:e<cr>
+    " autocmd FileType php nnoremap <c-s> :update<cr>:Silent php-cs-fixer fix %:p > /dev/null 2>&1<cr>:e<cr>
+    autocmd FileType php setlocal omnifunc=phpactor#Complete
+
+    " Include use statement
+    autocmd FileType php nnoremap <Leader>u :call phpactor#UseAdd()<CR>
+    " Expand FQCN
+    autocmd FileType php nnoremap <Leader>e :call phpactor#ClassExpand()<CR>
+    " Invoke the context menu
+    autocmd FileType php nnoremap <Leader>cm :call phpactor#ContextMenu()<CR>
+    " Invoke the navigation menu
+    autocmd FileType php nnoremap <Leader>nn :call phpactor#Navigate()<CR>
+    " Goto definition of class or class member under the cursor
+    autocmd FileType php nnoremap <Leader>gd :call phpactor#GotoDefinition()<CR>
+    " Find references to class or class member under the cursor
+    autocmd FileType php nnoremap <Leader>gr :call phpactor#FindReferences()<CR>
+    " Transform the classes in the current file
+    autocmd FileType php nnoremap <Leader>tt :call phpactor#Transform()<CR>
+    " Extract expression (normal mode)
+    autocmd FileType php nnoremap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
+    " Extract expression from selection
+    autocmd FileType php vnoremap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
+    " Extract method from selection
+    autocmd FileType php vnoremap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+    " Copy class
+    autocmd FileType php nnoremap <Leader>rcc :call phpactor#CopyFile()<CR>
+    " Move class
+    autocmd FileType php nnoremap <Leader>rcm :call phpactor#MoveFile()<CR>
+    " Move dir
+    autocmd FileType php nnoremap <leader>rdm :call PHPMoveDir()<CR>
 augroup end
 
 " php-doc-modded
@@ -387,26 +453,6 @@ function! PHPBreakLongLine()
 endfunction
 
 " phpactor
-
-function! PHPExtractVariable()
-    let l:name = input("Name of new variable: $")
-    normal! gvx
-    execute "normal! i$".l:name
-    execute "normal! O$".l:name." = "
-    normal! pa;
-endfunction
-
-noremap <leader>rcm :call PHPMoveClass()<cr>
-function! PHPMoveClass()
-    :w
-    let l:oldPath = expand('%')
-    let l:newPath = input("New path: ", l:oldPath)
-    execute "!phpactor class:move ".l:oldPath.' '.l:newPath
-    execute "bd ".l:oldPath
-    execute "e ". l:newPath
-endfunction
-
-noremap <leader>rd :call PHPMoveDir()<cr>
 function! PHPMoveDir()
     :w
     let l:oldPath = input("old path: ", expand('%:p:h'))
@@ -414,40 +460,21 @@ function! PHPMoveDir()
     execute "!phpactor class:move ".l:oldPath.' '.l:newPath
 endfunction
 
-noremap <leader>rcc :call PHPModify("complete_constructor")<cr>
-noremap <leader>ri :call PHPModify("implement_contracts")<cr>
-noremap <leader>ra :call PHPModify("add_missing_assignments")<cr>
-function! PHPModify(transformer)
-    :w
-    normal! ggdG
-    execute "read !phpactor class:transform ".expand('%').' --transform='.a:transformer
-    normal! ggdd
-    :w
-    /construct
-endfunction
-
-noremap <leader>rei :call PHPExtractInterface()<cr>
-function! PHPExtractInterface()
-    :w
-    let l:interfaceFile = substitute(expand('%'), '.php', 'Interface.php', '')
-    execute "!phpactor class:inflect ".expand('%').' '.l:interfaceFile.' interface'
-    execute "e ". l:interfaceFile
-endfunction
-
 " language-client
 augroup lintcomplete
     autocmd! BufWritePost * Neomake
-    autocmd FileType php LanguageClientStart
+    " autocmd FileType php LanguageClientStart
 augroup end
 
-nnoremap <leader>gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <leader>gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <leader>S :call LanguageClient_textDocument_documentSymbol()<cr>
-nnoremap K :call LanguageClient_textDocument_hover()<cr>
+" nnoremap <leader>gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <leader>gr :call LanguageClient_textDocument_references()<CR>
+" nnoremap <leader>S :call LanguageClient_textDocument_documentSymbol()<cr>
+" nnoremap K :call LanguageClient_textDocument_hover()<cr>
 let g:LanguageClient_selectionUI = 'fzf'
 
 " vim-gp
 let g:go_fmt_command = "goimports"
+let g:go_info_mode = 'gocode'
 
 " pdv
 let g:pdv_cfg_Uses = 0
@@ -476,6 +503,42 @@ let g:ale_php_phpmd_ruleset = 'cleancode,codesize,design,unusedcode'
 " neomake
 
 let g:neomake_php_phpcs_args_standard='PSR2'
+
+let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+  " \   '--enable-gc',
+  " \   '--concurrency=8',
+  " \   '--enable=deadcode',
+  " \   '--enable=dupl',
+  " \   '--enable=errcheck',
+  " \   '--disable=goconst',
+  " \   '--enable=gocyclo',
+  " \   '--enable=gotype',
+  " \   '--enable=ineffassign',
+  " \   '--enable=interfacer',
+  " \   '--enable=maligned',
+  " \   '--enable=megacheck',
+  " \   '--enable=misspell',
+  " \   '--enable=staticcheck',
+  " \   '--enable=structcheck',
+  " \   '--enable=unconvert',
+  " \   '--enable=varcheck',
+  " \   '--enable=vet',
+let g:neomake_go_gometalinter_maker = {
+  \ 'args': [
+  \   '--tests',
+  \   '--disable-all',
+  \   '--enable-gc',
+  \   '--fast',
+  \   '%:p:h',
+  \ ],
+  \ 'cwd': '%:h',
+  \ 'append_file': 0,
+  \ 'errorformat':
+  \   '%E%f:%l:%c:%trror: %m,' .
+  \   '%W%f:%l:%c:%tarning: %m,' .
+  \   '%E%f:%l::%trror: %m,' .
+  \   '%W%f:%l::%tarning: %m'
+\ }
 
 " vim-php-refactoring-toolbox
 let g:vim_php_refactoring_use_default_mapping = 0
@@ -509,3 +572,5 @@ set statusline=
 "   let l:branchname = GitBranch()
 "   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 " endfunction
+
+au BufNewFile,BufRead *.jinja set filetype=twig

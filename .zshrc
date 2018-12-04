@@ -47,6 +47,7 @@ export GDK_NATIVE_WINDOWS=true
 export PATH=$PATH:$HOME/.local/bin:$HOME/.config/composer/vendor/bin
 
 # add gopath
+export GO111MODULE=on
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
 
@@ -106,20 +107,15 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
-  alias-tips
   colored-man-pages
-  composer
   docker
   docker-compose
   extract
   git
-  history
   history-substring-search
-  knife
+  kubectl
   sudo
-  symfony2
   systemd
-  tmuxinator
 )
 
 if [ -n "$DISPLAY" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
@@ -171,3 +167,13 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.g
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f ~/.google-cloud-sdk/path.zsh.inc ]; then source ~/.google-cloud-sdk/path.zsh.inc; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f ~/.google-cloud-sdk/completion.zsh.inc ]; then source ~/.google-cloud-sdk/completion.zsh.inc; fi
+
+export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+
+source <(helm completion zsh)

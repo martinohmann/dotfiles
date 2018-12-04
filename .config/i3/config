@@ -73,7 +73,7 @@ bindsym $mod4+v split v
 bindsym $mod4+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod4+s layout stacking
+# bindsym $mod4+s layout stacking
 bindsym $mod4+m layout tabbed
 bindsym $mod4+t layout default
 bindsym $mod+y  layout toggle split
@@ -85,7 +85,7 @@ bindsym $mod4+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # toggle sticky mode of floating window
-bindsym $mod+s sticky toggle
+# bindsym $mod+s sticky toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -316,7 +316,7 @@ bindsym $mod4+e exec thunar ~
 bindsym $mod4+Shift+t workspace $ws6, exec thunderbird
 
 # screen lock
-# bindsym $mod+Control+l exec --no-startup-id ~/.config/i3/fuzzy-lock
+bindsym $mod+Control+Shift+l exec --no-startup-id ~/.config/i3/fuzzy-lock
 # bindsym $mod+Control+l exec --no-startup-id /usr/bin/slock > /tmp/slock.out 2> /tmp/slock.err
 bindsym $mod+Control+l exec --no-startup-id /usr/bin/physlock -s
 

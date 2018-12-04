@@ -147,6 +147,8 @@
     # Paths to default icons.
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
+    max_icon_size = 32
+
 [frame]
     width = 2
     color = "#292929"

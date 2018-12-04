@@ -92,10 +92,18 @@ alias kdb='knife data bag'
 # vim
 alias vi=nvim
 alias vim=nvim
+alias vimdiff='nvim -d'
 
 # ruby observr
 alias ob='observr autotest.rb'
 
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 
-alias trx='ssh -t db1.private.lesara.de innotop'
+# exercism
+alias efg='exercism fetch go'
+alias es='exercism submit'
+alias eg='cd $HOME/exercism/go/$(ls -t $HOME/exercism/go/ | head -1)'
+alias gtb='go test -bench .'
+
+# systemd
+alias systemctl='sudo systemctl'
