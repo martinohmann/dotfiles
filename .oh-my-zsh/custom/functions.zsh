@@ -59,15 +59,6 @@ ls_color() {
 		  s/\x1B\[0;3[4362]m-/\x1B[0;30m-\x1B[0;0m/g'
 }
 
-# translate german to english
-de-en() {
-	/usr/bin/trs {de=en} "$*"
-}
-# translate english to german
-en-de() {
-	/usr/bin/trs {en=de} "$*"
-}
-
 # cat syntax highlighting
 # cat() {
 #   source-highlight -i "$1" -o STDOUT -f esc --failsafe
@@ -84,23 +75,6 @@ pstree_color() {
 		s/[-a-zA-Z]\+/\x1B[32m&\x1B[0m/g
 		s/[{}]/\x1B[31m&\x1B[0m/g
 		s/[─┬─├─└│]/\x1B[34m&\x1B[0m/g'
-}
-
-# set terminal font size
-fsize() {
-	if [[ $# -ge 1 ]]; then
-		case "$1" in
-			"+") 	MO_FONTSIZE=$((MO_FONTSIZE+1));;
-			"-") 	MO_FONTSIZE=$((MO_FONTSIZE-1));;
-			*) 		[[ "$1" =~ ^[0-9]+$ ]] && MO_FONTSIZE=$1
-				 		[[ "$1" =~ ^[+-][0-9]+$ ]] && MO_FONTSIZE=$((MO_FONTSIZE+$1));;
-		esac
-		[[ $MO_FONTSIZE -le 6 ]] && MO_FONTSIZE=6
-		[[ $MO_FONTSIZE -gt 80 ]] && MO_FONTSIZE=80
-	else
-		MO_FONTSIZE=$MO_DEFAULT_FONTSIZE
-	fi
-	printf '\33]50;%s%d%s\007' "-*-ohsnap-medium-r-normal-*-" $MO_FONTSIZE "-*-*-*-*-*-*-*"
 }
 
 _fs() { #$1: name,  $2: search regexp, $3: file or directory
@@ -161,7 +135,7 @@ tempd() {
   cd "$dir"
 }
 
-_bc_convert() {
+bc_convert() {
   # $1: ibase
   # $2: obase, in ibase notation
   # $3: val
@@ -170,42 +144,42 @@ _bc_convert() {
   else
     val=$3
   fi
-  res=$(echo "ibase=$1; obase=$2; $val" | bc) 
+
+  val=${val#0X}
+  res=$(echo "obase=$2; ibase=$1; $val" | bc)
+
   if [ $2 -gt 10 ]; then
     res=$(echo $res | tr '[:upper:]' '[:lower:]')
   fi
+
+  if [ $2 -eq 2 ]; then
+    res="b$res"
+  elif [ $2 -eq 8 ]; then
+    res="o$res"
+  elif [ $2 -eq 16 ]; then
+    res="0x$res"
+  fi
+
   echo $res
 }
 
 # hex to dec
-h2d(){
-  _bc_convert 16 A $1
-}
+h2d() { bc_convert 16 10 $1; }
 
 # dec to hex
-d2h(){
-  _bc_convert 10 16 $1
-}
+d2h() { bc_convert 10 16 $1; }
 
 # bin to dec
-b2d(){
-  _bc_convert 2 1010 $1
-}
+b2d() { bc_convert 2 10 $1; }
 
 # dec to bin
-d2b(){
-  _bc_convert 10 2 $1
-}
+d2b() { bc_convert 10 2 $1; }
 
 # bin to hex
-b2h(){
-  _bc_convert 2 10000 $1
-}
+b2h() { bc_convert 2 16 $1; }
 
 # dec to bin
-h2b(){
-  _bc_convert 16 2 $1
-}
+h2b() { bc_convert 16 2 $1; }
 
 ## bash and zsh only!
 # functions to cd to the next or previous sibling directory, in glob order

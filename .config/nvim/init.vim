@@ -88,6 +88,8 @@ call plug#begin('~/.config/nvim/plugged')
 " multi purpose
 Plug 'ap/vim-buftabline'
 Plug 'flazz/vim-colorschemes'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
 " Plug 'fgrsnau/ncm-otherbuf'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
@@ -180,11 +182,10 @@ if installing_vim_plug
     :PlugInstall
 endif
 
-" colorscheme evening
-
 " gruvbox dark
 set background=dark
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme evening
 
 " mappings
 let mapleader = "\<Space>"

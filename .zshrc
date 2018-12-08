@@ -162,16 +162,14 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.g
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
+# [ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/.google-cloud-sdk/path.zsh.inc ]; then source ~/.google-cloud-sdk/path.zsh.inc; fi
-
-# The next line enables shell command completion for gcloud.
 if [ -f ~/.google-cloud-sdk/completion.zsh.inc ]; then source ~/.google-cloud-sdk/completion.zsh.inc; fi
 
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh

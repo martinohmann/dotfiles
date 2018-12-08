@@ -1,12 +1,11 @@
 ! common config
 URxvt.termName: rxvt-unicode-256color
-!URxvt.geometry: 78x27
 URxvt.saveLines: 5000
 URxvt.scrollBar: false
 URxvt.secondaryScroll: true
+URxvt.font: xft:Hack Nerd Font Mono:pixelsize=11
+!URxvt.geometry: 78x27
 !URxvt.internalBorder: 2
-URxvt.font: -*-ohsnapu-medium-r-*-*-14-*-*-*-*-*-*-*
-! URxvt.font: xft:Inconsolata,pixelsize=14,style=regular
 !URxvt.inheritPixmap: true 
 !URxvt.tintColor: Blue
 !URxvt.transparent: true
@@ -30,29 +29,21 @@ URxvt.matcher.button: 2
 URxvt.tabbed.saveLines: 5000
 URxvt.tabbed.scrollBar: false
 URxvt.tabbed.secondaryScroll: true
-URxvt.tabbed.font: -*-ohsnapu-medium-r-*-*-14-*-*-*-*-*-*-*
-! URxvt.font: xft:Inconsolata,pixelsize=14,style=regular
-URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.font: xft:Hack Nerd Font Mono:pixelsize=11
+URxvt.tabbed.tabbar-fg: 0
 URxvt.tabbed.tabbar-bg: -1
-URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-fg: 4
 URxvt.tabbed.tab-bg: -1
 URxvt.tabbed.autohide: true
 URxvt.tabbed.new-button: false
 URxvt.tabbed.title: false
-!URxvt.keysym.Control-t: perl:tabbedex:new_tab
 URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
 !URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+!URxvt.keysym.Control-t: perl:tabbedex:new_tab
 
 ! home + end key
 URxvt.keysym.Home: \033[1~
 URxvt.keysym.End: \033[4~
-
-! font size
-URxvt.keysym.C-0: fsize\n
-URxvt.keysym.C-plus: fsize +\n
-URxvt.keysym.C-minus: fsize -\n
-! URxvt.resize-font.smaller: C-minus
-! URxvt.resize-font.bigger: C-plus
 
 ! url launcher (Alt+u)
 URxvt.keysym.M-u: perl:url-select:select_next
@@ -64,10 +55,10 @@ URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 ! Colors
-! URxvt.background: 							[95]#181a1b
-URxvt.background: 							[90]#000000
+! URxvt.background: 			[95]#181a1b
+URxvt.background: 				[90]#000000
 URxvt.foreground:               #c2c2b0
-urxvt.background: 							[90]#000000
+urxvt.background: 				[90]#000000
 urxvt.foreground:               #c2c2b0
 
 ! Black + DarkGrey

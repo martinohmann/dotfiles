@@ -11,8 +11,7 @@
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:monospace 8
-font -*-ohsnap-medium-r-*-*-14-*-*-*-*-*-*-*
+font xft:Hack Nerd Font Mono Bold 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -201,7 +200,7 @@ bindsym Print  mode $mode_screenshot
 
 bar {
   id bar0
-  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+  font xft:Hack Nerd Font Mono Bold 9
   status_command ~/.config/i3/status bar0
   separator_symbol "|"
   tray_output none
@@ -225,38 +224,13 @@ bar {
 
 bar {
   id bar1
-  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
+  font xft:Hack Nerd Font Mono Bold 9
   status_command ~/.config/i3/status bar1
   output DP1
   output eDP1
   output HDMI2
   separator_symbol "|"
   tray_output eDP1
-  tray_padding 3
-  position bottom
-  workspace_buttons no
-  binding_mode_indicator no
-  modifier Mod3
-  colors {
-    background #000000
-    statusline #cccccc
-    separator #333333
-    # class            border  backgr. text
-    focused_workspace  #285577 #184567 #ffffff
-    active_workspace   #171717 #171717 #a3a4a8
-    inactive_workspace #000000 #000000 #a3a4a8
-    urgent_workspace   #b92020 #990000 #ffffff
-    binding_mode       #876538 #674518 #ffffff
-  }
-}
-
-bar {
-  id bar2
-  font -*-ohsnap.icons-medium-r-*-*-14-*-*-*-*-*-*-*
-  status_command ~/.config/i3/status bar2
-  output VGA1
-  separator_symbol "|"
-  tray_output VGA1
   tray_padding 3
   position bottom
   workspace_buttons no
@@ -327,7 +301,7 @@ bindsym $mod4+Shift+Return exec urxvtc
 # dmemu commands
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
   -nb "#000000" -nf "#a3a4a8" \
-  -fn "Misc Ohsnap-12" \
+  -fn "Hack-9" \
   -sb "#285577" -sf "#ffffff"
 
 bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder

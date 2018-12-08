@@ -1,6 +1,5 @@
 [global]
-    font = Misc Ohsnap 12
-    # font = Ohsnap 12
+    font = Hack Nerd Font Mono 9
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -151,7 +150,7 @@
 
 [frame]
     width = 2
-    color = "#292929"
+    color = "#191919"
 
 [shortcuts]
 
@@ -177,17 +176,17 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#181a1b"
+    background = "#080a0b"
     foreground = "#a1a4ff"
     timeout = 10
 
 [urgency_normal]
-    background = "#181a1b"
+    background = "#080a0b"
     foreground = "#ffffff"
     timeout = 10
 
 [urgency_critical]
-    background = "#181a1b"
+    background = "#080a0b"
     foreground = "#ff8a8a"
     timeout = 30
 
