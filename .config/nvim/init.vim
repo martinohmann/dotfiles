@@ -90,6 +90,7 @@ Plug 'ap/vim-buftabline'
 Plug 'flazz/vim-colorschemes'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
+Plug 'lilydjwg/colorizer'
 " Plug 'fgrsnau/ncm-otherbuf'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
@@ -186,6 +187,8 @@ endif
 set background=dark
 " colorscheme gruvbox
 colorscheme evening
+
+let g:colorizer_maxlines = 1000
 
 " mappings
 let mapleader = "\<Space>"
