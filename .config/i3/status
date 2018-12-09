@@ -38,19 +38,6 @@ if bar_id == "bar0":
         interval=10)
 
     add("network",
-        format_up='Â {interface}',
-        format_down='',
-        interface='enp0s31f6',
-        color_up=Colors.DEFAULT,
-        color_down=Colors.CRITICAL,
-        dynamic_color=False,
-        on_leftclick=None,
-        on_rightclick=None,
-        on_upscroll=None,
-        on_downscroll=None,
-        interval=5)
-
-    add("network",
         format_up=' {essid}',
         format_down='',
         interface='wlp4s0',
@@ -110,7 +97,7 @@ if bar_id == "bar0":
 elif bar_id == "bar1":
     add("dpms",
         format='⏾ dpms',
-        format_disabled=' dpms off',
+        format_disabled='⏾ dpms',
         color='#00dd77',
         color_disabled=Colors.DISABLED,
         interval=5)
@@ -165,7 +152,7 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface} down',
+        format_down=' {interface}',
         interface='enp0s31f6',
         color_up='#99ffff',
         color_down=Colors.DISABLED,
@@ -179,7 +166,7 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface} down',
+        format_down=' {interface}',
         interface='wlp4s0',
         color_up='#ffff99',
         color_down=Colors.DISABLED,
@@ -193,7 +180,7 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface} down',
+        format_down=' {interface}',
         interface='tun0',
         color_up='#3377ff',
         color_down=Colors.DISABLED,
@@ -214,11 +201,12 @@ elif bar_id == "bar1":
         interval=300)
 
     add("network",
-        format_up=(' {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) '
-                   ' {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) '),
-        format_down=' {interface}   - kb/s    - kb/s ',
-        interface='wlp4s0',
+        format_up=('異 {interface} {bytes_sent}kb/s ({tx_tot_Mbytes}M) '
+                   ' {bytes_recv}kb/s ({rx_tot_Mbytes}M) '),
+        format_down='異 {interface}',
+        interface='enp0s31f6',
         unknown_up=True,
+        next_if_down=True,
         color_down=Colors.DISABLED,
         start_color='#99ffaa',
         end_color=Colors.CRITICAL,
