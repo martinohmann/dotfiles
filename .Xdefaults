@@ -14,7 +14,12 @@ URxvt.depth: 32
 
 ! perl extensions
 URxvt.perl-ext: default,url-select
-URxvt.perl-ext-common: default,matcher,tabbedex,clipboard,resize-font
+URxvt.perl-ext-common: default,matcher,tabbedex,clipboard,resize-font,vim-scrollback
+
+! vim scrollback
+urxvt.vim-scrollback: C-v
+urxvt.vim-scrollback-bg: 14
+urxvt.vim-scrollback-fg: 1
 
 ! disable default Ctrl+Shift-Binding
 URxvt.iso14755: False
