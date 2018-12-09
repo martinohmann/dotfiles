@@ -117,7 +117,7 @@ elif bar_id == "bar1":
 
     add("shell",
         command='~/.config/i3/status-utils/weather',
-        format=' {output}',
+        format=' {output}',
         color='#ccccff',
         error_color=Colors.DISABLED,
         on_rightclick='~/.config/i3/status-utils/weather browser',
@@ -191,13 +191,19 @@ elif bar_id == "bar1":
         on_downscroll=None,
         interval=10)
 
-    add("shell",
-        command='~/.config/i3/status-utils/vpn',
-        format=' {output}',
-        color='#3377ff',
-        error_color=Colors.DISABLED,
-        on_rightclick='/usr/bin/true',
-        interval=120)
+    add("network",
+        format_up=' {interface} {v4}',
+        format_down=' {interface} down',
+        interface='tun0',
+        color_up='#3377ff',
+        color_down=Colors.DISABLED,
+        dynamic_color=False,
+        unknown_up=True,
+        on_leftclick=None,
+        on_rightclick=None,
+        on_upscroll=None,
+        on_downscroll=None,
+        interval=10)
 
     add("shell",
         command='~/.config/i3/status-utils/ip',
@@ -211,7 +217,8 @@ elif bar_id == "bar1":
         format_up=(' {interface} {bytes_sent:4d}kb/s ({tx_tot_Mbytes}M) '
                    ' {bytes_recv:4d}kb/s ({rx_tot_Mbytes}M) '),
         format_down=' {interface}   - kb/s    - kb/s ',
-        interface='enp0s31f6',
+        interface='wlp4s0',
+        unknown_up=True,
         color_down=Colors.DISABLED,
         start_color='#99ffaa',
         end_color=Colors.CRITICAL,
