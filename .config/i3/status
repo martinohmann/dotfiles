@@ -24,7 +24,7 @@ add = status.register
 # status for top bar
 if bar_id == "bar0":
     add("clock",
-        format="%a %b %d %Y %H:%M",
+        format=" %a %b %d %Y %H:%M",
         on_rightclick='~/.config/i3/status-utils/calendar',
         interval=5)
 
@@ -33,7 +33,7 @@ if bar_id == "bar0":
         on_rightclick='dmenu_session')
 
     add("xkblayout",
-        format=" {symbol}",
+        format=" {symbol}",
         layouts=["us", "de"],
         interval=10)
 
@@ -109,7 +109,7 @@ if bar_id == "bar0":
 # status for bottom bar
 elif bar_id == "bar1":
     add("dpms",
-        format=' dpms',
+        format='⏾ dpms',
         format_disabled=' dpms off',
         color='#00dd77',
         color_disabled=Colors.DISABLED,
@@ -124,7 +124,7 @@ elif bar_id == "bar1":
         interval=1800)
 
     add("disk",
-        format=" / {used}/{total}G",
+        format=" / {used}/{total}G",
         path="/",
         color='#ffaa99',
         on_rightclick='thunar /',
@@ -139,7 +139,7 @@ elif bar_id == "bar1":
         interval=10)
 
     add("load",
-        format=" {avg1} {avg5} ({tasks})",
+        format="溜 {avg1} {avg5} ({tasks})",
         color='#99aaff',
         critical_color=Colors.CRITICAL,
         interval=10)
@@ -193,7 +193,7 @@ elif bar_id == "bar1":
 
     add("shell",
         command='~/.config/i3/status-utils/vpn',
-        format=' {output}',
+        format=' {output}',
         color='#3377ff',
         error_color=Colors.DISABLED,
         on_rightclick='/usr/bin/true',
