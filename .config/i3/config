@@ -11,7 +11,8 @@
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font xft:Hack Nerd Font Mono Bold 9
+set $font "xft:Hack Nerd Font Mono Bold 9"
+font $font
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -42,6 +43,7 @@ set $ws0 10:ten
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod4
+floating_minimum_size 300 x 150
 
 # kill focused window
 bindsym $mod4+Shift+c kill
@@ -52,10 +54,10 @@ bindsym $mod+Left  focus left
 bindsym $mod+Down  focus down
 bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
-bindsym $mod4+h    focus left
-bindsym $mod4+j    focus down
-bindsym $mod4+k    focus up
-bindsym $mod4+l    focus right
+bindsym $mod+h     focus left
+bindsym $mod+j     focus down
+bindsym $mod+k     focus up
+bindsym $mod+l     focus right
 
 # tab through windows of current workspace
 bindsym $mod+Tab       focus right
@@ -66,10 +68,10 @@ bindsym $mod+Shift+Left  move left
 bindsym $mod+Shift+Down  move down
 bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
-bindsym $mod4+Shift+h    move left
-bindsym $mod4+Shift+j    move down
-bindsym $mod4+Shift+k    move up
-bindsym $mod4+Shift+l    move right
+bindsym $mod+Shift+h     move left
+bindsym $mod+Shift+j     move down
+bindsym $mod+Shift+k     move up
+bindsym $mod+Shift+l     move right
 
 # split horizontal, vertical, toggle orientation
 # bindsym $mod4+h split h
@@ -94,11 +96,9 @@ bindsym $mod+space focus mode_toggle
 # toggle sticky mode of floating window
 # bindsym $mod+s sticky toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
+# focus the parent and child container
+bindsym $mod+a       focus parent
+bindsym $mod+Shift+a focus child
 
 # move the currently focused window to the scratchpad
 bindsym $mod4+Shift+minus move scratchpad
@@ -115,10 +115,13 @@ bindsym $mod4+8 workspace $ws8
 bindsym $mod4+9 workspace $ws9
 bindsym $mod4+0 workspace $ws0
 
+# move focused container to adjacent screen
 bindsym $mod4+Shift+Left  move workspace to output left
 bindsym $mod4+Shift+Right move workspace to output right
+bindsym $mod4+Shift+h     move workspace to output left
+bindsym $mod4+Shift+l     move workspace to output right
 
-# move focused container to workspace
+ #move focused container to workspace
 bindsym $mod4+Shift+1 move container to workspace $ws1; workspace $ws1
 bindsym $mod4+Shift+2 move container to workspace $ws2; workspace $ws2
 bindsym $mod4+Shift+3 move container to workspace $ws3; workspace $ws3
@@ -150,14 +153,21 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # client colors
 # class                 border  backgr. text    indicator
-client.focused          #283547 #182547 #ffffff #2e5ea4
+client.focused          #283547 #1825a7 #ffffff #2e5ef4
 client.focused_inactive #272727 #272727 #a3a4a8 #484e50
 client.unfocused        #1a1a1a #1a1a1a #a3a4a8 #292d2e
 client.urgent           #b92020 #880000 #ffffff #c90000
 client.placeholder      #1c1c1c #0c0c0c #ffffff #000000
 client.background               #000000
 
-set $mode_resize "resize window"
+# binding modes
+set $mode_default     "default"
+set $mode_resize      "resize window"
+set $mode_move        "move window"
+set $mode_focus       "focus window"
+set $mode_screenshot  "screenshot: focused (f), selection (s), screen (enter)"
+set $mode_toggle_bars "toggle bars: top (t), bottom (b), all (a)"
+set $mode_mark        "marks: focus (f), mark (m), unmark (u), unmark all (a)"
 
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
@@ -179,11 +189,12 @@ mode $mode_resize {
   bindsym k     resize shrink height 40 px or 10 ppt
   bindsym l     resize grow   width  40 px or 10 ppt
 
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
+  bindsym Return       mode $mode_default
+  bindsym Escape       mode $mode_default
+  bindsym $mod+e       mode $mode_default
+  bindsym $mod+w       mode $mode_focus
+  bindsym $mod+Shift+w mode $mode_move
 }
-
-set $mode_move "move window"
 
 # move window
 mode $mode_move {
@@ -205,42 +216,107 @@ mode $mode_move {
   bindsym k     move up    50 px
   bindsym l     move right 50 px
 
+  bindsym 1 move container to workspace $ws1; workspace $ws1
+  bindsym 2 move container to workspace $ws2; workspace $ws2
+  bindsym 3 move container to workspace $ws3; workspace $ws3
+  bindsym 4 move container to workspace $ws4; workspace $ws4
+  bindsym 5 move container to workspace $ws5; workspace $ws5
+  bindsym 6 move container to workspace $ws6; workspace $ws6
+  bindsym 7 move container to workspace $ws7; workspace $ws7
+  bindsym 8 move container to workspace $ws8; workspace $ws8
+  bindsym 9 move container to workspace $ws9; workspace $ws9
+  bindsym 0 move container to workspace $ws0; workspace $ws0
+
   bindsym space move position center
 
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
+  bindsym Return       mode $mode_default
+  bindsym Escape       mode $mode_default
+  bindsym $mod+Shift+w mode $mode_default
+  bindsym $mod+w       mode $mode_focus
+  bindsym $mod+e       mode $mode_resize
 }
 
-set $mode_screenshot "screenshot: focused (f), selection (s), screen (enter)"
+# focus window
+mode $mode_focus {
+  bindsym Left  focus left
+  bindsym Down  focus down
+  bindsym Up    focus up
+  bindsym Right focus right
+  bindsym h     focus left
+  bindsym j     focus down
+  bindsym k     focus up
+  bindsym l     focus right
+
+  bindsym 1 workspace $ws1
+  bindsym 2 workspace $ws2
+  bindsym 3 workspace $ws3
+  bindsym 4 workspace $ws4
+  bindsym 5 workspace $ws5
+  bindsym 6 workspace $ws6
+  bindsym 7 workspace $ws7
+  bindsym 8 workspace $ws8
+  bindsym 9 workspace $ws9
+  bindsym 0 workspace $ws0
+
+  bindsym Return       mode $mode_default
+  bindsym Escape       mode $mode_default
+  bindsym $mod+w       mode $mode_default
+  bindsym $mod+Shift+w mode $mode_move
+  bindsym $mod+e       mode $mode_resize
+}
 
 # screenshot
 mode $mode_screenshot {
-  bindsym --release Return mode "default", exec cd ~ && scrot
-  bindsym --release s      mode "default", exec cd ~ && scrot -s
-  bindsym --release f      mode "default", exec cd ~ && scrot -u
+  bindsym --release Return mode $mode_default, exec cd ~ && scrot
+  bindsym --release s      mode $mode_default, exec cd ~ && scrot -s
+  bindsym --release f      mode $mode_default, exec cd ~ && scrot -u
 
-  bindsym Escape mode "default"
+  bindsym Escape mode $mode_default
 }
 
-bindsym $mod+r mode $mode_resize
-bindsym $mod+m mode $mode_move
-bindsym Print  mode $mode_screenshot
+# toggle bars
+mode $mode_toggle_bars {
+  bindsym t bar mode toggle bar0
+  bindsym b bar mode toggle bar1
+  bindsym a bar mode toggle bar0, bar mode toggle bar1
+
+  bindsym Escape mode $mode_default
+}
+
+# manage marks
+mode $mode_mark {
+  bindsym f mode $mode_default, exec i3-input -F '[con_mark="%s"] focus' -P 'Focus mark: ' -f $font
+  bindsym m mode $mode_default, exec i3-input -F 'mark "%s"' -P 'Mark container: ' -f $font
+  bindsym u mode $mode_default, exec i3-input -F 'unmark "%s"' -P 'Unmark container: ' -f $font
+  bindsym a mode $mode_default, unmark
+
+  bindsym Escape mode $mode_default
+}
+
+# mode bindings
+bindsym $mod+e       mode $mode_resize
+bindsym $mod+Shift+w mode $mode_move
+bindsym $mod+w       mode $mode_focus
+bindsym Print        mode $mode_screenshot
+bindsym $mod+b       mode $mode_toggle_bars
+bindsym $mod+m       mode $mode_mark
 
 bar {
   id bar0
-  font xft:Hack Nerd Font Mono Bold 9
+  font $font
   status_command ~/.config/i3/status bar0
   separator_symbol "/"
   tray_output none
   position top
-  binding_mode_indicator yes
+  binding_mode_indicator no
+  strip_workspace_name yes
   colors {
     background #000000
     statusline #cccccc
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
-    focused_workspace  #283547 #182547 #ffffff
+    focused_workspace  #283547 #1825a7 #ffffff
     active_workspace   #171717 #171717 #a3a4a8
     inactive_workspace #000000 #000000 #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
@@ -253,7 +329,7 @@ bar {
 
 bar {
   id bar1
-  font xft:Hack Nerd Font Mono Bold 9
+  font $font
   status_command ~/.config/i3/status bar1
   output DP1
   output eDP1
@@ -263,7 +339,7 @@ bar {
   tray_padding 3
   position bottom
   workspace_buttons no
-  binding_mode_indicator no
+  binding_mode_indicator yes
   modifier Mod3
   colors {
     background #000000
@@ -271,7 +347,7 @@ bar {
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
-    focused_workspace  #283547 #182547 #ffffff
+    focused_workspace  #283547 #1825a7 #ffffff
     active_workspace   #171717 #171717 #a3a4a8
     inactive_workspace #000000 #000000 #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
@@ -280,13 +356,13 @@ bar {
 }
 
 # border styles
-new_window pixel 2
-new_float normal
+default_border pixel 2
+default_floating_border normal
 
 # window rules
 for_window [class="URxvt"] border pixel 2
-for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 5
-for_window [class="URxvt" instance="nmtui"] floating enable, border pixel 5
+for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 3
+for_window [class="URxvt" instance="nmtui"] floating enable, border pixel 3
 for_window [class="Chromium"] border none
 for_window [class="(Skype|VirtualBox)"] floating enable
 for_window [class="(Wine|PokerStars.exe|Xsane)"] floating enable, border normal
@@ -304,13 +380,11 @@ force_display_urgency_hint 2000 ms
 ### -------------------------
 ## misc keybindings
 
-# toggle bottom bar
-bindsym $mod4+Shift+f bar mode toggle bar1
-# toggle all bars
-bindsym $mod4+Shift+adiaeresis bar mode toggle bar0, bar mode toggle bar1
-
 # toggle border
 bindsym $mod4+b border toggle
+
+# focus mark
+bindsym $mod+f exec i3-input -F '[con_mark="%s"] focus' -P 'Focus mark: ' -f $font
 
 # applications
 bindsym $mod4+w workspace $ws2, exec ~/.config/i3/runorraise chromium
@@ -321,7 +395,6 @@ bindsym $mod4+Shift+t workspace $ws6, exec thunderbird
 # screen lock
 bindsym $mod+Control+Shift+l exec --no-startup-id ~/.config/i3/fuzzy-lock
 bindsym $mod+Control+l exec --no-startup-id /usr/bin/physlock -s
-# bindsym $mod+Control+l exec --no-startup-id /usr/bin/slock > /tmp/slock.out 2> /tmp/slock.err
 
 # terminal
 bindsym $mod4+Return       exec urxvtc
@@ -331,9 +404,8 @@ bindsym $mod4+Shift+Return exec urxvtc
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
   -fn "Hack-9" \
   -nb "#000000" -nf "#a3a4a8" \
-  -sb "#285577" -sf "#ffffff"
+  -sb "#1825a7" -sf "#ffffff"
 
-bindsym $mod4+Shift+x exec --no-startup-id dmenu_finder
 bindsym $mod4+Shift+s exec --no-startup-id dmenu_session
 
 # scratchpad
