@@ -294,12 +294,12 @@ mode $mode_mark {
 }
 
 # mode bindings
-bindsym $mod+e       mode $mode_resize
-bindsym $mod+Shift+w mode $mode_move
-bindsym $mod+w       mode $mode_focus
-bindsym Print        mode $mode_screenshot
-bindsym $mod+b       mode $mode_toggle_bars
-bindsym $mod+m       mode $mode_mark
+bindsym $mod+e        mode $mode_resize
+bindsym $mod+Shift+w  mode $mode_move
+bindsym $mod+w        mode $mode_focus
+bindsym Print         mode $mode_screenshot
+bindsym $mod4+Shift+b mode $mode_toggle_bars
+bindsym $mod+m        mode $mode_mark
 
 bar {
   id bar0
@@ -322,9 +322,6 @@ bar {
     urgent_workspace   #b92020 #880000 #ffffff
     binding_mode       #876538 #674518 #ffffff
   }
-
-  # toggle bottom bars
-  bindsym Button3 bar mode toggle bar1
 }
 
 bar {
@@ -384,7 +381,7 @@ force_display_urgency_hint 2000 ms
 bindsym $mod4+b border toggle
 
 # focus mark
-bindsym $mod+f exec i3-input -F '[con_mark="%s"] focus' -P 'Focus mark: ' -f $font
+bindsym $mod+Shift+f exec i3-input -F '[con_mark="%s"] focus' -P 'Focus mark: ' -f $font
 
 # applications
 bindsym $mod4+w workspace $ws2, exec ~/.config/i3/runorraise chromium
