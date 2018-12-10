@@ -153,7 +153,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # client colors
 # class                 border  backgr. text    indicator
-client.focused          #283547 #1825a7 #ffffff #2e5ef4
+client.focused          #283547 #3865a7 #ffffff #5e81ac
 client.focused_inactive #272727 #272727 #a3a4a8 #484e50
 client.unfocused        #1a1a1a #1a1a1a #a3a4a8 #292d2e
 client.urgent           #b92020 #880000 #ffffff #c90000
@@ -164,7 +164,6 @@ client.background               #000000
 set $mode_default     "default"
 set $mode_resize      "resize window"
 set $mode_move        "move window"
-set $mode_focus       "focus window"
 set $mode_screenshot  "screenshot: focused (f), selection (s), screen (enter)"
 set $mode_toggle_bars "toggle bars: top (t), bottom (b), all (a)"
 set $mode_mark        "marks: focus (f), mark (m), unmark (u), unmark all (a)"
@@ -192,7 +191,6 @@ mode $mode_resize {
   bindsym Return       mode $mode_default
   bindsym Escape       mode $mode_default
   bindsym $mod+e       mode $mode_default
-  bindsym $mod+w       mode $mode_focus
   bindsym $mod+Shift+w mode $mode_move
 }
 
@@ -232,36 +230,6 @@ mode $mode_move {
   bindsym Return       mode $mode_default
   bindsym Escape       mode $mode_default
   bindsym $mod+Shift+w mode $mode_default
-  bindsym $mod+w       mode $mode_focus
-  bindsym $mod+e       mode $mode_resize
-}
-
-# focus window
-mode $mode_focus {
-  bindsym Left  focus left
-  bindsym Down  focus down
-  bindsym Up    focus up
-  bindsym Right focus right
-  bindsym h     focus left
-  bindsym j     focus down
-  bindsym k     focus up
-  bindsym l     focus right
-
-  bindsym 1 workspace $ws1
-  bindsym 2 workspace $ws2
-  bindsym 3 workspace $ws3
-  bindsym 4 workspace $ws4
-  bindsym 5 workspace $ws5
-  bindsym 6 workspace $ws6
-  bindsym 7 workspace $ws7
-  bindsym 8 workspace $ws8
-  bindsym 9 workspace $ws9
-  bindsym 0 workspace $ws0
-
-  bindsym Return       mode $mode_default
-  bindsym Escape       mode $mode_default
-  bindsym $mod+w       mode $mode_default
-  bindsym $mod+Shift+w mode $mode_move
   bindsym $mod+e       mode $mode_resize
 }
 
@@ -295,8 +263,7 @@ mode $mode_mark {
 
 # mode bindings
 bindsym $mod+e        mode $mode_resize
-bindsym $mod+Shift+w  mode $mode_move
-bindsym $mod+w        mode $mode_focus
+bindsym $mod+w        mode $mode_move
 bindsym Print         mode $mode_screenshot
 bindsym $mod4+Shift+b mode $mode_toggle_bars
 bindsym $mod+m        mode $mode_mark
@@ -308,17 +275,17 @@ bar {
   separator_symbol "/"
   tray_output none
   position top
-  binding_mode_indicator no
+  binding_mode_indicator yes
   strip_workspace_name yes
   colors {
-    background #000000
+    background #131516
     statusline #cccccc
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
-    focused_workspace  #283547 #1825a7 #ffffff
+    focused_workspace  #283547 #3865a7 #ffffff
     active_workspace   #171717 #171717 #a3a4a8
-    inactive_workspace #000000 #000000 #a3a4a8
+    inactive_workspace #131516 #131516 #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
     binding_mode       #876538 #674518 #ffffff
   }
@@ -336,17 +303,17 @@ bar {
   tray_padding 3
   position bottom
   workspace_buttons no
-  binding_mode_indicator yes
+  binding_mode_indicator no
   modifier Mod3
   colors {
-    background #000000
+    background #131516
     statusline #cccccc
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
-    focused_workspace  #283547 #1825a7 #ffffff
+    focused_workspace  #283547 #3865a7 #ffffff
     active_workspace   #171717 #171717 #a3a4a8
-    inactive_workspace #000000 #000000 #a3a4a8
+    inactive_workspace #131516 #131516 #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
     binding_mode       #876538 #674518 #ffffff
   }
@@ -401,7 +368,7 @@ bindsym $mod4+Shift+Return exec urxvtc
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
   -fn "Hack-9" \
   -nb "#000000" -nf "#a3a4a8" \
-  -sb "#1825a7" -sf "#ffffff"
+  -sb "#3865a7" -sf "#ffffff"
 
 bindsym $mod4+Shift+s exec --no-startup-id dmenu_session
 
