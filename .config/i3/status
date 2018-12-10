@@ -11,6 +11,16 @@ class Colors(object):
     CRITICAL = '#ff5454'
     DISABLED = '#777777'
 
+    BLUE = '#3377ff'
+    BROWN = '#cfb57a'
+    CYAN = '#99ffff'
+    GREEN = '#00dd00'
+    LIGHT_BLUE = '#ccccff'
+    LIGHT_BROWN = '#ffaa99'
+    LIGHT_GREEN = '#99ffaa'
+    LIGHT_YELLOW = '#ffff99'
+    PINK = '#ff99aa'
+
 
 try:
     bar_id = sys.argv[1]
@@ -98,14 +108,14 @@ elif bar_id == "bar1":
     add("dpms",
         format='⏾ dpms',
         format_disabled='⏾ dpms',
-        color='#00dd77',
+        color=Colors.GREEN,
         color_disabled=Colors.DISABLED,
         interval=5)
 
     add("shell",
         command='~/.config/i3/status-utils/weather',
         format=' {output}',
-        color='#ccccff',
+        color=Colors.LIGHT_BLUE,
         error_color=Colors.DISABLED,
         on_rightclick='~/.config/i3/status-utils/weather browser',
         interval=1800)
@@ -113,13 +123,13 @@ elif bar_id == "bar1":
     add("disk",
         format=" / {used}/{total}G",
         path="/",
-        color='#ffaa99',
+        color=Colors.LIGHT_BROWN,
         on_rightclick='thunar /',
         interval=60)
 
     add("mem",
         format=" {used_mem}/{total_mem}G",
-        color='#99ffaa',
+        color=Colors.LIGHT_GREEN,
         warn_color=Colors.WARNING,
         alert_color=Colors.CRITICAL,
         divisor=1024**3,
@@ -127,18 +137,18 @@ elif bar_id == "bar1":
 
     add("load",
         format="溜 {avg1} {avg5} ({tasks})",
-        color='#99aaff',
+        color=Colors.LIGHT_BLUE,
         critical_color=Colors.CRITICAL,
         interval=10)
 
     add("cpu_usage",
         format='({usage:02}%)',
-        color='#cfb57a',
+        color=Colors.LIGHT_BROWN,
         interval=10)
 
     add("cpu_freq",
         format=' {avgg}GHz',
-        color='#cfb57a',
+        color=Colors.LIGHT_BROWN,
         hints={
             'separator': False,
             'separator_block_width': 5
@@ -147,14 +157,14 @@ elif bar_id == "bar1":
 
     add("uptime",
         format='祥 up {days}d {hours}h {mins}m',
-        color='#ff99aa',
+        color=Colors.PINK,
         interval=50)
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface}',
+        format_down=' <span strikethrough="true">{interface}</span>',
         interface='enp0s31f6',
-        color_up='#99ffff',
+        color_up=Colors.CYAN,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         on_leftclick=None,
@@ -162,13 +172,16 @@ elif bar_id == "bar1":
                        '-e nmtui-connect'),
         on_upscroll=None,
         on_downscroll=None,
+        hints={
+            'markup': 'pango'
+        },
         interval=10)
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface}',
+        format_down=' <span strikethrough="true">{interface}</span>',
         interface='wlp4s0',
-        color_up='#ffff99',
+        color_up=Colors.LIGHT_YELLOW,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         on_leftclick=None,
@@ -176,13 +189,16 @@ elif bar_id == "bar1":
                        '-e nmtui-connect'),
         on_upscroll=None,
         on_downscroll=None,
+        hints={
+            'markup': 'pango'
+        },
         interval=10)
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' {interface}',
+        format_down=' <span strikethrough="true">{interface}</span>',
         interface='tun0',
-        color_up='#3377ff',
+        color_up=Colors.BLUE,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         unknown_up=True,
@@ -190,12 +206,15 @@ elif bar_id == "bar1":
         on_rightclick=None,
         on_upscroll=None,
         on_downscroll=None,
+        hints={
+            'markup': 'pango'
+        },
         interval=10)
 
     add("shell",
         command='~/.config/i3/status-utils/ip',
         format='爵 {output}',
-        color='#00dd00',
+        color=Colors.GREEN,
         error_color=Colors.CRITICAL,
         on_rightclick='/usr/bin/true',
         interval=300)
@@ -203,12 +222,12 @@ elif bar_id == "bar1":
     add("network",
         format_up=('異 {interface} {bytes_sent}kb/s ({tx_tot_Mbytes}M) '
                    ' {bytes_recv}kb/s ({rx_tot_Mbytes}M) '),
-        format_down='異 {interface}',
+        format_down='異 disconnected',
         interface='enp0s31f6',
         unknown_up=True,
         next_if_down=True,
         color_down=Colors.DISABLED,
-        start_color='#99ffaa',
+        start_color=Colors.LIGHT_GREEN,
         end_color=Colors.CRITICAL,
         dynamic_color=True,
         on_leftclick='cycle_interface',
