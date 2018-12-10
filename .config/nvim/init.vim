@@ -86,6 +86,7 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 " multi purpose
+Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'arcticicestudio/nord-vim'
 Plug 'flazz/vim-colorschemes'
@@ -192,6 +193,12 @@ set background=dark
 colorscheme nord
 
 hi Normal ctermbg=none
+
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ }
 
 let g:colorizer_maxlines = 1000
 
