@@ -87,11 +87,11 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 " multi purpose
 Plug 'ap/vim-buftabline'
+Plug 'arcticicestudio/nord-vim'
 Plug 'flazz/vim-colorschemes'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-colorscheme-switcher'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-colorscheme-switcher'
 Plug 'lilydjwg/colorizer'
-" Plug 'fgrsnau/ncm-otherbuf'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -125,7 +125,6 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'vim-scripts/ScrollColors'
 Plug 'yssl/QFEnter'
 " Plug 'w0rp/ale'
 " golang
@@ -162,6 +161,9 @@ Plug 'roxma/nvim-yarp'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
+" markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+
 "" plugins to check
 
 " Plug 'amiorin/vim-project'
@@ -175,18 +177,21 @@ Plug 'mxw/vim-jsx'
 "
 Plug 'saltstack/salt-vim'
 
-Plug 'martinohmann/vim-stepsize'
-
 call plug#end()
 
 if installing_vim_plug
     :PlugInstall
 endif
 
+let g:nord_uniform_diff_background = 1
+
 " gruvbox dark
 set background=dark
 " colorscheme gruvbox
-colorscheme evening
+" colorscheme evening
+colorscheme nord
+
+hi Normal ctermbg=none
 
 let g:colorizer_maxlines = 1000
 
@@ -578,3 +583,32 @@ set statusline=
 " endfunction
 
 au BufNewFile,BufRead *.jinja set filetype=twig
+"
+" convert url to markdown link
+" usage: just paste the raw url, :call UrlToMarkdownLink()<cr>
+function! UrlToMarkdownLink()
+    normal! diW
+    normal! i[]()
+    " paste url twice
+    normal! PBpT/
+    " keep last part of url
+    normal! dT[
+    " titelize last part of url if abolish installed
+    if exists('g:loaded_abolish')
+        normal! crt
+    endif
+    " check for trailing slashes
+    normal! f]h
+    let l:lastChar = getline('.')[col('.')-1]
+    if l:lastChar ==# '/'
+        normal! x
+    endif
+
+endfunction
+
+nnoremap gu :call UrlToMarkdownLink()<cr>
+
+" set to 1, then nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 0

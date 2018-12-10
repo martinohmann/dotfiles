@@ -60,33 +60,70 @@ URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 ! Colors
-! URxvt.background: 			[95]#181a1b
-URxvt.background: 				[90]#000000
-URxvt.foreground:               #c2c2b0
-urxvt.background: 				[90]#000000
-urxvt.foreground:               #c2c2b0
+! URxvt.background: 			    [98]#181a1b
+! ! URxvt.background: 				[100]#000000
+! URxvt.foreground:               #c2c2b0
+! 
+! ! Black + DarkGrey
+! *color0:                        #464646
+! *color8:                        #73675b
+! ! DarkRed + Red
+! *color1:                        #a64211
+! *color9:                        #cc5214
+! ! DarkGreen + Green
+! *color2:                        #638046
+! *color10:                       #80a65b
+! ! DarkYellow + Yellow
+! *color3:                        #bf8c25
+! *color11:                       #e6a82d
+! ! DarkBlue + Blue
+! *color4:                        #4d6d99
+! *color12:                       #6088bf
+! ! DarkMangenta + Mangenta
+! *color5:                        #996b89
+! *color13:                       #bf86ac
+! ! DarkCyan + Cyan
+! *color6:                        #8bAeA9
+! *color14:                       #B6E1Ef
+! ! LightGrey + White
+! *color7:                        #998a7a
+! *color15:                       #c2c2b0
 
-! Black + DarkGrey
-*color0:                        #464646
-*color8:                        #73675b
-! DarkRed + Red
-*color1:                        #a64211
-*color9:                        #cc5214
-! DarkGreen + Green
-*color2:                        #638046
-*color10:                       #80a65b
-! DarkYellow + Yellow
-*color3:                        #bf8c25
-*color11:                       #e6a82d
-! DarkBlue + Blue
-*color4:                        #4d6d99
-*color12:                       #6088bf
-! DarkMangenta + Mangenta
-*color5:                        #996b89
-*color13:                       #bf86ac
-! DarkCyan + Cyan
-*color6:                        #8bAeA9
-*color14:                       #B6E1Ef
-! LightGrey + White
-*color7:                        #998a7a
-*color15:                       #c2c2b0
+#define nord0 #2E3440
+#define nord1 #3B4252
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define nord4 #D8DEE9
+#define nord5 #E5E9F0
+#define nord6 #ECEFF4
+#define nord7 #8FBCBB
+#define nord8 #88C0D0
+#define nord9 #81A1C1
+#define nord10 #5E81AC
+#define nord11 #BF616A
+#define nord12 #D08770
+#define nord13 #EBCB8B
+#define nord14 #A3BE8C
+#define nord15 #B48EAD
+
+*.foreground:   nord4
+!*.background:   nord0
+URxvt.background: [98]#131516
+*.cursorColor:  nord4
+
+*.color0: nord1
+*.color1: nord11
+*.color2: nord14
+*.color3: nord13
+*.color4: nord9
+*.color5: nord15
+*.color6: nord8
+*.color7: nord5
+*.color8: nord3
+*.color9: nord11
+*.color10: nord14
+*.color11: nord13
+*.color12: nord9
+*.color13: nord15
+*.color14: nord7
+*.color15: nord6
