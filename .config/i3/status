@@ -51,7 +51,7 @@ add = status.register
 # status for top bar
 if bar_id == "bar0":
     add("clock",
-        format=" %a %b %d %Y %H:%M",
+        format=' %a %b %d %Y %H:%M ',
         on_rightclick='~/.config/i3/status-utils/calendar',
         interval=5)
 
@@ -60,7 +60,6 @@ if bar_id == "bar0":
         on_rightclick='dmenu_session')
 
     add("xkblayout",
-        format=" {symbol}",
         layouts=["us", "de"],
         interval=10)
 
@@ -123,8 +122,8 @@ if bar_id == "bar0":
 # status for bottom bar
 elif bar_id == "bar1":
     add("dpms",
-        format='⏾ dpms',
-        format_disabled='⏾ dpms',
+        format='⏾ dpms ',
+        format_disabled='⏾ dpms ',
         color=Colors.COLOR15,
         color_disabled=Colors.DISABLED,
         interval=5)
@@ -232,7 +231,7 @@ elif bar_id == "bar1":
         command='~/.config/i3/status-utils/ip',
         format='爵 {output}',
         color=Colors.COLOR5,
-        error_color=Colors.COLOR5,
+        error_color=Colors.COLOR11,
         on_rightclick='/usr/bin/true',
         interval=300)
 

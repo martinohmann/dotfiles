@@ -278,14 +278,14 @@ bar {
   binding_mode_indicator yes
   strip_workspace_name yes
   colors {
-    background #131516
+    background #201c1d
     statusline #cccccc
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
     focused_workspace  #283547 #3865a7 #ffffff
-    active_workspace   #171717 #171717 #a3a4a8
-    inactive_workspace #131516 #131516 #a3a4a8
+    active_workspace   #201c1d #201c1d #a3a4a8
+    inactive_workspace #201c1d #201c1d #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
     binding_mode       #876538 #674518 #ffffff
   }
@@ -306,14 +306,14 @@ bar {
   binding_mode_indicator no
   modifier Mod3
   colors {
-    background #131516
+    background #201c1d
     statusline #cccccc
     separator #333333
     # class            border  backgr. text
     # focused_workspace  #285577 #184567 #ffffff
     focused_workspace  #283547 #3865a7 #ffffff
-    active_workspace   #171717 #171717 #a3a4a8
-    inactive_workspace #131516 #131516 #a3a4a8
+    active_workspace   #201c1d #201c1d #a3a4a8
+    inactive_workspace #201c1d #201c1d #a3a4a8
     urgent_workspace   #b92020 #880000 #ffffff
     binding_mode       #876538 #674518 #ffffff
   }
@@ -322,6 +322,7 @@ bar {
 # border styles
 default_border pixel 2
 default_floating_border normal
+hide_edge_borders smart
 
 # window rules
 for_window [class="URxvt"] border pixel 2
