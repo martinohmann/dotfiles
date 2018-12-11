@@ -367,8 +367,8 @@ bindsym $mod4+Shift+Return exec urxvtc
 
 # dmemu commands
 bindsym $mod4+x exec --no-startup-id dmenu_run -b \
-  -fn "Hack-9" \
-  -nb "#000000" -nf "#a3a4a8" \
+  -fn "Hack Nerd Font Mono:bold:pixelsize=12" \
+  -nb "#201c1d" -nf "#a3a4a8" \
   -sb "#3865a7" -sf "#ffffff"
 
 bindsym $mod4+Shift+s exec --no-startup-id dmenu_session
