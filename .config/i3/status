@@ -21,6 +21,23 @@ class Colors(object):
     LIGHT_YELLOW = '#ffff99'
     PINK = '#ff99aa'
 
+    COLOR0 = '#2E3440'
+    COLOR1 = '#3B4252'
+    COLOR2 = '#434C5E'
+    COLOR3 = '#4C566A'
+    COLOR4 = '#D8DEE9'
+    COLOR5 = '#E5E9F0'
+    COLOR6 = '#ECEFF4'
+    COLOR7 = '#8FBCBB'
+    COLOR8 = '#88C0D0'
+    COLOR9 = '#81A1C1'
+    COLOR10 = '#5E81AC'
+    COLOR11 = '#BF616A'
+    COLOR12 = '#D08770'
+    COLOR13 = '#EBCB8B'
+    COLOR14 = '#A3BE8C'
+    COLOR15 = '#B48EAD'
+
 
 try:
     bar_id = sys.argv[1]
@@ -52,7 +69,7 @@ if bar_id == "bar0":
         format_down='',
         interface='wlp4s0',
         color_up=Colors.DEFAULT,
-        color_down=Colors.CRITICAL,
+        color_down=Colors.COLOR11,
         dynamic_color=False,
         on_leftclick=None,
         on_rightclick=None,
@@ -72,7 +89,7 @@ if bar_id == "bar0":
     add("temp",
         format=" {temp:.0f}°C",
         color=Colors.DEFAULT,
-        alert_color=Colors.CRITICAL,
+        alert_color=Colors.COLOR11,
         alert_temp=85,
         interval=5)
 
@@ -80,7 +97,7 @@ if bar_id == "bar0":
         format="墳 {volume}%",
         format_muted="婢 {volume}%",
         color_unmuted=Colors.DEFAULT,
-        color_muted=Colors.CRITICAL)
+        color_muted=Colors.COLOR11)
 
     add("battery",
         format=" {percentage:.0f}%{status}{remaining:%H:%M}",
@@ -88,7 +105,7 @@ if bar_id == "bar0":
         color=Colors.DEFAULT,
         full_color=Colors.DEFAULT,
         charging_color=Colors.DEFAULT,
-        critical_color=Colors.CRITICAL,
+        critical_color=Colors.COLOR11,
         not_present_color=Colors.DISABLED,
         critical_level_percentage=4,
         critical_level_command='systemctl suspend',
@@ -108,28 +125,28 @@ elif bar_id == "bar1":
     add("dpms",
         format='⏾ dpms',
         format_disabled='⏾ dpms',
-        color=Colors.GREEN,
+        color=Colors.COLOR15,
         color_disabled=Colors.DISABLED,
         interval=5)
 
     add("shell",
         command='~/.config/i3/status-utils/weather',
         format=' {output}',
-        color=Colors.LIGHT_BLUE,
-        error_color=Colors.DISABLED,
+        color=Colors.COLOR14,
+        error_color=Colors.COLOR14,
         on_rightclick='~/.config/i3/status-utils/weather browser',
         interval=1800)
 
     add("disk",
         format=" / {used}/{total}G",
         path="/",
-        color=Colors.LIGHT_BROWN,
+        color=Colors.COLOR13,
         on_rightclick='thunar /',
         interval=60)
 
     add("mem",
         format=" {used_mem}/{total_mem}G",
-        color=Colors.LIGHT_GREEN,
+        color=Colors.COLOR12,
         warn_color=Colors.WARNING,
         alert_color=Colors.CRITICAL,
         divisor=1024**3,
@@ -137,18 +154,18 @@ elif bar_id == "bar1":
 
     add("load",
         format="溜 {avg1} {avg5} ({tasks})",
-        color=Colors.LIGHT_BLUE,
+        color=Colors.COLOR11,
         critical_color=Colors.CRITICAL,
         interval=10)
 
     add("cpu_usage",
         format='({usage:02}%)',
-        color=Colors.LIGHT_BROWN,
+        color=Colors.COLOR10,
         interval=10)
 
     add("cpu_freq",
         format=' {avgg}GHz',
-        color=Colors.LIGHT_BROWN,
+        color=Colors.COLOR10,
         hints={
             'separator': False,
             'separator_block_width': 5
@@ -157,14 +174,14 @@ elif bar_id == "bar1":
 
     add("uptime",
         format='祥 up {days}d {hours}h {mins}m',
-        color=Colors.PINK,
+        color=Colors.COLOR9,
         interval=50)
 
     add("network",
         format_up=' {interface} {v4}',
         format_down=' <span strikethrough="true">{interface}</span>',
         interface='enp0s31f6',
-        color_up=Colors.CYAN,
+        color_up=Colors.COLOR8,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         on_leftclick=None,
@@ -181,7 +198,7 @@ elif bar_id == "bar1":
         format_up=' {interface} {v4}',
         format_down=' <span strikethrough="true">{interface}</span>',
         interface='wlp4s0',
-        color_up=Colors.LIGHT_YELLOW,
+        color_up=Colors.COLOR7,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         on_leftclick=None,
@@ -198,7 +215,7 @@ elif bar_id == "bar1":
         format_up=' {interface} {v4}',
         format_down=' <span strikethrough="true">{interface}</span>',
         interface='tun0',
-        color_up=Colors.BLUE,
+        color_up=Colors.COLOR6,
         color_down=Colors.DISABLED,
         dynamic_color=False,
         unknown_up=True,
@@ -214,8 +231,8 @@ elif bar_id == "bar1":
     add("shell",
         command='~/.config/i3/status-utils/ip',
         format='爵 {output}',
-        color=Colors.GREEN,
-        error_color=Colors.CRITICAL,
+        color=Colors.COLOR5,
+        error_color=Colors.COLOR5,
         on_rightclick='/usr/bin/true',
         interval=300)
 
@@ -227,7 +244,7 @@ elif bar_id == "bar1":
         unknown_up=True,
         next_if_down=True,
         color_down=Colors.DISABLED,
-        start_color=Colors.LIGHT_GREEN,
+        start_color=Colors.DEFAULT,
         end_color=Colors.CRITICAL,
         dynamic_color=True,
         on_leftclick='cycle_interface',
