@@ -7,5 +7,5 @@ while true; do
   if ! pgrep '^i3$' > /dev/null 2>&1; then
     break
   fi
-  urxvt -name scratchpad
+  urxvt -name scratchpad -e ~/.config/i3/scratchpad-tmux
 done
