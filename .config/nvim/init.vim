@@ -87,6 +87,7 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 " multi purpose
 Plug 'itchyny/lightline.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'arcticicestudio/nord-vim'
 Plug 'flazz/vim-colorschemes'
