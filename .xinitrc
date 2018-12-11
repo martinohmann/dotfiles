@@ -68,9 +68,6 @@ dunst > /dev/null 2>&1 &
 # prevent dpms if needed
 lightson 590 &
 
-# extend displays if connected
-srcsw -e
-
 # set background
 ~/.fehbg
 
