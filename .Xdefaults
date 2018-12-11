@@ -42,6 +42,10 @@ URxvt.tabbed.tab-bg: -1
 URxvt.tabbed.autohide: true
 URxvt.tabbed.new-button: false
 URxvt.tabbed.title: false
+URxvt.keysym.Control-Shift-L: perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-H: perl:tabbedex:prev_tab
+URxvt.keysym.Control-Shift-J: perl:tabbedex:new_tab
+URxvt.keysym.Control-Shift-K: perl:tabbedex:rename_tab
 URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
 !URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
 !URxvt.keysym.Control-t: perl:tabbedex:new_tab
@@ -108,7 +112,7 @@ URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 *.foreground:   nord4
 !*.background:   nord0
-URxvt.background: [98]#131516
+URxvt.background: [98]#201c1d
 *.cursorColor:  nord4
 
 *.color0: nord1
