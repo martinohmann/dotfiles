@@ -235,9 +235,9 @@ mode $mode_move {
 
 # screenshot
 mode $mode_screenshot {
-  bindsym --release Return mode $mode_default, exec cd ~ && scrot
-  bindsym --release s      mode $mode_default, exec cd ~ && scrot -s
-  bindsym --release f      mode $mode_default, exec cd ~ && scrot -u
+  bindsym --release Return mode $mode_default, exec sleep 1 && cd ~ && scrot
+  bindsym --release s      mode $mode_default, exec sleep 1 && cd ~ && scrot -s
+  bindsym --release f      mode $mode_default, exec sleep 1 && cd ~ && scrot -u
 
   bindsym Escape mode $mode_default
 }
