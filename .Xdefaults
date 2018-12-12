@@ -14,12 +14,7 @@ URxvt.depth: 32
 
 ! perl extensions
 URxvt.perl-ext: default,url-select
-URxvt.perl-ext-common: default,matcher,tabbedex,clipboard,resize-font,vim-scrollback
-
-! vim scrollback
-urxvt.vim-scrollback: C-v
-urxvt.vim-scrollback-bg: 14
-urxvt.vim-scrollback-fg: 1
+URxvt.perl-ext-common: default,matcher,clipboard,resize-font
 
 ! disable default Ctrl+Shift-Binding
 URxvt.iso14755: False
@@ -29,26 +24,6 @@ URxvt.iso14755_32: False
 URxvt.urlLauncher: chromium
 URxvt.url-launcher: /usr/bin/chromium
 URxvt.matcher.button: 2
-
-! tabbed config
-URxvt.tabbed.saveLines: 5000
-URxvt.tabbed.scrollBar: false
-URxvt.tabbed.secondaryScroll: true
-URxvt.tabbed.font: xft:Hack Nerd Font Mono:pixelsize=11
-URxvt.tabbed.tabbar-fg: 0
-URxvt.tabbed.tabbar-bg: -1
-URxvt.tabbed.tab-fg: 4
-URxvt.tabbed.tab-bg: -1
-URxvt.tabbed.autohide: true
-URxvt.tabbed.new-button: false
-URxvt.tabbed.title: false
-URxvt.keysym.Control-Shift-L: perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-H: perl:tabbedex:prev_tab
-URxvt.keysym.Control-Shift-J: perl:tabbedex:new_tab
-URxvt.keysym.Control-Shift-K: perl:tabbedex:rename_tab
-URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
-!URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
-!URxvt.keysym.Control-t: perl:tabbedex:new_tab
 
 ! home + end key
 URxvt.keysym.Home: \033[1~
