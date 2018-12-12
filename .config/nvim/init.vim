@@ -89,6 +89,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ap/vim-buftabline'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'arcticicestudio/nord-vim'
 Plug 'flazz/vim-colorschemes'
 " Plug 'xolox/vim-misc'

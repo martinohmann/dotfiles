@@ -175,3 +175,4 @@ if [ -f ~/.google-cloud-sdk/completion.zsh.inc ]; then source ~/.google-cloud-sd
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
 source <(helm completion zsh)
+source ~/.local/bin/tmuxinator.zsh
