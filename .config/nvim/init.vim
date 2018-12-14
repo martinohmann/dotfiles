@@ -142,6 +142,7 @@ Plug 'gregsexton/gitv'
 Plug 'int3/vim-extradite'
 Plug 'tpope/vim-fugitive'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'christoomey/vim-conflicted'
 " php
 " requires phpactor
 Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
