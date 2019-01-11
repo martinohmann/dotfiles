@@ -295,9 +295,6 @@ bar {
   id bar1
   font $font
   status_command ~/.config/i3/status bar1
-  output DP1
-  output eDP1
-  output HDMI2
   separator_symbol "/"
   tray_output eDP1
   tray_padding 3
