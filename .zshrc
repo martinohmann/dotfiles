@@ -1,3 +1,5 @@
+# add $HOME/.zfunctions to fpath
+fpath=( "$HOME/.zfunctions" $fpath )
 
 # use prettier term in emulators
 # if [ -n "$DISPLAY" ]; then
@@ -31,14 +33,14 @@ export BROWSER="chromium"
 # hide default venv prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper.sh
+# export WORKON_HOME=~/.virtualenvs
+# source /usr/bin/virtualenvwrapper.sh
 
 # add /usr/lib:/usr/local/lib to LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 
 # dircolors
-eval $(dircolors -b ~/.dircolors)
+[ -f ~/.dircolors ] && eval $(dircolors -b ~/.dircolors)
 
 # prevent java applications from freezing X11
 export GDK_NATIVE_WINDOWS=true
@@ -79,7 +81,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mohmann3"
+# ZSH_THEME="mohmann3"
+ZSH_THEME=""
 
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
@@ -116,6 +119,7 @@ plugins=(
   kubectl
   sudo
   systemd
+  zsh-syntax-highlighting
 )
 
 if [ -n "$DISPLAY" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
@@ -126,7 +130,7 @@ source $ZSH/oh-my-zsh.sh
 ## <<< END oh-my-zsh-specific
 
 # unset GREP_OPTIONS since it is deprecated
-unset GREP_OPTIONS
+# unset GREP_OPTIONS
 
 # disable ctrl-s
 stty -ixon
@@ -153,7 +157,10 @@ bindkey "\e[7~" beginning-of-line
 # for zsh-autosuggestions
 bindkey '^ ' autosuggest-accept
 
-eval "$(chef shell-init zsh)"
+# chef shell-init is fucking slow, cache it
+[ -f ~/.chef-shell-init.zsh ] || chef shell-init zsh > ~/.chef-shell-init.zsh
+
+source ~/.chef-shell-init.zsh
 
 # autostartx on tty1 only. why has this to be down here?! strange behaviour
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
@@ -175,4 +182,13 @@ if [ -f ~/.google-cloud-sdk/completion.zsh.inc ]; then source ~/.google-cloud-sd
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
 source <(helm completion zsh)
-source ~/.local/bin/tmuxinator.zsh
+[ -f ~/.local/bin/tmuxinator.zsh ] && source ~/.local/bin/tmuxinator.zsh
+
+autoload -U promptinit; promptinit
+
+PLAINBOW_BG_JOBS=1
+PLAINBOW_FULL_CWD=1
+PLAINBOW_GIT_PULL=1
+PLAINBOW_GIT_UNTRACKED_DIRTY=1
+
+prompt plainbow
