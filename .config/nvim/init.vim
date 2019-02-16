@@ -215,6 +215,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-go'
+Plug 'ncm2/ncm2-jedi'
 
 let g:ncm2_go#gocode_path = $GOPATH.'/bin/gocode-gomod'
 
@@ -224,6 +225,7 @@ Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-abolish'
 Plug 'yssl/QFEnter'
 Plug 'easymotion/vim-easymotion'
 
@@ -441,6 +443,12 @@ let g:neomake_go_gometalinter_maker = {
   \   '%W%f:%l::%tarning: %m'
 \ }
 "}}}
+
+Plug 'davidhalter/jedi-vim'
+Plug 'rodjek/vim-puppet'
+Plug 'hashivim/vim-terraform'
+
+let g:terraform_fmt_on_save=1
 
 call plug#end()
 
