@@ -36,10 +36,7 @@ export GNOME_KEYRING_CONTROL=/run/user/1000/keyring
 export QT_STYLE_OVERRIDE=gtk
 
 # disable touchpad
-synclient touchpadoff=1
-
-# disable touchpad while typing. will override the touchpadoff=1 rule
-# syndaemon -i 1 -k -d
+touchpad off
 
 # set dircolors
 eval "$(dircolors -b ~/.dircolors)"
