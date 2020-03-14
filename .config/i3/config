@@ -246,7 +246,7 @@ mode $mode_screenshot {
 mode $mode_toggle_bars {
   bindsym t bar mode toggle bar0
   bindsym b bar mode toggle bar1
-  bindsym a bar mode toggle bar0, bar mode toggle bar1
+  bindsym a bar mode toggle
 
   bindsym Escape mode $mode_default
 }
@@ -380,19 +380,22 @@ bindcode 123 exec --no-startup-id volume up
 bindcode 198 exec --no-startup-id amixer set Capture toggle
 
 # backlight
-bindcode 232 exec --no-startup-id light -U 10
-bindcode 233 exec --no-startup-id light -A 10
+bindcode 232 exec --no-startup-id xbacklight -dec 10
+bindcode 233 exec --no-startup-id xbacklight -inc 10
 
 # networkmanager
 bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 
 # single, extend, clone display
-bindsym $mod+F11        exec --no-startup-id ~/.config/i3/screen -C
-bindsym $mod+Shift+F11  exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
-bindsym $mod4+Shift+F11 exec --no-startup-id ~/.local/bin/dmenu_screen
+bindsym $mod+F7        exec --no-startup-id ~/.config/i3/screen -C
+bindsym $mod+Shift+F7  exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
+bindsym $mod4+Shift+F7 exec --no-startup-id ~/.local/bin/dmenu_screen
 
 # toggle touchpad
-bindsym $mod+F12 exec --no-startup-id touchpad toggle
+bindsym $mod+F11 exec --no-startup-id touchpad toggle
+
+# autorandr
+bindsym $mod+F12 exec --no-startup-id autorandr --change
 
 # toggle keymap
 bindsym $mod4+Shift+d exec --no-startup-id ~/.config/i3/toggle-keymap
@@ -402,3 +405,5 @@ bindsym $mod4+Shift+d exec --no-startup-id ~/.config/i3/toggle-keymap
 
 # create scratchpad
 exec --no-startup-id ~/.config/i3/scratchpad &
+
+exec --no-startup-id autorandr --change &
