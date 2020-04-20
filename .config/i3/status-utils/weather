@@ -8,36 +8,22 @@ import webbrowser
 # openweathermap api key
 APPID = "8ab59c0c302e4fafaca328679cc81188"
 
+# city for which to look up the weather
+CITY = "Berlin,DE"
+
 # http request timeout
 TIMEOUT = 5
 
-def get_location():
-  url = 'http://ip-api.com/json'
+def get_weather():
+  url = "https://api.openweathermap.org/data/2.5/weather" \
+        "?units=metric&q=%s&appid=%s" % (CITY, APPID)
 
   try:
     r = requests.get(url, timeout=TIMEOUT)
     if r.status_code == 200:
-      data = r.json()
-      if data['status'] == 'success':
-        return data
+      return r.json()
   except Exception:
     pass
-
-  return None
-
-def get_weather(location):
-  url = "http://api.openweathermap.org/data/2.5/weather" \
-        "?units=metric&lat=%f&lon=%f&appid=%s"
-
-  if location:
-    url = url % (location['lat'], location['lon'], APPID)
-
-    try:
-      r = requests.get(url, timeout=TIMEOUT)
-      if r.status_code == 200:
-        return r.json()
-    except Exception:
-      pass
 
   return None
 
@@ -69,7 +55,7 @@ def print_weather(weather):
     sys.exit("unknown")
 
 def open_browser(weather):
-  url = 'http://openweathermap.org/city/'
+  url = 'https://openweathermap.org/city/'
 
   if weather and weather['cod'] == 200:
     url += str(weather['id'])
@@ -77,8 +63,7 @@ def open_browser(weather):
   webbrowser.open(url)
 
 if __name__ == '__main__':
-  location = get_location()
-  weather = get_weather(location)
+  weather = get_weather()
 
   if len(sys.argv) > 1 and sys.argv[1] == 'browser':
     open_browser(weather)

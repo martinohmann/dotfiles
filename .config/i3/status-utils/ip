@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# prevent curl from hanging by limiting request time to 5sec
-ip=$(curl -s --max-time 5 https://api.ipify.org/)
-
-if [ $? -eq 0 ]; then
+if ip=$(curl --fail --silent --max-time 5 https://api.ipify.org/); then
   echo "$ip"
 else
   echo "offline"

@@ -44,6 +44,8 @@ try:
 except IndexError:
     bar_id = None
 
+wifi_iface = 'wlp61s0'
+
 status = Status(standalone=True, logfile='/tmp/i3pystatus.log')
 
 add = status.register
@@ -59,14 +61,22 @@ if bar_id == "bar0":
         text="",
         on_rightclick='dmenu_session')
 
-    add("xkblayout",
-        layouts=["us", "de"],
-        interval=10)
+    # FIXME: this is broken
+    # add("xkblayout",
+    #     layouts=["us", "de"],
+    #     interval=10)
+
+    # FIXME: workaround for broken xkblayout
+    add("shell",
+        command='setxkbmap -query | grep "layout" | cut -f6 -d\' \' | tr a-z A-Z',
+        format='\u2328 {output}',
+        on_rightclick='~/.config/i3/toggle-keymap',
+        interval=20)
 
     add("network",
-        format_up=' {essid}',
+        format_up=' {essid} {quality}%',
         format_down='',
-        interface='wlp4s0',
+        interface=wifi_iface,
         color_up=Colors.DEFAULT,
         color_down=Colors.COLOR11,
         dynamic_color=False,
@@ -159,6 +169,7 @@ elif bar_id == "bar1":
 
     add("cpu_usage",
         format='({usage:02}%)',
+        format_all='({usage:02}%)',
         color=Colors.COLOR10,
         interval=10)
 
@@ -178,7 +189,8 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' <span strikethrough="true">{interface}</span>',
+        # format_down=' <span strikethrough="true">{interface}</span>',
+        format_down='',
         interface='enp0s31f6',
         color_up=Colors.COLOR8,
         color_down=Colors.DISABLED,
@@ -195,8 +207,9 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' <span strikethrough="true">{interface}</span>',
-        interface='wlp4s0',
+        # format_down=' <span strikethrough="true">{interface}</span>',
+        format_down='',
+        interface=wifi_iface,
         color_up=Colors.COLOR7,
         color_down=Colors.DISABLED,
         dynamic_color=False,
@@ -212,7 +225,8 @@ elif bar_id == "bar1":
 
     add("network",
         format_up=' {interface} {v4}',
-        format_down=' <span strikethrough="true">{interface}</span>',
+        # format_down=' <span strikethrough="true">{interface}</span>',
+        format_down='',
         interface='tun0',
         color_up=Colors.COLOR6,
         color_down=Colors.DISABLED,
@@ -236,8 +250,8 @@ elif bar_id == "bar1":
         interval=300)
 
     add("network",
-        format_up=('異 {interface} {bytes_sent}kb/s ({tx_tot_Mbytes}M) '
-                   ' {bytes_recv}kb/s ({rx_tot_Mbytes}M) '),
+            format_up=('異 {interface} {bytes_sent}kb/s ({tx_tot_Mbytes:.2f}M) '
+            ' {bytes_recv}kb/s ({rx_tot_Mbytes:.2f}M) '),
         format_down='異 disconnected',
         interface='enp0s31f6',
         unknown_up=True,

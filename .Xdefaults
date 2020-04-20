@@ -3,7 +3,7 @@ URxvt.termName: rxvt-unicode-256color
 URxvt.saveLines: 5000
 URxvt.scrollBar: false
 URxvt.secondaryScroll: true
-URxvt.font: xft:Hack Nerd Font Mono:pixelsize=11
+URxvt.font: xft:Hack Nerd Font Mono:pixelsize=13
 !URxvt.geometry: 78x27
 !URxvt.internalBorder: 2
 !URxvt.inheritPixmap: true 
