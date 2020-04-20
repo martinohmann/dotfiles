@@ -1,0 +1,90 @@
+# enter fullscreen mode for the focused container
+cmd - f : yabai -m window --toggle native-fullscreen
+
+# float / unfloat window and center on screen
+shift + alt - space : yabai -m window --toggle float; \
+                      yabai -m window --grid 4:4:1:1:2:2
+
+# change layout of desktop
+alt - t : yabai -m space --layout bsp
+alt - m : ~/.config/yabai/toggle-monocle.sh
+
+# kill focused window
+shift + cmd - c : yabai -m window --close
+
+# change focus
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# unmap annoying bindings
+cmd - j [
+    "iTerm2" : true
+]
+cmd - k [
+    "iTerm2" : true
+]
+
+# move between windows
+shift + alt - tab : yabai -m window --focus prev || yabai -m window --focus last
+alt - tab         : yabai -m window --focus next || yabai -m window --focus first
+
+# move focused window
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
+alt - r : yabai -m space --rotate 90
+
+# open terminal
+cmd - return : open -F -n -a /Applications/iTerm.app
+
+# move focused container to workspace
+shift + cmd - h : yabai -m window --space prev; osascript -e 'tell application "System Events" to key code 4 using {command down}'
+shift + cmd - l : yabai -m window --space next; osascript -e 'tell application "System Events" to key code 37 using {command down}'
+shift + cmd - 1 : yabai -m window --space 1; osascript -e 'tell application "System Events" to key code 18 using {command down}'
+shift + cmd - 2 : yabai -m window --space 2; osascript -e 'tell application "System Events" to key code 19 using {command down}'
+shift + cmd - 3 : yabai -m window --space 3; osascript -e 'tell application "System Events" to key code 20 using {command down}'
+shift + cmd - 4 : yabai -m window --space 4; osascript -e 'tell application "System Events" to key code 21 using {command down}'
+shift + cmd - 5 : yabai -m window --space 5; osascript -e 'tell application "System Events" to key code 23 using {command down}'
+shift + cmd - 6 : yabai -m window --space 6; osascript -e 'tell application "System Events" to key code 22 using {command down}'
+shift + cmd - 7 : yabai -m window --space 7; osascript -e 'tell application "System Events" to key code 26 using {command down}'
+shift + cmd - 8 : yabai -m window --space 8; osascript -e 'tell application "System Events" to key code 28 using {command down}'
+shift + cmd - 9 : yabai -m window --space 9; osascript -e 'tell application "System Events" to key code 25 using {command down}'
+shift + cmd - 0 : yabai -m window --space 0; osascript -e 'tell application "System Events" to key code 29 using {command down}'
+shift + cmd - r : brew services restart yabai
+
+# defines a new mode 'resize'
+:: resize @
+#
+# from 'default' mode, activate mode 'resize'
+alt - e ; resize
+#
+# from 'resize' mode, activate mode 'resize'
+resize < escape ; default
+
+# Resize windows
+resize < shift - h : \
+    yabai -m window --resize right:-20:0
+
+resize < shift - j : \
+    yabai -m window --resize top:0:20
+
+resize < shift - k : \
+    yabai -m window --resize top:0:-20
+
+resize < shift - l : \
+    yabai -m window --resize right:20:0
+
+resize < h : \
+    yabai -m window --resize right:-50:0
+
+resize < j : \
+    yabai -m window --resize top:0:50
+
+resize < k : \
+    yabai -m window --resize top:0:-50
+
+resize < l : \
+    yabai -m window --resize right:50:0
