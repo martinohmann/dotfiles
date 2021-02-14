@@ -17,7 +17,7 @@ fpath=( "$HOME/.zfunctions" $fpath )
 # if [ -e /usr/share/terminfo/x/xterm-256color ] && [ "$COLORTERM" = "xfce4-terminal" ]; then
 #     export TERM=xterm-256color
 # fi
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 # set terminfo keys
 # export TERMINFO=~/.terminfo
@@ -53,25 +53,14 @@ export GO111MODULE=on
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
 
-# add android tools to PATH
-#export PATH=$PATH:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools
-#
-# add grails to PATH
-export PATH=$PATH:/opt/grails/current/bin
-export GRAILS_HOME=/opt/grails/current
+# add java home
 export JAVA_HOME=/usr/lib/jvm/default
-
-# add android sdk path
-export ANDROID_HOME=/opt/android-sdk
-export PATH=$PATH:/opt/android-sdk/tools:/opt/android-sdk/platform-tools
-#
-# knife config
-#
-export KNIFE_CONF_PATH=$HOME/work/chef-repo/.chef/knife.rb
-export KNIFE_COOKBOOK_PATH=$HOME/work/chef-repo/site-cookbooks
 
 # add global yarn node_modules to path
 export PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
+
+# rubygems
+export PATH=$HOME/.gem/ruby/2.7.0/bin:$PATH
 
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
@@ -129,9 +118,6 @@ fi
 source $ZSH/oh-my-zsh.sh
 ## <<< END oh-my-zsh-specific
 
-# unset GREP_OPTIONS since it is deprecated
-# unset GREP_OPTIONS
-
 # disable ctrl-s
 stty -ixon
 
@@ -157,32 +143,15 @@ bindkey "\e[7~" beginning-of-line
 # for zsh-autosuggestions
 bindkey '^ ' autosuggest-accept
 
-# chef shell-init is fucking slow, cache it
-[ -f ~/.chef-shell-init.zsh ] || chef shell-init zsh > ~/.chef-shell-init.zsh
-
-source ~/.chef-shell-init.zsh
-
-# autostartx on tty1 only. why has this to be down here?! strange behaviour
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+# autostartx on tty1 only
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx > /tmp/xorg-$USER.stdout 2> /tmp/xorg-$USER.stderr
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.git/*" --no-messages'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# [ -e ~/.phpbrew/bashrc ] && source ~/.phpbrew/bashrc
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f ~/.google-cloud-sdk/path.zsh.inc ]; then source ~/.google-cloud-sdk/path.zsh.inc; fi
-if [ -f ~/.google-cloud-sdk/completion.zsh.inc ]; then source ~/.google-cloud-sdk/completion.zsh.inc; fi
-
-export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
-
-source <(helm completion zsh)
-[ -f ~/.local/bin/tmuxinator.zsh ] && source ~/.local/bin/tmuxinator.zsh
+[ -f ~/.tmuxinator.zsh ] && source ~/.tmuxinator.zsh
+[ -f ~/.google-cloud-sdk/path.zsh.inc ] && source ~/.google-cloud-sdk/path.zsh.inc
+[ -f ~/.google-cloud-sdk/completion.zsh.inc ] && source ~/.google-cloud-sdk/completion.zsh.inc
 
 autoload -U promptinit; promptinit
 
@@ -192,3 +161,5 @@ PLAINBOW_GIT_PULL=1
 PLAINBOW_GIT_UNTRACKED_DIRTY=1
 
 prompt plainbow
+
+source <(kickoff completion zsh)
