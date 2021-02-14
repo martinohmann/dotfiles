@@ -42,7 +42,7 @@ touchpad off
 eval "$(dircolors -b ~/.dircolors)"
 
 # launch compositor
-compton -CGb -f -D 5 --backend glx
+# compton -CGb -f -D 5 --backend glx
 
 # enable usb automount
 udiskie -2 &
