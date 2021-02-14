@@ -42,7 +42,6 @@ alias o='xdg-open'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias g='grep -in'
 
 # Show history
 alias hist='fc -l 1'
@@ -91,7 +90,7 @@ alias kdb='knife data bag'
 
 # vim
 alias vi=nvim
-alias vim=nvim
+alias vim='nvim -w ~/.nvim-keylog "$@"'
 alias vimdiff='nvim -d'
 
 # ruby observr
@@ -104,6 +103,3 @@ alias efg='exercism fetch go'
 alias es='exercism submit'
 alias eg='cd $HOME/exercism/go/$(ls -t $HOME/exercism/go/ | head -1)'
 alias gtb='go test -bench .'
-
-# systemd
-alias systemctl='sudo systemctl'
