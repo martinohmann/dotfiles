@@ -51,9 +51,6 @@ alias afind='ack-grep -il'
 # sublime text
 alias st='subl'
 
-# Xilinx 13.1
-alias ise='/opt/Xilinx/13.1/ISE_DS/ISE/bin/lin64/ise &'
-
 # colored cat
 alias ccat='pygmentize -g'
 
@@ -62,10 +59,6 @@ alias bc='bc -l'
 
 # sudo wifi
 alias wifi='sudo wifi'
-
-# tomcat start/stop
-alias tomcat-start='/opt/apache-tomcat-6.0.36/bin/startup.sh'
-alias tomcat-stop='/opt/apache-tomcat-6.0.36/bin/shutdown.sh'
 
 # set pulse audio sinkport
 alias sinkport='pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo'
@@ -80,13 +73,6 @@ alias diff='colordiff'
 
 # shorter colored less
 alias le='cless'
-
-alias mathpy='PYTHONSTARTUP=~/.math-interactive.py python'
-
-# knife
-alias kcu='knife cookbook upload'
-alias krff='knife role from file'
-alias kdb='knife data bag'
 
 # vim
 alias vi=nvim
