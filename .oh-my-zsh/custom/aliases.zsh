@@ -13,14 +13,14 @@ alias lsd='ls -d */'
 #alias j='jump'
 
 # List direcory contents
-#alias l='ls -lah'
+# alias l='ls -lah'
 alias ls='ls -F --color=auto'
 alias l='ls_color -ah'
 alias ll='ls_color'
 alias la='ls_color -a'
-alias lg='ls_color -a --group-directories-first'
-alias sl=ls # often screw this up
-alias lso="ls -lG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
+# alias lg='ls_color -a --group-directories-first'
+# alias sl=ls # often screw this up
+# alias lso="ls -lG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
 
 # Super user
 alias _='sudo'
@@ -107,3 +107,7 @@ alias gtb='go test -bench .'
 
 # systemd
 alias systemctl='sudo systemctl'
+
+alias mux='tmuxinator'
+alias ggr='git gerritreview'
+alias gfr='git fetch && git rebase'

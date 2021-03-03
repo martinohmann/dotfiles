@@ -53,7 +53,7 @@ ls_color() {
 	# - colorize permissions (d/l: blue, u: yellow, g: cyan, o: green)
 	# - recolorize unset permissions (black)
 	ls -Fl --color=always $@ | \
-        sed 's/^total.*$/\x1B[4;37m&\x1B[0m/g
+        gsed 's/^total.*$/\x1B[4;37m&\x1B[0m/g
 	    s/^\([bcdlps-][rwxtsT-]\{9\}\)\(+\?\)\([ ]\+[^ ]\+\)\([ ]\+[^ ]\+\)\([ ]\+[^ ]\+\)\([ ]*[0-9]*[,]\{0,1\}\)\([ ]\+[0-9\.,]\+\)\([KMGTPEZY]\?\)\([ ]\+[^ ]\+[ ]\+[^ ]\+[ ]\+[^ ]\+\)/\1\x1B[0;35m\2\x1B[0;31m\3\x1B[1;33m\4\x1B[0;33m\5\x1B[0;32m\6\x1B[1;32m\7\x1B[0;32m\8\x1B[0;34m\9\x1B[0m/g
 		  s/^\([bcdlps-]\)\([r-]\)\([w-]\)\([xs-]\)\([r-]\)\([w-]\)\([xs-]\)\([r-]\)\([w-]\)/\x1B[0;34m\1\x1B[0;33m\2\x1B[0;33m\3\x1B[0;33m\4\x1B[0;36m\5\x1B[0;36m\6\x1B[0;36m\7\x1B[0;32m\8\x1B[0;32m\9\x1B[0;32m/g
 		  s/\x1B\[0;3[4362]m-/\x1B[0;30m-\x1B[0;0m/g'
@@ -245,3 +245,47 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+# Merges the contents of a kubeconfig file into ~/.kube/config. It will create
+# a backup of ~/.kube/config prior to merging at ~/.kube/config.bak.
+#
+# usage:
+#   kmerge /path/to/some/kubeconfig
+kmerge() {
+  # backup current kubeconfig
+  cp ~/.kube/config ~/.kube/config.bak
+
+  # merge kubeconfigs into ~/.kube/config.merged and only replace
+  # ~/.kube/config of merging succeeded.
+  KUBECONFIG="$1:$HOME/.kube/config" kubectl config view \
+    --flatten > ~/.kube/config.merged && \
+  mv ~/.kube/config.merged ~/.kube/config
+}
+
+kmerge2() {
+    echo would merge $1
+}
+
+# Wraps calls to kubectl and prints out the kubeconfig context that this
+# currently active before every kubectl invocation. Contexts containing the
+# word 'admin' in their name will be colored in red.
+# The context information will not be printed if the shell detects that kubectl
+# is used in a pipe.
+kubectl() {
+  # only print current context if the command is not piped.
+  if [ -t 1 ]; then
+    context="$(command kubectl config current-context)"
+
+    local color="\e[32;4m"
+
+    # color admin contexts in red
+    if [[ "$context" == *admin* ]]; then
+      color="\e[31;4m"
+    fi
+
+    printf "\e[37;1mcurrent context: %b%s\e[0m\n\n" "$color" "$context"
+  fi
+
+  # execute real kubectl
+  command kubectl "$@"
+}

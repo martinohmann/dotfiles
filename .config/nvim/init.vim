@@ -217,9 +217,9 @@ Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-jedi'
 
-let g:ncm2_go#gocode_path = $GOPATH.'/bin/gocode-gomod'
+" let g:ncm2_go#gocode_path = $GOPATH.'/bin/gocode-gomod'
 
-Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
+Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'master' }
 "}}}
 
 Plug 'tpope/vim-commentary'
@@ -233,7 +233,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go'
 
 let g:go_fmt_command = "goimports"
-let g:go_info_mode = 'gocode-gomod'
+" let g:go_info_mode = 'gocode-gomod'
 
 autocmd FileType go set ts=4
 "}}}
@@ -359,6 +359,8 @@ endfunction
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 " markdown{{{
 Plug 'iamcco/markdown-preview.nvim', { 'for': 'markdown', 'do': 'cd app & yarn install' }
@@ -445,10 +447,44 @@ let g:neomake_go_gometalinter_maker = {
 "}}}
 
 Plug 'davidhalter/jedi-vim'
+Plug 'tell-k/vim-autopep8'
 Plug 'rodjek/vim-puppet'
 Plug 'hashivim/vim-terraform'
+Plug 'towolf/vim-helm'
+Plug 'google/vim-jsonnet'
+
+" java{{{
+Plug 'ObserverOfTime/ncm2-jc2', {'for': ['java', 'jsp']}
+Plug 'artur-shaik/vim-javacomplete2', {'for': ['java', 'jsp']}
+
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd BufWritePre *.java JCimportsRemoveUnused
+
+function! s:GetBasePath()
+    return substitute(g:JavaComplete_GradlePath, 'build.gradle', 'src/main/java', '')
+endfunction
+
+function! FixNeomakeGradle()
+    if exists('g:JavaComplete_PluginLoaded') && exists('g:JavaComplete_ProjectKey')
+        if javacomplete#classpath#gradle#IfGradle()
+            " extend classpath manually
+            let l:path = javacomplete#util#GetBase("classpath" . g:FILE_SEP) . g:JavaComplete_ProjectKey
+            let l:javac_classpath = readfile(l:path)
+
+            let g:neomake_java_javac_classpath = s:GetBasePath() . ":" . l:javac_classpath[0]
+        endif
+    endif
+endfunction
+
+au BufEnter *.java :call FixNeomakeGradle()
+"}}}
 
 let g:terraform_fmt_on_save=1
+let g:jsonnet_fmt_on_save=1
+let g:autopep8_on_save = 1
+let g:autopep8_disable_show_diff=1
+
+Plug 'rhysd/git-messenger.vim'
 
 call plug#end()
 
@@ -489,6 +525,9 @@ augroup pre_post_hooks
          \   exe "normal! g`\"" |
          \ endif
 augroup END
+
+" remove trailing whitespace on save
+"autocmd BufWritePre * :%s/\s\+$//e
 
 " disable arrow keys to force usage of hjkl
 inoremap  <Up>     <NOP>
@@ -547,7 +586,11 @@ vnoremap <leader>a "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
 nnoremap <leader><tab> :Buffers<cr>
 
 autocmd FileType ruby,json,javascript,javascript.jsx,sh,yaml,feature set ts=2|set sw=2|set expandtab
+autocmd FileType java set ts=4|set sw=4|set expandtab
 autocmd BufNewFile,BufRead *.jinja set filetype=twig
+autocmd BufNewFile,BufRead *.tpl set syntax=helm
+autocmd FileType mustache set syntax=helm
+autocmd BufNewFile,BufRead *.tf.hcl set filetype=terraform
 
 " wrapper for shell commands
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
