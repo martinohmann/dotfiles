@@ -62,6 +62,9 @@ export PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
 # rubygems
 export PATH=$HOME/.gem/ruby/2.7.0/bin:$PATH
 
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -163,3 +166,6 @@ PLAINBOW_GIT_UNTRACKED_DIRTY=1
 prompt plainbow
 
 source <(kickoff completion zsh)
+source <(gh completion -s zsh)
+
+export BAT_THEME=Nord
