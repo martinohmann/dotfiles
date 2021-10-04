@@ -76,7 +76,8 @@ alias le='cless'
 
 # vim
 alias vi=nvim
-alias vim='nvim -w ~/.nvim-keylog "$@"'
+alias vim=nvim
+# alias vim='nvim -w ~/.nvim-keylog "$@"'
 alias vimdiff='nvim -d'
 
 # ruby observr
