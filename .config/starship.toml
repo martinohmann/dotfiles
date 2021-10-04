@@ -43,9 +43,20 @@ style = "fg:red"
 
 [git_metrics]
 disabled = false
-format = '([](fg:cyan) ([+$added]($added_style) )([-$deleted]($deleted_style) ))'
+format = '([](fg:cyan) ([+$added]($added_style) )([-$deleted]($deleted_style) ))'
 added_style = "fg:green"
 deleted_style = "fg:red"
+
+[git_state]
+format = '[\[$state( $progress_current/$progress_total)\]]($style) '
+style = "fg:yellow bold"
+rebase = " rebase"
+merge = " merge"
+revert = " revert"
+cherry_pick	= " cherry-pick"
+bisect = " bisect"
+am = " am"
+am_or_rebase = " am/rebase"
 
 [git_status]
 format = '([$ahead_behind](fg:cyan) )([$all_status]($style) )'
