@@ -3,6 +3,7 @@
     "gofumpt": true
   },
   "coc.preferences.formatOnSaveFiletypes": [
-    "go"
+    "go",
+    "rust"
   ]
 }
