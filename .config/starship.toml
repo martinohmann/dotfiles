@@ -1,0 +1,152 @@
+# format = "$directory$git$character"
+# format = """
+# $username\
+# $hostname\
+# $shlvl\
+# $singularity\
+# $kubernetes\
+# $directory\
+# $vcsh\
+# $git_branch\
+# $git_commit\
+# $git_state\
+# $git_metrics\
+# $git_status\
+# $hg_branch\
+# $docker_context\
+# $package\
+# $cmake\
+# $cobol\
+# $dart\
+# $deno\
+# $dotnet\
+# $elixir\
+# $elm\
+# $erlang\
+# $golang\
+# $helm\
+# $java\
+# $julia\
+# $kotlin\
+# $lua\
+# $nim\
+# $nodejs\
+# $ocaml\
+# $perl\
+# $php\
+# $purescript\
+# $python\
+# $rlang\
+# $red\
+# $ruby\
+# $rust\
+# $scala\
+# $swift\
+# $terraform\
+# $vlang\
+# $vagrant\
+# $zig\
+# $nix_shell\
+# $conda\
+# $memory_usage\
+# $aws\
+# $gcloud\
+# $openstack\
+# $env_var\
+# $crystal\
+# $custom\
+# $cmd_duration\
+# $line_break\
+# $jobs\
+# $battery\
+# $time\
+# $status\
+# $shell\
+# $character"""
+
+format = "($golang$kubernetes\n)$directory$git_branch$git_commit${custom.git_tag}$git_state$git_metrics$git_status$cmd_duration$jobs$character"
+
+[aws]
+symbol = " "
+
+[cmd_duration]
+format = "[{$duration}]($style) "
+min_time = 5000
+show_milliseconds = true
+style = "fg:black"
+
+[directory]
+truncate_to_repo = false
+truncation_length = 4
+read_only = " "
+read_only_style = "fg:red"
+style = "fg:blue"
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "red"
+only_attached = true
+
+[git_commit]
+only_detached = true
+tag_disabled = true
+format = "[ $hash]($style) "
+style = "fg:red"
+
+[git_metrics]
+disabled = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+added_style = "fg:#009900"
+deleted_style = "fg:#990000"
+
+[git_status]
+format = '([$ahead_behind](fg:cyan) )([$all_status]($style) )'
+modified = ""
+stashed = ""
+untracked = ""
+style = "fg:yellow"
+
+[golang]
+symbol = " "
+disabled = true
+
+[java]
+symbol = " "
+
+[jobs]
+format = "[$number]($style) "
+number_threshold = 1
+style = "green"
+
+[kubernetes]
+disabled = true
+
+[memory_usage]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[shlvl]
+symbol = " "
+
+[custom.git_tag]
+description = "Shows the git tag, if the current commit points to one"
+command = "git describe --tags --exact-match"
+shell = ["bash","--norc","--noprofile"]
+when = "git rev-parse --git-dir"
+format = "([$output]($style) )"
+style = "fg:#ddcc00"

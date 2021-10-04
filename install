@@ -9,6 +9,7 @@ declare -a dotfiles_standard=(
   .config/dunst
   .config/i3
   .config/nvim
+  .config/starship.toml
   .dircolors
   .oh-my-zsh/custom
   .tmux.conf
