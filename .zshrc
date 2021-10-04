@@ -156,16 +156,18 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.g
 [ -f ~/.google-cloud-sdk/path.zsh.inc ] && source ~/.google-cloud-sdk/path.zsh.inc
 [ -f ~/.google-cloud-sdk/completion.zsh.inc ] && source ~/.google-cloud-sdk/completion.zsh.inc
 
-autoload -U promptinit; promptinit
+# autoload -U promptinit; promptinit
 
-PLAINBOW_BG_JOBS=1
-PLAINBOW_FULL_CWD=1
-PLAINBOW_GIT_PULL=1
-PLAINBOW_GIT_UNTRACKED_DIRTY=1
+# PLAINBOW_BG_JOBS=1
+# PLAINBOW_FULL_CWD=1
+# PLAINBOW_GIT_PULL=1
+# PLAINBOW_GIT_UNTRACKED_DIRTY=1
 
-prompt plainbow
+# prompt plainbow
 
 source <(kickoff completion zsh)
 source <(gh completion -s zsh)
 
 export BAT_THEME=Nord
+
+eval "$(starship init zsh)"
