@@ -43,9 +43,9 @@ style = "fg:red"
 
 [git_metrics]
 disabled = false
-format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
-added_style = "fg:#009900"
-deleted_style = "fg:#990000"
+format = '([](fg:cyan) ([+$added]($added_style) )([-$deleted]($deleted_style) ))'
+added_style = "fg:green"
+deleted_style = "fg:red"
 
 [git_status]
 format = '([$ahead_behind](fg:cyan) )([$all_status]($style) )'
@@ -82,5 +82,5 @@ description = "Shows the git tag, if the current commit points to one"
 command = "git describe --tags --exact-match"
 shell = ["bash","--norc","--noprofile"]
 when = "git rev-parse --git-dir"
-format = "([$output]($style) )"
-style = "fg:#ddcc00"
+format = "([ $output]($style) )"
+style = "fg:yellow"
