@@ -478,6 +478,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'towolf/vim-helm'
 Plug 'nelsyeung/twig.vim'
 Plug 'saltstack/salt-vim'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 
 let g:terraform_fmt_on_save=1
 
