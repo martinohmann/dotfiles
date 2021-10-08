@@ -1,0 +1,23 @@
+{
+  "go.goplsOptions": {
+    "gofumpt": true
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "go",
+    "rust"
+  ],
+  "java.format.enabled": true,
+  "java.completion.enabled": true,
+  "java.saveActions.organizeImports": true,
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-1.8",
+      "path": "/Users/martin.ohmann/.sdkman/candidates/java/8.0.292-zulu"
+    },
+    {
+      "name": "JavaSE-11",
+      "path": "/Users/martin.ohmann/.sdkman/candidates/java/11.0.11-zulu",
+      "default": true
+    }
+  ]
+}
