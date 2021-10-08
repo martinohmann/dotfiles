@@ -53,7 +53,7 @@ ls_color() {
 	# - colorize permissions (d/l: blue, u: yellow, g: cyan, o: green)
 	# - recolorize unset permissions (black)
 	ls -Fl --color=always $@ | \
-        gsed 's/^total.*$/\x1B[4;37m&\x1B[0m/g
+        sed 's/^total.*$/\x1B[4;37m&\x1B[0m/g
 	    s/^\([bcdlps-][rwxtsT-]\{9\}\)\(+\?\)\([ ]\+[^ ]\+\)\([ ]\+[^ ]\+\)\([ ]\+[^ ]\+\)\([ ]*[0-9]*[,]\{0,1\}\)\([ ]\+[0-9\.,]\+\)\([KMGTPEZY]\?\)\([ ]\+[^ ]\+[ ]\+[^ ]\+[ ]\+[^ ]\+\)/\1\x1B[0;35m\2\x1B[0;31m\3\x1B[1;33m\4\x1B[0;33m\5\x1B[0;32m\6\x1B[1;32m\7\x1B[0;32m\8\x1B[0;34m\9\x1B[0m/g
 		  s/^\([bcdlps-]\)\([r-]\)\([w-]\)\([xs-]\)\([r-]\)\([w-]\)\([xs-]\)\([r-]\)\([w-]\)/\x1B[0;34m\1\x1B[0;33m\2\x1B[0;33m\3\x1B[0;33m\4\x1B[0;36m\5\x1B[0;36m\6\x1B[0;36m\7\x1B[0;32m\8\x1B[0;32m\9\x1B[0;32m/g
 		  s/\x1B\[0;3[4362]m-/\x1B[0;30m-\x1B[0;0m/g'
@@ -260,10 +260,6 @@ kmerge() {
   KUBECONFIG="$1:$HOME/.kube/config" kubectl config view \
     --flatten > ~/.kube/config.merged && \
   mv ~/.kube/config.merged ~/.kube/config
-}
-
-kmerge2() {
-    echo would merge $1
 }
 
 # Wraps calls to kubectl and prints out the kubeconfig context that this
