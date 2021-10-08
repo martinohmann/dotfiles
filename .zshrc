@@ -1,6 +1,18 @@
 # add $HOME/.zfunctions to fpath
 fpath=( "$HOME/.zfunctions" $fpath )
 
+platform="$(uname)"
+arch="$(uname -p)"
+
+if [ "$platform" = Darwin ]; then
+  export HOMEBREW_PREFIX="/opt/homebrew";
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+  export HOMEBREW_REPOSITORY="/opt/homebrew";
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+fi
+
 # use prettier term in emulators
 # if [ -n "$DISPLAY" ]; then
 	# export real term
@@ -41,7 +53,11 @@ export BROWSER="chromium"
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 
 # dircolors
-[ -f ~/.dircolors ] && eval $(dircolors -b ~/.dircolors)
+if [ "$platform" = Darwin ]; then
+  [ -f ~/.dircolors ] && eval $(gdircolors -b ~/.dircolors)
+else
+  [ -f ~/.dircolors ] && eval $(dircolors -b ~/.dircolors)
+fi
 
 # prevent java applications from freezing X11
 export GDK_NATIVE_WINDOWS=true
@@ -123,12 +139,14 @@ plugins=(
   extract
   git
   history-substring-search
-  igit
+  # igit
   kubectl
   sudo
   systemd
   zsh-syntax-highlighting
 )
+
+export ZSH_AUTOSUGGEST_FORCE_ENABLE=1
 
 if [ -n "$ZSH_AUTOSUGGEST_FORCE_ENABLE" ] || [ -n "$DISPLAY" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   plugins+=(zsh-autosuggestions)
@@ -201,12 +219,20 @@ PLAINBOW_GIT_UNTRACKED_DIRTY=1
 
 prompt plainbow
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/martin.ohmann/.sdkman"
 [[ -s "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh"
 
 # krew path
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+if [ "$platform" = Darwin ] && [ "$arch" = arm ]; then
+    # To fix aws-azure-login on arm64
+    export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+    export PUPPETEER_EXECUTABLE_PATH="$(which chromium)"
+fi
+
+export BAT_THEME=Nord
