@@ -53,6 +53,7 @@ set history=700
 
 " disable file backups
 set nobackup
+set nowritebackup
 set nowb
 set noswapfile
 
@@ -93,8 +94,167 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 
     let installing_vim_plug = 1
 endif
+
 command! PU PlugUpdate | PlugUpgrade
+
 call plug#begin('~/.config/nvim/plugged')
+
+" coc{{{
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd FileType go nmap gic :CocCommand go.impl.cursor<cr>
+autocmd FileType go nmap gtt :CocCommand go.test.toggle<cr>
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" " Always show the signcolumn, otherwise it would shift the text each time
+" " diagnostics appear/become resolved.
+" if has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+"}}}
 
 " lightline{{{
 Plug 'itchyny/lightline.vim'
@@ -115,6 +275,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
+
+nnoremap <leader><enter> :FZFMru<cr>
+nnoremap <leader><leader><enter> :History<cr>
+nnoremap <leader><backspace> :Files<cr>
+nnoremap <leader>a :exec ':Ag '.expand('<cword>')<CR>
+vnoremap <leader>a "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
+nnoremap <leader><tab> :Buffers<cr>
 "}}}
 
 " nerdtree{{{
@@ -143,13 +310,13 @@ let g:echodoc#highlight_arguments = 'Number'
 Plug 'simeji/winresizer'
 Plug 'ap/vim-buftabline'
 
-" nord-vim{{{
+" colorschemes{{{
 Plug 'arcticicestudio/nord-vim'
 
 let g:nord_uniform_diff_background = 1
-"}}}
 
 Plug 'flazz/vim-colorschemes'
+"}}}
 
 " tagbar{{{
 Plug 'majutsushi/tagbar'
@@ -184,8 +351,6 @@ let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = '<c-h>'
 "}}}}}}
 
-Plug 'milkypostman/vim-togglelist'
-
 " ultisnips{{{
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -198,169 +363,33 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsEditSplit='vertical'
 "}}}
 
-" ncm2{{{
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANT: :help Ncm2PopupOpen for more information
-" set completeopt=noinsert,menuone,noselect
-" set completeopt-=preview
-au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-au User Ncm2PopupClose set completeopt=menuone
-
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-go'
-Plug 'ncm2/ncm2-jedi'
-
-" let g:ncm2_go#gocode_path = $GOPATH.'/bin/gocode-gomod'
-
-Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'master' }
-"}}}
-
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-abolish'
 Plug 'yssl/QFEnter'
 Plug 'easymotion/vim-easymotion'
+Plug 'milkypostman/vim-togglelist'
 
-" vim-go{{{
-Plug 'fatih/vim-go'
-
-let g:go_fmt_command = "goimports"
-" let g:go_info_mode = 'gocode-gomod'
+" go{{{
+Plug 'sebdah/vim-delve'
 
 autocmd FileType go set ts=4
 "}}}
 
-Plug 'godoctor/godoctor.vim'
-Plug 'sebdah/vim-delve'
-
+" git{{{
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'christoomey/vim-conflicted'
-
-Plug 'phpactor/phpactor' ,  { 'do': 'composer install', 'for': 'php' }
-Plug 'phpactor/ncm2-phpactor', { 'for': 'php' }
-Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-Plug 'phux/php-doc-modded', { 'for': 'php' }
-
-" vim-php-refactoring-toolbox{{{
-Plug 'adoy/vim-php-refactoring-toolbox', { 'for': 'php' }
-
-let g:vim_php_refactoring_use_default_mapping = 0
 "}}}
 
-" vim-php{{{
-function! PhpSyntaxOverride()
-  hi! def link phpDocTags  phpDefine
-  " hi! def link phpDocParam phpType
-endfunction
-
-augroup vimphp
-    autocmd!
-    au BufNewFile,BufRead,BufWinEnter *Test.php exe ":UltiSnipsAddFiletypes php.phpunit"
-    au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
-    autocmd FileType php call PhpSyntaxOverride()
-    autocmd FileType php nnoremap <leader>d :call UpdatePhpDocIfExists()<cr>
-    autocmd FileType php nnoremap <leader>f :call PHPBreakLongLine()<cr>
-    autocmd FileType php set ts=4|set sw=4|set expandtab
-    autocmd FileType php setlocal omnifunc=phpactor#Complete
-    " Include use statement
-    autocmd FileType php nnoremap <Leader>u :call phpactor#UseAdd()<CR>
-    " Expand FQCN
-    autocmd FileType php nnoremap <Leader>e :call phpactor#ClassExpand()<CR>
-    " Invoke the context menu
-    autocmd FileType php nnoremap <Leader>cm :call phpactor#ContextMenu()<CR>
-    " Invoke the navigation menu
-    autocmd FileType php nnoremap <Leader>nn :call phpactor#Navigate()<CR>
-    " Goto definition of class or class member under the cursor
-    autocmd FileType php nnoremap <Leader>gd :call phpactor#GotoDefinition()<CR>
-    " Find references to class or class member under the cursor
-    autocmd FileType php nnoremap <Leader>gr :call phpactor#FindReferences()<CR>
-    " Transform the classes in the current file
-    autocmd FileType php nnoremap <Leader>tt :call phpactor#Transform()<CR>
-    " Extract expression (normal mode)
-    autocmd FileType php nnoremap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-    " Extract expression from selection
-    autocmd FileType php vnoremap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-    " Extract method from selection
-    autocmd FileType php vnoremap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-    " Copy class
-    autocmd FileType php nnoremap <Leader>rcc :call phpactor#CopyFile()<CR>
-    " Move class
-    autocmd FileType php nnoremap <Leader>rcm :call phpactor#MoveFile()<CR>
-    " Move dir
-    autocmd FileType php nnoremap <leader>rdm :call PHPMoveDir()<CR>
-augroup end
-
-function! UpdatePhpDocIfExists()
-    normal! k
-    if getline('.') =~ '/'
-        normal! V%d
-    else
-        normal! j
-    endif
-    call PhpDocSingle()
-    normal! k^%k$
-    if getline('.') =~ ';'
-        exe "normal! $svoid"
-    endif
-endfunction
-
-function! PHPBreakLongLine()
-    let l:currentLine = getline('.')
-    let l:isFunctionCallOrDefinitionOrArray = l:currentLine =~ ',' || l:currentLine =~ ';' || l:currentLine =~ ' array(' || l:currentLine =~ '(['
-    let l:isConditional = l:currentLine =~ '\s*&&' || l:currentLine =~ ' and ' || l:currentLine =~ '\s*||' || l:currentLine =~ ' or ' || l:currentLine =~ '\s*?'
-
-    normal! $
-    normal! ma
-    if l:isConditional
-        normal! F)
-    elseif l:isFunctionCallOrDefinitionOrArray
-        if l:currentLine =~ ';'
-            normal! h
-        else
-            normal! Jh
-        endif
-    endif
-
-    execute "normal! i\n"
-    normal! mb
-    normal! k
-
-    if l:isConditional
-        :s/\(\s*&&\| and \|\s*||\| or \| ?\| :\)/\r\1/g
-    elseif l:isFunctionCallOrDefinitionOrArray
-        execute "normal! 0f(a\n"
-        if l:currentLine =~ ','
-            :s/,\s/,\r/g
-        endif
-    endif
-    'b
-    normal! V
-    'a
-    normal! =
-endfunction
-
-function! PHPMoveDir()
-    :w
-    let l:oldPath = input("old path: ", expand('%:p:h'))
-    let l:newPath = input("New path: ", l:oldPath)
-    execute "!phpactor class:move ".l:oldPath.' '.l:newPath
-endfunction
-"}}}
-
+" javascript{{{
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+"}}}
 
 " markdown{{{
 Plug 'iamcco/markdown-preview.nvim', { 'for': 'markdown', 'do': 'cd app & yarn install' }
@@ -397,9 +426,6 @@ endfunction
 autocmd FileType markdown nnoremap gu :call UrlToMarkdownLink()<cr>
 "}}}
 
-Plug 'nelsyeung/twig.vim'
-Plug 'saltstack/salt-vim'
-
 " neomake{{{
 Plug 'neomake/neomake'
 
@@ -407,9 +433,13 @@ augroup lintcomplete
     autocmd! BufWritePost * Neomake
 augroup end
 
+" Disable java maker, CoC will take care of that.
+let g:loaded_neomake_java_javac_maker = 1
+
 let g:neomake_php_phpcs_args_standard='PSR2'
 
-let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+let g:neomake_go_enabled_makers = [ 'go', 'golangci_lint' ]
+" let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
   " \   '--enable-gc',
   " \   '--concurrency=8',
   " \   '--enable=deadcode',
@@ -446,45 +476,38 @@ let g:neomake_go_gometalinter_maker = {
 \ }
 "}}}
 
-Plug 'davidhalter/jedi-vim'
-Plug 'tell-k/vim-autopep8'
 Plug 'rodjek/vim-puppet'
 Plug 'hashivim/vim-terraform'
 Plug 'towolf/vim-helm'
+Plug 'nelsyeung/twig.vim'
+Plug 'saltstack/salt-vim'
 Plug 'google/vim-jsonnet'
 
-" java{{{
-Plug 'ObserverOfTime/ncm2-jc2', {'for': ['java', 'jsp']}
-Plug 'artur-shaik/vim-javacomplete2', {'for': ['java', 'jsp']}
+let g:terraform_fmt_on_save=1
 
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd BufWritePre *.java JCimportsRemoveUnused
-
-function! s:GetBasePath()
-    return substitute(g:JavaComplete_GradlePath, 'build.gradle', 'src/main/java', '')
-endfunction
-
-function! FixNeomakeGradle()
-    if exists('g:JavaComplete_PluginLoaded') && exists('g:JavaComplete_ProjectKey')
-        if javacomplete#classpath#gradle#IfGradle()
-            " extend classpath manually
-            let l:path = javacomplete#util#GetBase("classpath" . g:FILE_SEP) . g:JavaComplete_ProjectKey
-            let l:javac_classpath = readfile(l:path)
-
-            let g:neomake_java_javac_classpath = s:GetBasePath() . ":" . l:javac_classpath[0]
-        endif
-    endif
-endfunction
-
-au BufEnter *.java :call FixNeomakeGradle()
+" keysound{{{
+Plug 'skywind3000/vim-keysound'
+let g:keysound_py_version = 3
+let g:keysound_theme = 'typewriter'
+let g:keysound_volume = 1000
 "}}}
 
-let g:terraform_fmt_on_save=1
-let g:jsonnet_fmt_on_save=1
-let g:autopep8_on_save = 1
-let g:autopep8_disable_show_diff=1
+" arduino{{{
+Plug 'stevearc/vim-arduino'
+let g:arduino_dir = '/usr/share/arduino'
+let g:arduino_board = 'archlinux-arduino:avr:uno'
+let g:arduino_serial_baud = 9600
+let g:arduino_auto_baud = 1
+let g:arduino_serial_port = '/dev/ttyACM1'
 
-Plug 'rhysd/git-messenger.vim'
+autocmd FileType arduino nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
+autocmd FileType arduino nnoremap <buffer> <leader>ap :ArduinoChoosePort<CR>
+autocmd FileType arduino nnoremap <buffer> <leader>ar :ArduinoChooseProgrammer<CR>
+autocmd FileType arduino nnoremap <buffer> <leader>au :ArduinoUpload<CR>
+autocmd FileType arduino nnoremap <buffer> <leader>as :ArduinoUploadAndSerial<CR>
+autocmd FileType arduino nnoremap <buffer> <leader>av :ArduinoVerify<CR>
+autocmd FileType arduino set ts=2|set sw=2|set expandtab
+"}}}
 
 call plug#end()
 
@@ -525,9 +548,6 @@ augroup pre_post_hooks
          \   exe "normal! g`\"" |
          \ endif
 augroup END
-
-" remove trailing whitespace on save
-"autocmd BufWritePre * :%s/\s\+$//e
 
 " disable arrow keys to force usage of hjkl
 inoremap  <Up>     <NOP>
@@ -572,25 +592,8 @@ nnoremap <C-M> :call DeleteTrailingWS()<cr>
 nnoremap <tab> :bnext<cr>
 nnoremap <s-tab> :bprev<cr>
 
-" <tab>: completion.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
-" fzf
-nnoremap <leader><enter> :FZFMru<cr>
-nnoremap <leader><leader><enter> :History<cr>
-nnoremap <leader><backspace> :Files<cr>
-nnoremap <leader>a :exec ':Ag '.expand('<cword>')<CR>
-vnoremap <leader>a "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
-nnoremap <leader><tab> :Buffers<cr>
-
 autocmd FileType ruby,json,javascript,javascript.jsx,sh,yaml,feature set ts=2|set sw=2|set expandtab
-autocmd FileType java set ts=4|set sw=4|set expandtab
 autocmd BufNewFile,BufRead *.jinja set filetype=twig
-autocmd BufNewFile,BufRead *.tpl set syntax=helm
-autocmd FileType mustache set syntax=helm
-autocmd BufNewFile,BufRead *.tf.hcl set filetype=terraform
 
 " wrapper for shell commands
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
