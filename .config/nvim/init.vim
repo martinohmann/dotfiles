@@ -482,6 +482,7 @@ Plug 'towolf/vim-helm'
 Plug 'nelsyeung/twig.vim'
 Plug 'saltstack/salt-vim'
 Plug 'google/vim-jsonnet'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 
 let g:terraform_fmt_on_save=1
 

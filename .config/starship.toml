@@ -1,0 +1,97 @@
+format = """
+$directory\
+$git_branch\
+$git_commit\
+${custom.git_tag}\
+$git_state\
+$git_metrics\
+$git_status\
+$cmd_duration\
+$jobs\
+$character"""
+
+[aws]
+symbol = " "
+
+[cmd_duration]
+format = "[{$duration}]($style) "
+min_time = 5000
+show_milliseconds = true
+style = "fg:black"
+
+[directory]
+truncate_to_repo = false
+truncation_length = 4
+read_only = " "
+read_only_style = "fg:red"
+style = "fg:blue"
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "red"
+only_attached = true
+
+[git_commit]
+only_detached = true
+tag_disabled = true
+format = "[ $hash]($style) "
+style = "fg:red"
+
+[git_metrics]
+disabled = false
+format = '([](fg:cyan) ([+$added]($added_style) )([-$deleted]($deleted_style) ))'
+added_style = "fg:green"
+deleted_style = "fg:red"
+
+[git_state]
+format = '[\[$state( $progress_current/$progress_total)\]]($style) '
+style = "fg:yellow bold"
+rebase = " rebase"
+merge = " merge"
+revert = " revert"
+cherry_pick	= " cherry-pick"
+bisect = " bisect"
+am = " am"
+am_or_rebase = " am/rebase"
+
+[git_status]
+format = '([$ahead_behind](fg:cyan) )([$all_status]($style) )'
+modified = ""
+stashed = ""
+untracked = ""
+style = "fg:yellow"
+
+[golang]
+symbol = " "
+
+[java]
+symbol = " "
+
+[jobs]
+format = "[$number]($style) "
+number_threshold = 1
+style = "green"
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[shlvl]
+symbol = " "
+
+[custom.git_tag]
+description = "Shows the git tag, if the current commit points to one"
+command = "git describe --tags --exact-match"
+shell = ["bash","--norc","--noprofile"]
+when = "git rev-parse --git-dir"
+format = "([ $output]($style) )"
+style = "fg:yellow"

@@ -271,7 +271,7 @@ bindsym $mod+m        mode $mode_mark
 bar {
   id bar0
   font $font
-  status_command ~/.config/i3/status bar0
+  status_command i3-barista --bar top
   separator_symbol "/"
   tray_output none
   position top
@@ -294,7 +294,7 @@ bar {
 bar {
   id bar1
   font $font
-  status_command ~/.config/i3/status bar1
+  status_command i3-barista --bar bottom
   separator_symbol "/"
   tray_output eDP1
   tray_padding 3
@@ -317,12 +317,12 @@ bar {
 }
 
 # border styles
-default_border pixel 2
+default_border pixel 4
 default_floating_border normal
 hide_edge_borders smart
 
 # window rules
-for_window [class="URxvt"] border pixel 2
+for_window [class="URxvt"] border pixel 4
 for_window [class="URxvt" instance="scratchpad"] move scratchpad, border pixel 3
 for_window [class="URxvt" instance="nmtui"] floating enable, border pixel 3
 for_window [class="Chromium"] border none
@@ -387,8 +387,9 @@ bindcode 233 exec --no-startup-id xbacklight -inc 10
 bindsym $mod+F8 exec --no-startup-id urxvt -name nmtui -geometry 100x40 -e nmtui
 
 # single, extend, clone display
-bindsym $mod+F7        exec --no-startup-id ~/.config/i3/screen -C
-bindsym $mod+Shift+F7  exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
+bindsym $mod+F7        exec --no-startup-id autorandr --change
+# bindsym $mod+F7        exec --no-startup-id ~/.config/i3/screen -C
+# bindsym $mod+Shift+F7  exec --no-startup-id ~/.config/i3/screen -d DP1:HDMI2:eDP1 -e right
 bindsym $mod4+Shift+F7 exec --no-startup-id ~/.local/bin/dmenu_screen
 
 # toggle touchpad

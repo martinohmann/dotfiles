@@ -44,7 +44,6 @@ alias o='xdg-open'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias g='grep -in'
 
 # Show history
 alias hist='fc -l 1'
@@ -54,9 +53,6 @@ alias afind='ack-grep -il'
 # sublime text
 alias st='subl'
 
-# Xilinx 13.1
-alias ise='/opt/Xilinx/13.1/ISE_DS/ISE/bin/lin64/ise &'
-
 # colored cat
 alias ccat='pygmentize -g'
 
@@ -65,10 +61,6 @@ alias bc='bc -l'
 
 # sudo wifi
 alias wifi='sudo wifi'
-
-# tomcat start/stop
-alias tomcat-start='/opt/apache-tomcat-6.0.36/bin/startup.sh'
-alias tomcat-stop='/opt/apache-tomcat-6.0.36/bin/shutdown.sh'
 
 # set pulse audio sinkport
 alias sinkport='pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo'
@@ -84,16 +76,10 @@ alias diff='colordiff'
 # shorter colored less
 alias le='cless'
 
-alias mathpy='PYTHONSTARTUP=~/.math-interactive.py python'
-
-# knife
-alias kcu='knife cookbook upload'
-alias krff='knife role from file'
-alias kdb='knife data bag'
-
 # vim
 alias vi=nvim
 alias vim=nvim
+# alias vim='nvim -w ~/.nvim-keylog "$@"'
 alias vimdiff='nvim -d'
 
 # ruby observr
