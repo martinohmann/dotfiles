@@ -191,15 +191,6 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.g
 [ -f ~/.local/bin/tmuxinator.zsh ] && source ~/.local/bin/tmuxinator.zsh
 
 if [ "$platform" = Darwin ]; then
-  autoload -U promptinit; promptinit
-
-  PLAINBOW_BG_JOBS=1
-  PLAINBOW_FULL_CWD=1
-  PLAINBOW_GIT_PULL=1
-  PLAINBOW_GIT_UNTRACKED_DIRTY=1
-
-  prompt plainbow
-
   #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
   export SDKMAN_DIR="/Users/martin.ohmann/.sdkman"
   [[ -s "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh"
@@ -218,8 +209,17 @@ if [ "$platform" = Darwin ]; then
 else
   source <(kickoff completion zsh)
   source <(gh completion -s zsh)
-
-  eval "$(starship init zsh)"
 fi
+
+# autoload -U promptinit; promptinit
+
+# PLAINBOW_BG_JOBS=1
+# PLAINBOW_FULL_CWD=1
+# PLAINBOW_GIT_PULL=1
+# PLAINBOW_GIT_UNTRACKED_DIRTY=1
+
+# prompt plainbow
+
+eval "$(starship init zsh)"
 
 export BAT_THEME=Nord
