@@ -4,36 +4,6 @@ fpath=( "$HOME/.zfunctions" $fpath )
 platform="$(uname)"
 arch="$(uname -p)"
 
-if [ "$platform" = Darwin ]; then
-  export HOMEBREW_PREFIX="/opt/homebrew";
-  export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-  export HOMEBREW_REPOSITORY="/opt/homebrew";
-  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-fi
-
-# use prettier term in emulators
-# if [ -n "$DISPLAY" ]; then
-	# export real term
-	# export REAL_TERM="$TERM"
-
-	# if [[ -e /usr/share/terminfo/x/xterm-256color ]]; then
-	# 	export TERM='xterm-256color'
-	# else
-	# 	export TERM='xterm-color'
-	# fi
-# fi
-
-# set correct term variable in xfce4-terminal
-# if [ -e /usr/share/terminfo/x/xterm-256color ] && [ "$COLORTERM" = "xfce4-terminal" ]; then
-#     export TERM=xterm-256color
-# fi
-# export TERM=xterm-256color
-
-# set terminfo keys
-# export TERMINFO=~/.terminfo
-
 # mute terminal
 setopt no_beep
 
@@ -42,47 +12,39 @@ setopt no_beep
 export EDITOR="nvim"
 export BROWSER="chromium"
 
-# hide default venv prompt
-# export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-# export WORKON_HOME=~/.virtualenvs
-# source /usr/bin/virtualenvwrapper.sh
-# source /usr/local/bin/virtualenvwrapper.sh
-
 # add /usr/lib:/usr/local/lib to LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 
 # dircolors
 if [ "$platform" = Darwin ]; then
+  export HOMEBREW_PREFIX="/opt/homebrew";
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+  export HOMEBREW_REPOSITORY="/opt/homebrew";
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+  # homebrew core-utils
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+  # homebrew ruby
+  export PATH="/usr/local/opt/ruby/bin:$PATH"
+
   [ -f ~/.dircolors ] && eval $(gdircolors -b ~/.dircolors)
 else
+  # add java home
+  export JAVA_HOME=/usr/lib/jvm/default
+
+  # prevent java applications from freezing X11
+  export GDK_NATIVE_WINDOWS=true
+
   [ -f ~/.dircolors ] && eval $(dircolors -b ~/.dircolors)
 fi
-
-# prevent java applications from freezing X11
-export GDK_NATIVE_WINDOWS=true
-
-# add usrscripts to PATH
-export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
-
-# homebrew core-utils
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-
-# homebrew ruby
-export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # add gopath
 export GO111MODULE=on
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
-
-# add java home
-if [ "$platform" = Linux ]; then
-  export JAVA_HOME=/usr/lib/jvm/default
-fi
-
-# add global yarn node_modules to path
-# export PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
 
 # rubygems
 export PATH=$HOME/.gem/ruby/2.7.0/bin:$PATH
@@ -182,15 +144,12 @@ fi
 export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --follow --glob "!.git/*" --no-messages'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.tmuxinator.zsh ] && source ~/.tmuxinator.zsh
 [ -f ~/.google-cloud-sdk/path.zsh.inc ] && source ~/.google-cloud-sdk/path.zsh.inc
 [ -f ~/.google-cloud-sdk/completion.zsh.inc ] && source ~/.google-cloud-sdk/completion.zsh.inc
 
-# autoload -U promptinit; promptinit
-
-[ -f ~/.local/bin/tmuxinator.zsh ] && source ~/.local/bin/tmuxinator.zsh
-
 if [ "$platform" = Darwin ]; then
+  [ -f ~/.local/bin/tmuxinator.zsh ] && source ~/.local/bin/tmuxinator.zsh
+
   #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
   export SDKMAN_DIR="/Users/martin.ohmann/.sdkman"
   [[ -s "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/martin.ohmann/.sdkman/bin/sdkman-init.sh"
@@ -207,6 +166,8 @@ if [ "$platform" = Darwin ]; then
       export PUPPETEER_EXECUTABLE_PATH="$(which chromium)"
   fi
 else
+  [ -f ~/.tmuxinator.zsh ] && source ~/.tmuxinator.zsh
+
   source <(kickoff completion zsh)
   source <(gh completion -s zsh)
 fi
