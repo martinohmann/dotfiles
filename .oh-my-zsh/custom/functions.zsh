@@ -287,5 +287,5 @@ kubectl() {
   fi
 
   # execute real kubectl
-  command kubectl "$@"
+  command kubectl --cache-dir /tmp/kube-cache "$@"
 }
