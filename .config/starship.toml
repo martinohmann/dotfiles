@@ -17,7 +17,7 @@ symbol = " "
 format = "[{$duration}]($style) "
 min_time = 5000
 show_milliseconds = true
-style = "fg:black"
+style = "fg:bright-black"
 
 [directory]
 truncate_to_repo = false
@@ -59,10 +59,9 @@ am = " am"
 am_or_rebase = " am/rebase"
 
 [git_status]
-format = '([$ahead_behind](fg:cyan) )([$all_status]($style) )'
+format = '([$ahead_behind](fg:cyan) )([$conflicted]($style) )([$deleted]($style) )([$renamed]($style) )([$modified]($style) )([$staged]($style) )([$untracked]($style) )'
 modified = ""
-stashed = ""
-untracked = ""
+untracked = "?"
 style = "fg:yellow"
 
 [golang]
