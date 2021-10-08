@@ -19,10 +19,10 @@ if [ "$(uname)" = Linux ]; then
   alias l='ls_color -ah'
   alias ll='ls_color'
   alias la='ls_color -a'
+  alias lg='ls_color -a --group-directories-first'
+  alias sl=ls # often screw this up
+  alias lso="ls -lG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
 fi
-# alias lg='ls_color -a --group-directories-first'
-# alias sl=ls # often screw this up
-# alias lso="ls -lG | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\" %0o \",k);print}'"
 
 # Super user
 alias _='sudo'
@@ -93,9 +93,5 @@ alias es='exercism submit'
 alias eg='cd $HOME/exercism/go/$(ls -t $HOME/exercism/go/ | head -1)'
 alias gtb='go test -bench .'
 
-# systemd
-alias systemctl='sudo systemctl'
-
-alias mux='tmuxinator'
 alias ggr='git gerritreview'
 alias gfr='git fetch && git rebase'
