@@ -1,4 +1,5 @@
 format = """
+$python\
 $directory\
 $git_branch\
 $git_commit\
@@ -9,6 +10,8 @@ $git_status\
 $cmd_duration\
 $jobs\
 $character"""
+
+command_timeout = 2000
 
 [aws]
 symbol = " "
@@ -21,7 +24,7 @@ style = "fg:bright-black"
 
 [directory]
 truncate_to_repo = false
-truncation_length = 4
+truncation_length = 3
 read_only = " "
 read_only_style = "fg:red"
 style = "fg:blue"
@@ -77,6 +80,8 @@ style = "green"
 
 [python]
 symbol = " "
+format = '[($symbol$virtualenv )]($style)'
+style = "cyan"
 
 [ruby]
 symbol = " "
@@ -88,6 +93,7 @@ symbol = " "
 symbol = " "
 
 [custom.git_tag]
+disabled = true
 description = "Shows the git tag, if the current commit points to one"
 command = "git describe --tags --exact-match"
 shell = ["bash","--norc","--noprofile"]
