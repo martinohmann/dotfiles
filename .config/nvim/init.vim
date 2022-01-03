@@ -274,13 +274,12 @@ Plug 'christoomey/vim-tmux-navigator'
 " fzf{{{
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
 
-nnoremap <leader><enter> :FZFMru<cr>
-nnoremap <leader><leader><enter> :History<cr>
+nnoremap <leader><enter> :History<cr>
 nnoremap <leader><backspace> :Files<cr>
-nnoremap <leader>a :exec ':Ag '.expand('<cword>')<CR>
-vnoremap <leader>a "hy:exec "Ag ".escape('<C-R>h', "/\.*$^~[()")<cr>
+nnoremap <leader>a :exec ':Rg '.expand('<cword>')<CR>
+vnoremap <leader>a "hy:exec "Rg ".escape('<C-R>h', "/\.*$^~[()")<cr>
+nnoremap <leader>ft :Filetypes<cr>
 nnoremap <leader><tab> :Buffers<cr>
 "}}}
 
