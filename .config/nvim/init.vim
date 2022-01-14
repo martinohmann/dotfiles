@@ -594,6 +594,7 @@ nnoremap <s-tab> :bprev<cr>
 
 autocmd FileType ruby,json,javascript,javascript.jsx,sh,yaml,feature set ts=2|set sw=2|set expandtab
 autocmd BufNewFile,BufRead *.jinja set filetype=twig
+autocmd BufNewFile,BufRead *.pest set filetype=rust
 
 " wrapper for shell commands
 command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'

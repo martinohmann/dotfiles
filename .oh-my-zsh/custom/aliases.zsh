@@ -93,5 +93,10 @@ alias es='exercism submit'
 alias eg='cd $HOME/exercism/go/$(ls -t $HOME/exercism/go/ | head -1)'
 alias gtb='go test -bench .'
 
+# gerrit
 alias ggr='git gerritreview'
 alias gfr='git fetch && git rebase'
+
+# rust
+alias cr='cargo run'
+alias ct='cargo test'

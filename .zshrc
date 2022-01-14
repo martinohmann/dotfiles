@@ -52,6 +52,10 @@ export PATH=$HOME/.gem/ruby/2.7.0/bin:$PATH
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
+export PATH="$PATH:$HOME/.cargo/bin"
+
+export PATH="$PATH:$HOME/.local/bin"
+
 ## >>> START oh-my-zsh specific
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
